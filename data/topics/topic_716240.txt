@@ -1,0 +1,177 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+JAN VOREL · 13TH IN THIS COMPETITION · POSTED 3 DAYS AGO
+arrow_drop_up
+0
+more_vert
+Claude Mythos 5
+
+Claude Mythos 5 was cleared for roughly 100 pre-approved government agencies and organisations. How organisers can here enforce that this model is not used in competition? I do not want to spend next 2 weeks fighting windmills in my free time 😀
+
+1
+
+Please sign in to reply to this topic.
+
+comment
+7 Comments
+Hotness
+len8487
+
+Posted 3 hours ago
+
+· 80th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I tried using Fable 5. It sucks. It just assumes "It's floor. It's mathematically impossible". ChatGPT and Codex much better
+
+emoji_people
+vatsal
+
+Posted 2 hours ago
+
+· 121st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Found it to be the same. Fable took 2 hours and told me a task was mathematically impossible to be optimised further. Codex xhigh solved it with a perfect score in under 4 min.
+
+emoji_people
+Jan Vorel
+TOPIC AUTHOR
+
+Posted 2 hours ago
+
+· 13th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Anybody have access to ChatGPT 5.6 Sol? Is it much better than 5.5 for these optimisations?
+
+Russell Kirk
+
+Posted 3 days ago
+
+· 16th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+robga
+
+Posted 3 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+The latest news is ChatGPT 5.6 may be geo-restricted to the US. While it doesn't really seem a fair playing field, I suppose it's not completely different to the existing world where GPU availability (quality and quantity) have always been a Kaggle handicap across entrants.
+
+Fususu
+
+Posted a day ago
+
+· 34th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I feel Claude thinking too much for a simple task, do you feel the same?
+
+Chew Kok Wah
+
+Posted a day ago
+
+· 884th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Curios are you able to use Fable for this task or it will refuse or downgrade to Opus ?
+
+emoji_people
+Jan Vorel
+TOPIC AUTHOR
+
+Posted a day ago
+
+· 13th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I do not use it … just ChatGPT, I would like to know as well if worth to subscribe for Fable if it is any help at all
+
+Russell Kirk
+
+Posted a day ago
+
+· 16th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Best use of Fable: "Help me sign up for ChatGPT."

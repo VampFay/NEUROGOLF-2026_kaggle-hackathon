@@ -1,0 +1,205 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+ANDREY YUNOSHEV · 58TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+9
+more_vert
+Sanity-checking the leaderboard: does top-team performance ~7,400 LB really reduce to ~600-byte solutions per task without scorer exploits?
+
+Hi everyone, hi @mmoffitt — I'd like a sanity check before I keep pushing on this competition. I've spent significant time exploring techniques in shared notebooks and discussions, and I want to confirm I'm understanding the playing field correctly.
+
+The math
+
+Per-task score is pts = max(1.0, 25.0 - ln(cost)). So total LB = sum over 400 tasks of max(1, 25 - ln(cost_i)).
+
+If a team is around LB ≈ 7,400 (close to top-10), that implies an average per-task score of 7400 / 400 = 18.5 pts, which inverts to an average per-task cost of roughly:
+
+cost ≈ exp(25 − 18.5) = exp(6.5) ≈ 665 bytes per task
+
+
+Top-1 around LB ≈ 7,457 implies even lower — exp(25 − 18.64) ≈ 578 bytes per task on average.
+
+This is what I keep seeing referenced as "the ~600-byte regime."ф
+
+What 600B per task means in practice
+
+If the average is around 600 bytes, then roughly half of the 400 tasks need to come in below 600B — i.e. at a graph size where you essentially have:
+
+0–20 parameters in initializers
+1–4 intermediate tensors of small shape (or none counted at all)
+Output going more or less straight from input through a handful of ops
+
+That is a minimal-graph regime — almost no learned weights, almost no intermediate broadcast tensors, op-fusion to the point that you can describe the whole task in a few lines.
+
+My current bundle
+
+I am at LB ≈ 6,358.65, which works out to an average per-task cost of:
+
+6358.65 / 400 = 15.90 pts/task   →   cost ≈ exp(25 − 15.90) = exp(9.10) ≈ 8,950 bytes/task
+
+
+So my bundle is roughly 15× more expensive on average than the top-10 level, and about 15.5× more expensive than top-1. I clearly have a lot of structural compression headroom — I'm not arguing the gap is illegitimate.
+
+My question
+
+I just want to confirm I'm reading the target correctly:
+
+Is an average per-task solution size below ~600 bytes a realistically achievable target through honest structural compression alone?
+
+I'm asking because before I commit weeks of work to chasing that number, I'd like to know whether ~600B/task is a regime I can actually reach by writing tight, minimal-graph ARC encodings — or whether it would only be reachable through scorer quirks I'm not aware of.
+
+Yes / no would already help me a lot. Thanks!
+
+Please sign in to reply to this topic.
+
+comment
+6 Comments
+Hotness
+emoji_people
+jacekwl
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+9
+more_vert
+
+I think using average is a bit misleading here because of the ln in the formula. My average cost is ~7200, while median is ~860. Average is basically determined by the worst tasks.
+
+robga
+
+Posted a month ago
+
+· 9th in this Competition
+
+arrow_drop_up
+10
+more_vert
+
+The number 1 tip for any kaggle competition is to understand the evaluation metric and go from there. So the fact you're doing that means you're well positioned. Keep going! I'm not aware of any bug.
+
+emoji_people
+Chan Kha Vu
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+So the fact you're doing that means you're well positioned. Keep going! I'm not aware of any bug.
+
+To add to this motivational speech. @andreyyunoshev, people will probably form super-teams at the end of this competition to boost / combine scores. So with densest packing, 60 people can get a gold medal… and you're probably in the gold zone for now 😁
+
+Durga Kumari
+
+Posted a month ago
+
+arrow_drop_up
+-1
+more_vert
+
+Your math and interpretation look reasonable to me. A ~600B/task average does seem to imply extremely minimal graphs with heavy structural reuse/compression.
+
+Navneet
+
+Posted a month ago
+
+arrow_drop_up
+0
+more_vert
+
+Cool Sanity check leaderboard @andreyyunoshev
+
+Rustam Bazarbayev
+
+Posted a month ago
+
+· 995th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I think they got a higher score because they had some easier tasks, which made it easier to score above 20.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+9
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+10
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+-1
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+0
+more_vert

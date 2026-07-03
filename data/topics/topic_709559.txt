@@ -1,0 +1,504 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+HWE OWE · 10TH IN THIS COMPETITION · POSTED 15 DAYS AGO
+arrow_drop_up
+17
+more_vert
+Request to stop the notebook now
+
+There is a notebook score 7015 publish. I would like to request to stop notebook so that it would be a gap for participants that work hard and participation who copy notebook only,thanks
+
+Please sign in to reply to this topic.
+
+comment
+23 Comments
+Hotness
+MassimilianoGhiotto
+
+Posted 14 days ago
+
+· 117th in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+To be completely honest, I was actually on the verge of quitting this competition. The overwhelming reliance on LLMs to brute-force solutions has transformed the environment into a race, leaving almost no time to patiently craft and understand approaches by hand. However, this submission has completely reignited my desire to continue. Having access to a well-structured approach like this allows me to quickly study, absorb new concepts, and focus my time on actually learning rather than feeling hopelessly left behind by automated generation.
+
+Furthermore, we should not overlook the environmental and resource impact of a public share like this. By providing this baseline, we have likely saved a massive amount of redundant compute power, both in terms of local LLM usage and API tokens, that would have otherwise been burned by hundreds of competitors trying to prompt their way to this exact starting point.
+
+Personally, I do not participate in these challenges for the prize pool (this is not my day job), nor do I compete just to gain a medal. My sole objective is personal growth and knowledge. In fact, many forward-thinking companies encourage their employees to participate on Kaggle strictly for skill development, rather than chasing payouts or ranks. In that spirit, I find this sharing to be fundamental and deeply interesting.
+
+I can completely agree that dropping a near-complete solution just a few days before the deadline would be disrespectful to the integrity of the leaderboard. But with a full month still left in the competition, this provides a fantastic foundation for the community to study, adapt, and build upon.
+
+Paritosh Kumar Tripathi
+
+Posted 15 days ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+I don't think you or anyone is at loss except the original publisher as you can simply merge the improvements from his notebook with your notebook.
+
+emoji_people
+hongan
+
+Posted 15 days ago
+
+· 4th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+true. net gain for everyone else
+
+hwe owe
+TOPIC AUTHOR
+
+Posted 15 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+-6
+more_vert
+
+But i score 6900 on 62 rank,now i merged and only gain 30 score,it will be unfair on anyone who work hard averyday.also,in Santa 2025 competition,a 69.9913 notebook publish and everyone who score 69s drop.so,can us block 3 weeks of notebook publishing before competition finish?
+
+4 more replies
+arrow_drop_down
+emoji_people
+jacekwl
+
+Posted 15 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+Yes and no. If your score is 7000 and score of other person is 6980 but other person benefited more from that ensemble it can be 7130 for you and 7150 for other person after ensemble. You are are below that other person now.
+
+Paritosh Kumar Tripathi
+
+Posted 15 days ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Hmm right. In terms of absolute gain everyone benefits but relatively, not everyone.
+
+3 more replies
+arrow_drop_down
+Yubo WANG
+
+Posted 15 days ago
+
+· 120th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+I feel your frustration. To be honest, when I suddenly realised I was dropping at a rate of 10 places every 5 minutes, I was in the middle of enjoying my lunch. It was really tasty, but I didn't finish it because I had to rush back to check what was going on. I think most of us who have spent countless nights tuning parameters, tweaking prompts, and designing multi-agent workflows can relate to that sinking feeling when a public notebook suddenly reshuffles the leaderboard.
+
+That said, after calming down, I actually agree with this point: the race is relative, not absolute. If everyone gets the same lift from a public notebook, we're just fighting over smaller margins anyway.
+
+But here is where it gets interesting. We are all assuming the notebook publisher is acting in good faith, sharing out of generosity. What if that is not always the case? What if there is a more cynical angle?
+
+Here is a dark thought that has lingered in my mind for a long time.
+
+Imagine it is the final hour of the competition. The top 5 are locked in for prize money, and you are sitting at 6th place, just a few points away but with no realistic chance to break into the top 5 anymore. You have a killer private solution that you have been saving all along. You know that if you publish it right now, in the last 30 minutes, there is no way everyone can fully integrate it in time. But a few teams right below you might copy and merge it and leapfrog the top 5. You will not win anything anyway, so why not?
+
+You publish the notebook. Chaos ensues. The top 5 scramble to merge it, but the clock runs out. The leaderboard freezes with a completely different set of names at the top. You still get nothing, but you just turned the entire prize distribution into a lottery. All because you had nothing to lose.
+
+Has this ever happened? I genuinely do not know. But the fact that the system makes it technically possible, and the incentives could align under the right conditions, makes me wonder whether Kaggle should at least consider a "no public submissions in the final 6 hours" rule—not for fairness, but just to prevent that one moment of spite from ruining everything for everyone else.
+
+Or maybe I am just overthinking, and people are inherently good. What do you all think? 😅
+
+hwe owe
+TOPIC AUTHOR
+
+Posted 15 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Not only 5 hours,at least 2 week
+
+Ryuhki Kimura
+
+Posted 14 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+This actually happened in a competition called Santa.
+
+Because of that, everyone ranked 28th or below got shuffled around.
+
+Fritz Cremer
+
+Posted 14 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Yes this may happen, but I don't think I've ever seen it happen with someone that was in Gold range I think. Many people compete for the ranks/medals rather than for the prize money, so it's not like they would give up a 6th place just for fun.
+
+Ryuhki Kimura
+
+Posted 14 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+God is telling us not to be anything but the best.
+
+Ali
+
+Posted 15 days ago
+
+· 164th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+I agree, I woke up in a hurry to catch my fall, and now I've merged with a couple of points higher! All my work (money spent on agents) is meaningless now!
+
+The competitiveness gap is much, much smaller now :-( I had a 200 to 300 points advantage, now I have like a 20 points advantage!
+
+ADARSH REDDY B
+
+Posted 14 days ago
+
+· 270th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Loggedin after 3 days to see my LB position at ~350 (down from 70s). No wonder.
+
+emoji_people
+c0sm1c
+
+Posted 14 days ago
+
+· 36th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+To be honest, the nature of this competition makes it inevitable to adopt open-source solutions without any restrictions. This would be a matter that affects the community environment. What they offer as open source is the answer package, rather than the algorithm design code as you can see in other competitions. If someone continues to submit higher scores, the entire competition environment will become more like a game of chance, with the outcome determined by who can come up with a more integrated score? If you don't integrate with them, you will be surpassed by others. This is obviously an unhealthy competitive environment. I think this competition is more about how one can build the workflow of the agent with limited resources to make the agent make more effective use of operator experience and one's accumulation of mathematical skills. It is hoped that the authorities can impose some restrictions.
+
+hwe owe
+TOPIC AUTHOR
+
+Posted 14 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+ye s，this is my purpose for making this topic post
+
+KKY
+
+Posted 14 days ago
+
+· 16th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Partially agree, i burned out a lot of tokens on this, not only for medal/prize, but i learn how to design agent harness. I was a claude code/Codex guy, now i use pi-agent to build my personal agent for anything : )
+
+hwe owe
+TOPIC AUTHOR
+
+Posted 14 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+our team spend a lot of time climbing from 6700to6950,then the notebook publish
+
+Yubo WANG
+
+Posted 14 days ago
+
+· 120th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Can't agree more. Beyond gaining knowledge about ONNX graph compression (which felt similar to topics in ACM-ICPC), the biggest takeaway from the competition for me was mastering multi-agent system architectures, taking me from a beginner to an expert.
+
+Navneet
+
+Posted 12 days ago
+
+arrow_drop_up
+-4
+more_vert
+
+Thank you for the Request to stop the notebook @hweowe
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 14 days ago
+
+arrow_drop_up
+1
+more_vert
+
+The sharing of new public notebooks is disabled in the last week of the competition (see previous discussions here and here).
+
+[RU] Nikita Kuznetsov
+
+Posted 14 days ago
+
+· 922nd in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+they just can update old notebooks, same situation was with Santa
+
+Tom
+
+Posted 13 days ago
+
+· 17th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Should also lock old notebook update as well
+
+hwe owe
+TOPIC AUTHOR
+
+Posted 13 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+We should stop the code section or lock old notebooks update.if not,they will produce new version of notebook and making something we didn’t want to see
+
+Yeyang
+
+Posted 14 days ago
+
+· 91st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+It would be helpful to set a hard ddl for sharing notebooks so that people still have time to learn from better solutions without dealing with the uncertainties at the last minute, rather than letting the leaderboard dominated by purely open source solutions.
+
+emoji_people
+Lixin73
+
+Posted 14 days ago
+
+· 36th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+if public book is 7400+ ，anyway 7500+，the match is end！
+
+This comment has been deleted.
+
+This comment has been deleted.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+6
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+5
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+-6
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 10 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 11 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 12 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 13 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 14 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 15 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 16 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 17 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 18 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 19 ---
+arrow_drop_up
+-4
+more_vert
+--- Comment 20 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 21 ---
+arrow_drop_up
+5
+more_vert
+--- Comment 22 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 23 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 24 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 25 ---
+arrow_drop_up
+0
+more_vert

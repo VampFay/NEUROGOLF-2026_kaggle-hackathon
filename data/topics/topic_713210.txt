@@ -1,0 +1,122 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+ANJANA MOHAN · 953RD IN THIS COMPETITION · POSTED 10 DAYS AGO
+arrow_drop_up
+1
+more_vert
+Looking for tips to solve more tasks — currently at 66/400 with hand-crafted + MLP approach
+
+Hi everyone, I'm relatively new to this competition and have been building my solver from scratch. Currently at ~66 tasks solved using:
+
+Hand-crafted ONNX graphs for clean patterns (recolor, rotation, flip, transpose, mirror, scale, mode-fill)
+A small 2-layer MLP (hidden 4-64) trained on all examples including arc-gen, exported to opset-10 ONNX via Gemm+Relu+Gemm My MLP only handles tasks where all examples share the same input/output shape. The biggest gap I see is variable-shape tasks and tasks too complex for a tiny MLP. A few questions:
+What's the most effective approach for tasks with variable input sizes?
+For tasks where MLP overfits train/test but fails arc-gen — any tips for better generalization?
+Any recommended approach for flood-fill / enclosed-region type tasks within the opset-10 constraint? Any advice appreciated — happy to share my notebook in return. Thanks!
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+emoji_people
+Andrey Yunoshev
+
+Posted 9 days ago
+
+· 58th in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+MLPs are a dead end here. On any 7k+ task, an MLP that actually learns ends up 10–40× more expensive than a symbolic graph — and at cost-feasible sizes it doesn't learn at all. The grader needs full-grid exactness, so partial accuracy scores zero. No task is both learnable and cheaper than baseline.
+
+Why stuck on opset-10? It's not required. Recent opsets load fine, and opset ≥14 unlocks cheap uint8 ops that roughly halve memory cost.
+
+Flood-fill: unroll fixed steps — each step reach = Min(MaxPool3x3(reach), passable), repeated N times (N = family diameter). Enclosed regions = flood from the border, then passable AND NOT reach.
+
+Anjana mohan
+TOPIC AUTHOR
+
+Posted 9 days ago
+
+· 953rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+@Andrey Yunoshev — Thank you for the flood-fill tip! I've been trying to implement it but hitting a consistent 5/6 failure. Could you share more details?*
+
+My current ONNX implementation:
+
+in_grid = ReduceSum(input, axis=1) clamped to [0,1]
+passable = channel_0 AND in_grid
+Seed from actual grid border (cells adjacent to non-grid cells)
+64 steps of: reach = Min(reach + Conv(reach, cross_kernel) * passable, 1)
+enclosed = passable AND NOT reach
+
+My numpy reference passes all 262 arc-gen examples but the ONNX version fails 59 of them. The numpy v1 (seeding from canvas border row 0/29, col 0/29) fails 75 arc-gen, but numpy v2 (seeding from actual grid border) passes all 262.
+
+Could you share your actual ONNX graph structure for the flood-fill primitive? Specifically: how do you seed the initial reach, and do you use Conv or MaxPool for spreading?
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+5
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

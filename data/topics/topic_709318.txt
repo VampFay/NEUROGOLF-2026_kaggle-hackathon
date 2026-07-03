@@ -1,0 +1,163 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+RUSTAM BAZARBAYEV · 995TH IN THIS COMPETITION · POSTED 15 DAYS AGO
+arrow_drop_up
+0
+more_vert
+How can I push my score higher?
+
+I’m looking to get advice from top competitors on how to improve the LLM for a higher score. Sometimes, it suggests there’s a theoretical limit for this task, but when I calculate the average score from the top performers, it’s around 18.5 to 19.5. I’m aiming for my first medal, so any advice would be greatly appreciated.
+
+Please sign in to reply to this topic.
+
+comment
+4 Comments
+Hotness
+Munshi Sahil Ahmed
+
+Posted 15 days ago
+
+arrow_drop_up
+0
+more_vert
+
+Guy's It might be a bit off topic question. But are you guy's writing the transformations for each tasks individually. Are there any transformations that can be reused in other tasks also ?
+
+Rustam Bazarbayev
+TOPIC AUTHOR
+
+Posted 15 days ago
+
+· 995th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Some transformation might be work for some tasks but not for all. But you can use some type of operations
+
+Munshi Sahil Ahmed
+
+Posted 15 days ago
+
+arrow_drop_up
+0
+more_vert
+
+I understand so it's a long and tedious process
+
+Deep Blue
+
+Posted 15 days ago
+
+· 514th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+You can start from good public submissions and keep refining them with Codex. As Tony Li put it, ChatGPT Plus is all you need for this competition. https://www.kaggle.com/competitions/neurogolf-2026/discussion/704942
+
+Rustam Bazarbayev
+TOPIC AUTHOR
+
+Posted 15 days ago
+
+· 995th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thanks. But OpenAI declined my Visa card
+
+Deep Blue
+
+Posted 15 days ago
+
+· 514th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+This is frustrating, but third-party relay API may be an option. I haven’t tried other models yet, so I don’t know if they work.
+
+4 more replies
+arrow_drop_down
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+0
+more_vert

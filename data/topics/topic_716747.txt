@@ -1,0 +1,99 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+AKRAM RAHALI · POSTED 3 DAYS AGO
+arrow_drop_up
+1
+more_vert
+student team
+
+how to confirm what teams are student ones? is there any type of verification ?
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+emoji_people
+jacekwl
+
+Posted 3 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+It's not 100% known while competition is still going. Basically part of the game.
+
+Diana
+
+Posted 3 days ago
+
+· 16th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+You can find similar discussion here https://www.kaggle.com/competitions/neurogolf-2026/discussion/694387
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

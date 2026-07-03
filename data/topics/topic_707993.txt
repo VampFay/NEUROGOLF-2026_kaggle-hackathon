@@ -1,0 +1,253 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+SOULDRIVE · 270TH IN THIS COMPETITION · POSTED 21 DAYS AGO
+arrow_drop_up
+1
+more_vert
+Compile, Don't Train: the opset-10 ONNX trick that scores ~2× on held-out
+
+TL;DR. In NeuroGolf the per-task score rewards small, simple nets that nail the held-out examples. We stopped training per-task CNNs and started compiling reference ARC programs into opset-10 ONNX. Compiled rules generalize (~0.93–1.0 held-out) and are tiny, so they beat trained memorizers (~0.42) by roughly 2× of public value. Below: how to reason about the metric, an empirical "scoring is fractional" finding, the reusable opset-10 golf tricks, a debugging method, and an honest list of what this can't do.
+
+▶ Runnable companion notebook (every trick below as a real, verified opset-10 graph): https://www.kaggle.com/code/souldrive/compile-don-t-train-onnx-golf-that-scores-2x
+
+The metric, restated as a strategy
+
+Per task, score ≈ (25 - ln(mem + params)) × (fraction of held-out scored examples predicted exactly).
+
+Two forces fall out of that single line:
+
+Smaller is more. Because it's 25 - ln(mem + params), every byte you shave is logarithmic points back. "Memory" here is mostly intermediate tensor size, not weights — that distinction is where most of the points hide (see Memory Golf below).
+Right beats close, but close beats zero. The second factor is a fraction, so a net that implements the true rule on more held-out examples scores strictly more.
+
+That second point reframes the whole competition. If you believe scoring is binary (exact-on-everything or zero), you train a CNN to memorize your visible examples and hope. If scoring is fractional, you should instead implement the rule that produced the examples — because the rule is what transfers to the held-out split.
+
+The empirical finding: scoring is FRACTIONAL, not all-or-nothing
+
+We didn't assume this — we measured it. We took several "near-miss" transpiles (programs exact on ~90–99% of our examples, not 100%) and submitted them on empty task slots. Public score went up ~+25.
+
+Under all-or-nothing scoring that change is +0. The only model consistent with "+25" is:
+
+task_points = base_points × (held-out exact fraction)
+
+
+This is the single most useful thing we learned, because it tells you what to optimize: not "fit my visible examples" but "implement the rule that generates them." Memorizers cap out near their visible-set fraction on held-out data; rule-implementers ride the fraction up toward 1.0.
+
+Why compile beats train
+
+A public ARC DSL ships ground-truth solve_<id>(I) programs for many tasks. Transpile those into compact ONNX and you get both metric factors at once — tiny and correct:
+
+	trained tiny CNN	compiled DSL rule
+held-out exact	~0.42	~0.93–1.0
+size (mem+params)	large	tiny
+net effect	memorizes	generalizes
+
+The mental model that makes this click: a trained CNN approximates the input→output map from a few points; a compiled program is the map. Held-out is exactly where that difference shows up.
+
+One honest caveat up front, because it shapes how you should use all of this: a fairly complete transpiler tops out around ~3400 local, which is below this competition's Bronze cutoff. So treat this as a strong rank-climb plus a reusable engineering technique — not a guaranteed-medal method.
+
+The reusable part: opset-10 ONNX-golf tricks
+
+This is the section to steal even if you never touch ARC. opset-10 is deliberately spartan — no Loop, no Unique, no NonZero, no CumSum, and Min/Max are float-only — so the "obvious" implementations are gone and you express everything as fixed-shape tensor algebra. These patterns transfer to any compact-ONNX / net-golf target.
+
+1. Enumerate components without Loop: the fixed-K peel
+
+You can't iterate an unknown number of objects. Pick a budget K and peel the highest remaining component K times:
+
+remaining = labels                  # int/float grid, 0 = background
+for k in range(K):                  # K is a compile-time constant -> fully unrolled
+    mx   = ReduceMax(remaining)
+    comp = Greater(remaining, mx - 0.5) * Greater(mx, 0.5)   # the top object (empty if none)
+    objects[k] = comp
+    remaining = remaining * (1 - comp)                       # erase it, continue
+
+
+K iterations yield up to K objects in descending-label order; iterations past the last object produce empty masks that fold away. Pick K = your worst-case object count.
+
+2. Connected-component labeling via unrolled max-propagation
+
+To get those labels, seed each foreground cell with a unique id, then propagate the neighbor-max for H + W steps — BFS flood unrolled to its worst-case diameter:
+
+ids = unique_id_per_cell * foreground          # e.g. row*W + col + 1, zeroed on background
+for _ in range(H + W):
+    nbr = max(ids, shift_up(ids), shift_down(ids), shift_left(ids), shift_right(ids))
+    ids = nbr * foreground                      # re-mask so labels never leak into background
+
+
+After convergence every cell carries its component's max id — a stable label you feed straight into Trick 1. Shifts are Pad + Gather (Trick 6), so everything stays static-shape.
+
+3. Prefix sums without CumSum: triangular MatMul
+
+A prefix sum along an axis is exactly a multiply by a triangular ones-matrix:
+
+L = lower_triangular_ones(N, N)     # constant initializer, L[i,j] = 1 if j <= i
+prefix = MatMul(L, v)               # prefix[i] = sum_{j<=i} v[j]
+
+
+Use the strict (j < i) variant for exclusive sums. This is the workhorse for compaction: prefix-sum a 0/1 keep-mask to get each kept element's destination index.
+
+4. Variable-length outputs (compress / dedupe / split / crop) via a permutation MatMul
+
+compress / dedupe / split / crop all produce a variable number of lines — normally a NonZero+Gather job you can't do here. Instead build a 0/1 permutation matrix that scatters kept lines to the top-left, and apply it with MatMul:
+
+keep = (row is kept)                         # 0/1 vector, length H
+dest = strict_prefix_sum(keep) * keep        # Trick 3: kept row i -> position dest[i]
+R    = onehot_scatter(dest, keep)            # R[dest[i], i] = 1 for kept rows
+rows_compacted = MatMul(R, grid)             # rows pulled to the top; rest zero
+# columns: build Cm the same way and do MatMul(grid, Cm)
+
+
+Rows use a left-multiply, columns a right-multiply. The output stays a static H×W; kept content lands top-left, the rest is zero.
+
+5. Canvas mode: keep the output shape STATICALLY inferable
+
+This one is load-bearing. The scorer sizes your net via shape-inference, so your output shape must be statically inferable. A dynamic Slice makes the shape runtime-only → the net is unscoreable.
+
+So for variable-size outputs, always emit onto a fixed 30×30 canvas, content packed top-left, with a runtime keepmask that zeros everything beyond the runtime (H, W) extent:
+
+canvas[30, 30]                       # static shape -> shape-inference is happy
+keep = (row_idx < H) * (col_idx < W) # runtime mask from the data, broadcast to 30x30
+out  = canvas * keep
+
+
+Variable size lives in the values, never in the shape.
+
+Corollary: subgrid / crop is two static-shape Gathers, never a dynamic Slice. The index values can be data-dependent; the index shape is static, so the output shape is too — and this is also how every "shift" in Trick 2 is built.
+
+6. The all-zeros profiling pass → clamp every index
+
+The scorer profiles each net on an all-zeros input to measure cost. That's a trap: with an empty grid your masks are empty, your "first kept index" is garbage, and a Gather happily reads out of bounds. Clamp every data-derived index into [0, N-1] before you gather. opset-10 Min/Max are float-only, so clamp in float and cast back:
+
+idx_f = Cast(idx, to=FLOAT)
+idx_f = Max(idx_f, 0.0)
+idx_f = Min(idx_f, N - 1.0)
+idx   = Cast(idx_f, to=INT64)
+
+
+Do this on every index that derives from data, not just the obvious ones. The all-zeros pass will find the one you forgot.
+
+7. Memory golf: trace on the compact frame, then Pad back
+
+Points scale with 25 - ln(mem + params), and most of mem is intermediate tensor size, not weights. So the biggest lever is often: don't run your pipeline on the full 30×30. Crop the input to its content bounding box B×B (two Gathers, Trick 5), run the entire trace on the compact frame, then Pad back to 30×30:
+
+B   = content_extent(grid)           # bounding box of non-background
+core = Gather2D(grid, B)             # run everything on B x B
+out  = Pad(core, to=30x30)           # restore static canvas at the end
+
+
+On one heavy net this dropped "memory" from ~59.7M → ~1.6M — a large, basically-free gain, because the cost is logarithmic in mem + params.
+
+Two strict-equality footguns (these cost me real submissions)
+
+These aren't opset tricks — they're equality-contract traps. Both produce nets that "look right" and fail the strict compare.
+
+Refill channel 0. The harness compares the full one-hot, and colour 0 means channel-0 = 1, not "all channels 0". Any cell you zero across all channels reads as invalid, not colour-0, and fails strict equality even though it renders identically:
+  ch0 = 1 - ReduceSum(onehot, axis=channels)   # cells now empty
+  onehot[..., 0] = onehot[..., 0] + ch0         # refill background so 0 == channel-0=1
+
+Clip fills to the content extent. A flood/fill that overshoots paints the zero-padding outside (H, W) → off-grid colours that fail the strict 30×30 compare. Clip every fill to the real extent (the Trick 5 keepmask does it).
+The F-lever: one substrate, a whole family of tasks
+
+Once you can enumerate objects (Trick 1), one substrate unlocks a family of tasks: a general higher-order sfilter/apply over enumerated objects.
+
+objects = peel_K(mask)                                  # Trick 1
+keep    = [ coerce_bool(predicate(o)) for o in objects ]  # any per-object test
+result  = union( o * keep_o for o in objects )            # gate + union survivors
+
+
+Evaluate any predicate per single-component object (size, colour count, symmetry, touches-border, unique-colour, …), coerce to a keep-bool, gate the cells, union the survivors. Most "select the objects that …" tasks collapse into picking the predicate. Build the substrate once; reuse it everywhere.
+
+Debugging: partial-program verify
+
+When a transpiled program is wrong but you don't know where, build synthetic targets from the reference program's intermediate state:
+
+Run the reference solve_<id>(I) up to intermediate variable x_k.
+Make a synthetic example whose target output is x_k.
+Run your transpiled graph truncated to the same point and compare.
+
+The first x_k that diverges is the exact statement your transpiler got wrong. This turns "the net is wrong somewhere" into "node 37 mismatches" — the difference between an afternoon and five minutes.
+
+Companion heuristic: the compiles-but-wrong per-example diff is your highest-yield signal. A net that compiles but misses a few examples almost always encodes one concrete bug or a single semantic gap, and the per-example diff points right at it. Chase those before anything else.
+
+Honest limits — what this cannot do
+
+I'd rather you trust the rest of the post, so here's the unflattering half:
+
+The DSL has to actually reproduce the scored examples. The transpiler can only bank a task where the reference program matches the scored arc-gen examples (~306/400 for us). The rest are arc-quirk: the reference disagrees with the generator (classic case — the DSL keeps a border the scored output strips). A perfect transpile of the wrong rule is still wrong — unbankable, so detect and skip rather than burn hours.
+Order-dependent selection is fragile. Ops like "take the first / extract over a set" depend on iteration order, and our connected-component ordering differs from the reference's frozenset order. A few tasks mismatch purely on order. We skip those rather than ship a wrong net.
+There's a ceiling, and it's below Bronze (~3400 local, as noted above). This is a rank-climb and a reusable technique, not a guaranteed medal — I'd rather say that plainly than oversell it.
+
+The exact-verify gate is the unsung hero of the honest version: every banked net is verified exact on our examples before it ships, so the failure mode is "we skip a task," never "we silently submit a wrong net."
+
+Takeaways you can reuse tomorrow
+On any net-golf metric, first decide if scoring is fractional — submit a near-miss on an empty slot and watch the delta. It changes your entire strategy.
+If it's fractional, implement rules, don't memorize examples — rules ride the held-out fraction toward 1.0.
+The opset-10 patterns (fixed-K peel, max-propagation labeling, triangular-MatMul prefix sums, permutation-MatMul variable outputs, static canvas + keepmask, clamp-every-index, bounding-box memory golf) port to any compact-ONNX target.
+Build one higher-order substrate (the F-lever) and reuse it across a whole task family.
+Verify exact before you ship, and partial-program-verify to localize bugs fast.
+
+If you're new here: you don't need to train anything to make progress. Pick one task with a known reference program, hand-compile it to opset-10 using the tricks above, verify it exact, and submit it on an empty slot. Watch the score move. That single loop taught us more than any amount of model tuning.
+
+▶ Want to run it? Every trick above is a real, executable opset-10 graph in the companion notebook: https://www.kaggle.com/code/souldrive/compile-don-t-train-onnx-golf-that-scores-2x — fork it, run it, and the vmirror + compress demos verify exact in seconds.
+
+Happy to go deeper on any of these — the permutation-MatMul and the canvas/keepmask shape trick especially have details I compressed here. A couple of open questions I'd genuinely love help with:
+
+Better tricks for order-stable component enumeration in opset-10? That's our biggest remaining source of skips.
+Does "compile, don't train" generalize to other net-golf metrics you've seen? I suspect it does, well beyond ARC.
+
+What net-golf tricks have you found? Replies and questions very welcome.
+
+Please sign in to reply to this topic.
+
+comment
+0 Comments
+Hotness

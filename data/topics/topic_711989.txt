@@ -1,0 +1,109 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+VINCENT SIRIUS · 267TH IN THIS COMPETITION · POSTED 11 DAYS AGO
+arrow_drop_up
+8
+more_vert
+Looking for general tips on agent workflows and ONNX golf strategy
+
+Hi everyone🙇,
+
+I’ve been working on optimizing my NeuroGolf submissions for a while, but I feel like I’m hitting a wall now.
+
+In the earlier rounds, asking agents to rewrite the ONNX architecture, avoid large intermediate tensors, push big ops to the final output node, use uint8/bool, crop early, try Einsum/RoiAlign/Conv tricks, etc. gave me some decent gains. But recently the improvements have slowed down a lot. I’m spending a huge amount of tokens per task, and most attempts either fail correctness/stress or only shave off a tiny bit of cost.
+
+For people who are still making steady progress: do you have any practical tips?
+
+I’m curious about both sides:
+
+Prompting / agent workflow: how do you ask agents to explore without wasting tons of tokens?
+Optimization strategy: when do you stop trying to force a task below some cost threshold and move on?
+Any useful ONNX/code-golf patterns that changed how you approach hard tasks?
+
+I’m mostly looking for general advice on how to avoid getting stuck in the same unproductive loop.
+
+Thanks!
+
+1
+
+Please sign in to reply to this topic.
+
+comment
+1 Comment
+Hotness
+Georgy Mamarin
+
+Posted 9 days ago
+
+· 547th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+A few things that pulled me out of that exact loop:
+
+Put a local scorer and a per-file validator in the agent's hands, not just the task. Once the agent can measure params/memory/cost itself with a faithful copy of the server scorer, and check correctness after every rewrite, it stops guessing and burning tokens on attempts that were never going to score. That one change cut my wasted iterations the most.
+
+Gate every lossy rewrite against fresh generator seeds, not just train/test. The hidden set comes from the same ARC-GEN generator, so I generate a few hundred fresh examples per task and run the candidate against them. It catches the "passes locally, 0 on private" overfits before they cost a submit, and tells the agent right away when a clever shortcut broke generalization.
+
+On when to stop: measure the delta, not the absolute, and keep a dead-ends list. A few "free lunch" ideas just don't pay under this metric. Sub-byte/INT4 packing doesn't help because params count elements, not bytes. sparse_initializer looks free but materializes back to dense, and the memory eats the params win. "Closed-form" one-big-MatMul flood-fill loses because the NxN intermediate dominates. If a task won't drop after a couple of honest attempts, it's usually a structural floor, not a missing trick. The model that helped me most: MACs are free here, tensors aren't, so cost is the count and size of your intermediates, not the ops.
+
+Happy to go deeper on any of these.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert

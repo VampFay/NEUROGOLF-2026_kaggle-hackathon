@@ -1,0 +1,149 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+TRISTON MORGAN · 33RD IN THIS COMPETITION · POSTED 19 DAYS AGO
+arrow_drop_up
+1
+more_vert
+Questions About the ONNX Evaluation Environment Versions and Supported Operators
+
+@mmoffitt Dear organizers,
+
+I have recently encountered the error Error processing onnx networks for tasks multiple times when submitting ONNX models. At the moment, the error message is quite general, and without more detailed logs or information about the evaluation environment and compatibility constraints, it is difficult to debug the issue locally.
+
+In addition, since the evaluation system has gone through several updates during the competition, I am not sure whether the environment information mentioned in earlier posts is still up to date. Therefore, I would like to confirm the current evaluation environment details so that participants can generate and validate more compatible ONNX models locally.
+
+I would like to ask the following questions:
+
+What version of onnx is currently used in the evaluation environment? What version of onnxruntime is currently used in the evaluation environment? What is the highest supported ONNX IR version? What is the highest supported opset version? Is there any additional operator whitelist or list of disabled operators?
+
+If possible, I would also like to ask whether more specific error information from the processing stage could be provided without revealing evaluation details, such as which model, node, operator, shape, or dtype check caused the failure. This would make it much easier for us to reproduce and fix such issues locally.
+
+Thank you!
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+robga
+
+Posted 18 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+The earlier posted info remains accurate. At least it does for me, never having those errors.
+
+Organiser posting the pinned version numbers (numpy 2.4.4, ORT 1.24.4, onnx 1.21.0, ignore onnx-tool): https://www.kaggle.com/competitions/neurogolf-2026/discussion/693088#3446667
+
+Organiser posting about opset/ir versions ("We don't explicitly enforce any restrictions"): https://www.kaggle.com/competitions/neurogolf-2026/discussion/696953#3454289
+
+neurogolf_utils.py in the Data tells you that you can not use LOOP, SCAN, NONZERO, IF, UNIQUE, SCRIPT, FUNCTION, COMPRESS, sequence ops, ai.onnx, and other restrictions. afaik the kaggle side env uses that exact scorer, per task, in the order of files in your zip, but with an extra tiny holdout set.
+
+Ken Krige
+
+Posted 18 days ago
+
+· 25th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Does that mean the ban on LOOP, SCAN, NONZERO, IF, UNIQUE, SCRIPT, FUNCTION, COMPRESS, sequence ops, ai.onnx, and other restrictions, is no longer a ban?
+
+robga
+
+Posted 18 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+they are banned. use neurogolf_utils.py to score locally (or give it to your agent).
+
+Ken Krige
+
+Posted 18 days ago
+
+· 25th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the confirmation.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+1
+more_vert

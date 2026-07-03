@@ -1,0 +1,480 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+MICHAEL D. MOFFITT · POSTED 2 MONTHS AGO
+·
+COMPETITION HOST
+arrow_drop_up
+30
+more_vert
+NeuroGolf Update for April 21st
+
+Many thanks to the hundreds of teams who have entered our NeuroGolf Championship thus far, and especially to those that have suggested improvements to the competition! We are pleased to announce the following updates:
+
+At the request of @jazivxt, we have increased the number of submissions per day to 100.
+We have also updated our metric to ignore test cases whose grid dimensions eclipse 30x30, as reported by @kosirowada.
+Our scorer is now configured to report specific failing networks (suggested by @anglolodorf and many others).
+We have patched a negative memory vulnerability discovered by @calibrator.
+Several bugs in the onnx-tool profiler (identified by @shinh0) have been graciously addressed by its creator, @kevinyuluo.
+In response to @tonylica's question about versions, we have pinned our metric and official starter notebook to the following releases (some of which are upgrades): numpy (2.4.4), onnx (1.21.0), onnxruntime (1.24.4), and onnx-tool (1.0.1 for now)
+Sometime soon (likely tomorrow) we'll kick off a rescoring of all submissions, and will post a comment below once that process is complete — you may see a temporary shuffling of positions on the leaderboard during this time.
+
+We'll continue to monitor messages on the discussion forum for additional suggestions, with the intention of resolving any remaining ambiguities over the next few weeks. Thank you for your patience!
+
+[Refer to the bottom of our welcome message for a complete list of all contest updates]
+
+15
+8
+12
+
+Please sign in to reply to this topic.
+
+comment
+18 Comments
+2 appreciation comments
+Hotness
+Jiwei Liu
+
+Posted 2 months ago
+
+· 14th in this Competition
+
+arrow_drop_up
+8
+more_vert
+
+Our agent might also find several loop holes. unfortunately all three of us are busy with something else we don't have time manually inspecting. We'll ask the agent to write a report and share here.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+6
+more_vert
+
+Update (April 24th): Early next week, we plan to issue two more metric updates that will (a) explicitly enforce our "statically-shaped" constraint, and (b) include the contribution of parameters from Constant operations. Soon afterwards, we aim to kick-off our batch rescoring process. Thank you!
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Metric update complete! Please feel free to respond to that thread with questions and comments.
+
+Mukundan
+
+Posted 2 months ago
+
+· 1083rd in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+The rules state:
+
+All tensors and parameters in each ONNX network file must have statically-defined shapes so that the performance of the network can be properly evaluated.
+
+I couldn't find this being enforced in the scorer script. On top of that, when dynamic shapes are used the current scorer appears to under-report memory cost, which inflates the reported score. Could you clarify how the rule is intended to apply?
+
+Is this rule still current, or is it outdated?
+Will the scorer be updated to check it automatically?
+Or will compliance be reviewed manually?
+
+For example this solution for task179 uses dynamic shapes to inflate the score:
+
+from spox import Tensor, argument, build
+from spox.opset.ai.onnx import v24 as op
+
+inp = argument(Tensor('float32', (1, 10, 30, 30)))
+crop = op.cast(op.slice(inp, i64([0, 0, 0]), i64([10, 3, 3]), axes=i64([1, 2, 3])), to=np.bool_)
+flip = op.transpose(crop, perm=[0, 1, 3, 2])
+
+one = op.cast(op.reduce_max(crop, keepdims=False), to=np.int64)
+one = op.reshape(one, i64([1]))
+pad27 = op.mul(one, i64([27]))
+
+pads = op.concat([i64([0, 0, 0, 0, 0, 0]), pad27, pad27], axis=0)
+out = op.pad(flip, pads)
+
+model = build({"input": inp}, {"output": out})
+
+Tony Li
+
+Posted 2 months ago
+
+· 1st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I built a dynamic-pad probe at task179.onnx based your code.
+
+That probe passes kaggle scorer and local correctness on all 267 in-envelope examples for task 179 and scores 18.139, with reported cost 954 and file size 716 bytes.
+
+Net effect versus the current canonical file: +2.937 score.
+
+This is a real score inflation under the current scorer. Task 179’s official local examples are all 3x3, so the crop-to-3x3 trick is semantically valid here. The current scorer only enforces static declared graph input/output shapes, but the cost still comes from onnx_tool.shape_infer(None) -> profile().
+
+In this probe, ORT returns [1,10,30,30], while onnx_tool profiles the Pad output as [1,10,3,3], so it undercounts memory badly (memory=846, macs=91, params=17).
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Just to confirm: it sounds like you are both advocating for a scorer change similar to the following:
+
+def score_network(m):
+    ....
+    for key in g.nodemap.keys():  # <--- this stanza is new
+        if (0,) in [g.nodemap[key].inshape, g.nodemap[key].outshape]:
+            return None, None, None  # Shape not explicitly defined.
+    return int(sum(g.macs)), int(g.memory), int(g.params)
+
+
+Let me know if something like that would resolve both the ambiguity and the inflation problem.
+
+4 more replies
+arrow_drop_down
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+This issue should be now fixed (see also: our metric update from today). Specifically, we perform shape inference on all networks, and require all resulting tensors to have statically-defined shapes in order to be eligible for scoring.
+
+MassimilianoGhiotto
+
+Posted 2 months ago
+
+· 135th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+Hi everyone, thanks for the update! Regarding the pinned versions, could you please clarify which opset_id range is supported by the scorer? Thanks!
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+2
+more_vert
+
+Our scorer itself imposes no limit on the opset_id range, aside from those supported implicitly by the tools we call. So, if you find that a certain opcode behavior is implemented in both onnxruntime and onnx-tool, then you should be all set!
+
+This comment has been deleted.
+
+hengck23
+
+Posted 2 months ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+@mmoffitt can you verify if lazy broadcast is allowed?
+https://www.kaggle.com/competitions/neurogolf-2026/discussion/694051
+
+the ouput memory size is not counted by the profiler, although it is fixed shape and coded in python and shown in onnx graph (netron.app)
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Yep, just posted my reply. Feel free to respond in that thread if we can offer more clarity.
+
+Yiheng Wang
+
+Posted 2 months ago
+
+· 5th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+HI @mmoffitt thanks for the updates. May I know:
+
+Sometime soon (likely tomorrow) we'll kick off a rescoring of all submissions
+
+If we have already rescored all submissions? Seems my 5900 score is still there (it should be 57XX or 56XX I think)
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+4
+more_vert
+
+Great question -- not yet, we're taking a closer look at two other issues first (one being the parameter contribution of Constant ops, another being the tolerance of dynamic shapes). We'll follow up to this thread once we've settled on an appropriate resolution.
+
+Yiheng Wang
+
+Posted 2 months ago
+
+· 5th in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+Thanks. FYI, the following are bugs that I found (not sure if duplicate) in onnx-tool 1.0.1:
+
+Two reproducible mismatches between onnx-tool 1.0.1 and onnxruntime that may affect scoring:
+
+Environment:
+
+onnx-tool 1.0.1
+onnxruntime 1.24.4
+opset 17
+1. Heterogeneous-shape Where is profiled with the wrong output shape
+
+Expected: onnx-tool should infer/profile the same broadcasted output shape as ONNX Runtime.
+
+Observed: For Where(cond, x, y) with different input shapes, onnx-tool reports a smaller output shape than onnxruntime.
+
+Minimal repro:
+
+import io, os, tempfile, contextlib
+import numpy as np
+import onnx, onnx.helper as oh, onnx.numpy_helper as onp
+import onnx_tool, onnxruntime as ort
+
+cond = np.zeros((1, 1, 9, 9), dtype=np.bool_)
+x = np.zeros((1, 5, 1, 9), dtype=np.uint8)
+y = np.zeros((1, 5, 1, 1), dtype=np.uint8)
+
+node = oh.make_node('Where', ['cond', 'x', 'y'], ['out'])
+graph = oh.make_graph(
+    [node], 'where_bug', [],
+    [oh.make_tensor_value_info('out', onnx.TensorProto.UINT8, None)],
+    [onp.from_array(cond, 'cond'), onp.from_array(x, 'x'), onp.from_array(y, 'y')]
+)
+model = oh.make_model(graph, opset_imports=[oh.make_opsetid('', 17)], ir_version=10)
+
+fd, path = tempfile.mkstemp(suffix='.onnx')
+os.close(fd)
+onnx.save(model, path)
+
+with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+    mo = onnx_tool.loadmodel(path, {'verbose': False})
+    mo.graph.graph_reorder_nodes()
+    mo.graph.shape_infer(None)
+    mo.graph.profile()
+
+print("onnx-tool:", tuple(mo.graph.tensormap['out'].shape))
+print("onnxruntime:", ort.InferenceSession(path, providers=['CPUExecutionProvider']).run(['out'], {})[0].shape)
+
+
+Observed output:
+
+onnx-tool: (1, 1, 9, 9)
+onnxruntime: (1, 5, 9, 9)
+2. Value-dependent shape inference is evaluated with zero-filled dummy inputs
+
+Expected: If an output shape depends on runtime tensor values, onnx-tool should not collapse it to zero during static shape inference.
+
+Observed: A shape-producing subgraph is evaluated with zero-filled dummy input, causing ConstantOfShape to be profiled as size 0 even though runtime output is nonzero.
+
+Minimal repro:
+
+import io, os, tempfile, contextlib
+import numpy as np
+import onnx, onnx.helper as oh, onnx.numpy_helper as onp
+import onnx_tool, onnxruntime as ort
+
+input_vi = oh.make_tensor_value_info('input', onnx.TensorProto.FLOAT, [1, 1, 4, 4])
+
+zero = onp.from_array(np.array([0.0], dtype=np.float32), 'zero')
+axes = onp.from_array(np.array([0, 1, 2, 3], dtype=np.int64), 'axes')
+unsq_axes = onp.from_array(np.array([0], dtype=np.int64), 'unsq_axes')
+fill = onp.from_array(np.array([1.0], dtype=np.float32), 'fill')
+
+nodes = [
+    oh.make_node('Greater', ['input', 'zero'], ['gt']),
+    oh.make_node('Cast', ['gt'], ['gt_i64'], to=onnx.TensorProto.INT64),
+    oh.make_node('ReduceSum', ['gt_i64', 'axes'], ['n'], keepdims=0),
+    oh.make_node('Unsqueeze', ['n', 'unsq_axes'], ['shape1']),
+    oh.make_node('ConstantOfShape', ['shape1'], ['out'], value=fill),
+]
+
+graph = oh.make_graph(
+    nodes, 'bug2_zero_fill',
+    [input_vi],
+    [oh.make_tensor_value_info('out', onnx.TensorProto.FLOAT, None)],
+    [zero, axes, unsq_axes]
+)
+model = oh.make_model(graph, opset_imports=[oh.make_opsetid('', 17)], ir_version=10)
+
+fd, path = tempfile.mkstemp(suffix='.onnx')
+os.close(fd)
+onnx.save(model, path)
+
+with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+    mo = onnx_tool.loadmodel(path, {'verbose': False})
+    mo.graph.graph_reorder_nodes()
+    mo.graph.shape_infer(None)
+    mo.graph.profile()
+
+print("onnx-tool:", tuple(mo.graph.tensormap['out'].shape))
+print("onnxruntime:", ort.InferenceSession(path, providers=['CPUExecutionProvider']).run(
+    ['out'], {'input': np.ones((1, 1, 4, 4), dtype=np.float32)}
+)[0].shape)
+
+
+Observed output:
+
+onnx-tool: (0,)
+onnxruntime: (16,)
+
+Thanks.
+
+Durga Kumari
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thank you for the detailed update and for actively incorporating community feedback
+
+Navneet
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Thanks for the neuroGolf Update @mmoffitt
+
+Kawchar Husain
+
+Posted 2 months ago
+
+· 1096th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Hello @mmoffitt ,
+
+I have a question about the Longest Leader.
+
+The competition description says it is awarded to the team holding 1st place for the longest period between April 16, 2026 12:00 AM UTC and July 15, 2026 11:59 PM UTC.
+
+However, there was a scoring update on April 21, and you also mentioned on April 24 that another update may happen next week.
+
+Could you please clarify which time period will be counted for the Longest Leader award?
+
+Will it count from the original start date, April 16, or will it restart/count from after the next scoring update, or use some other period?
+
+Thanks!
+
+This comment has been deleted.
+
+Appreciation (2)
+emoji_people
+@🤞@
+
+Posted 2 months ago
+
+· 325th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+thank for the consideration 🙏
+
+emoji_people
+Svanik Kolli
+
+Posted 2 months ago
+
+· 1572nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+THANK YOU SM

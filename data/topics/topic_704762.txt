@@ -1,0 +1,307 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+TONY LI · 1ST IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+6
+more_vert
+Token, Overfit, and Timeout
+
+I think there are three major challenges in this competition: token limits, overfitting, and score timeout.
+
+I may write a separate post about token issues. This one is mainly about overfit and timeout.
+
+My current concern is around these two task groups:
+
+Overfit-risk top 10 task IDs: task192, task319, task118, task359, task018, task285, task096, task048, task355, task219
+
+Slowest top 10 task IDs: task358, task350, task212, task335, task246, task022, task375, task009, task074, task070
+
+ How do you usually manage these overfitting, and timeout issues?
+
+For tasks like these, how do you detect possible overfit (score zero in kaggle )early, or avoid having the LLM repeatedly make the same overfit optimization? And how do you reduce timeout risk without weakening the score?
+
+About overfit , I have tried generating a hidden private dataset. It may reduce the overfitting risk by around 80%–90%, but it needs to be balanced with the time the LLM spends optimizing and scoring. Also, sometimes a solution fails my synthetic private dataset but still passes Kaggle, so it is a double-edged sword.
+
+Please sign in to reply to this topic.
+
+comment
+13 Comments
+Hotness
+Yiheng Wang
+
+Posted a month ago
+
+· 5th in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+Hi Tony, thanks for sharing this topic. Let me share some of my experiences:
+
+Overfitting: On my side, I record each "wrong" optimization for each task and tell my model to avoid that kind of change in the future.
+
+Timeout: I did some profiling-based optimization, which helped me reduce my >30 min inference time to ~12 min when I was in the 74XX range. It's not hard — just tell the LLM your expectation: maintain the current cost and reduce profiling time.
+
+Token: I subscribed to ChatGPT Pro ($200/month). I can run my workflow with codex automatically for 2–4 days per week to use up the weekly limit (recently, OpenAI frequently reset quota, thus sometimes can use 4-6 days per week), and after that I can keep using ChatGPT's web page and do copy-and-paste optimization instead. It's unlimited, and you can open multiple tabs in parallel. Therefore, we don't need to spend too much money and can keep optimizing our models every day.
+
+emoji_people
+Jan Vorel
+
+Posted a month ago
+
+· 13th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+After this post are you confident to keep second place? ;) Thanks for sharing
+
+Tony Li
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 1st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+This competition requires real time, energy, and effort. So there’s no need to worry about us. Time cannot be manipulated by simply sharing ideas or a few words. For example, once someone reaches the 7,600-point level, it may take 10+ days just to gain another 100 points. That part can not be reduced .
+
+emoji_people
+Jan Vorel
+
+Posted a month ago
+
+· 13th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Challenge Accepted :)
+
+Yiheng Wang
+
+Posted a month ago
+
+· 5th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+These are not secrets, I think many participants have already used similar ways😄
+
+3 more replies
+arrow_drop_down
+Chet
+
+Posted a month ago
+
+· 77th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+The LB is now consistent with the final scoring data—is my understanding correct?
+
+emoji_people
+Geremie Yeo
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Interestingly, for our last 10 hidden zero tasks, none of them intersected with your list
+
+Tony Li
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 1st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+This may change over time, but my ChatGPT obsession keeps overfitting these tasks again and again — especially task 359.
+
+Cona
+
+Posted a month ago
+
+· 38th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Arc-Gen natively generates some insoluble samples for a few complex tasks, and picking them out may help.
+
+I agree with @xsmaxpc that overfitting might be valid, so could we investigate those samples paired with onnxs that fail on our own private set but pass the official private set? I haven't implemented this pipeline yet, so I don't know if it's an efficient choice.
+
+Paritosh Kumar Tripathi
+
+Posted a month ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Also, sometimes a solution fails my synthetic private dataset but still passes Kaggle, so it is a double-edged sword.
+
+I noticed it too, I believe increasing the number of samples in the hidden test set should help.
+
+robga
+
+Posted a month ago
+
+· 9th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Timeouts: my aggregate runtime for all those 10 tasks is 2.8 seconds score 177. It's cool to imagine people are taking different approaches and wonder what the ensemble effect may be when groups form later.
+
+Tony Li
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 1st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I did a probe test run for this slowest runtime. It took 9 minutes, which is half of my current total runtime of 18 minutes. The total score is 195. I also updated the picture in my original post.
+
+emoji_people
+AibePC
+
+Posted a month ago
+
+· 36th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+It seems that the competition doesn't have a private leaderboard. If the organizers aren't going to swap in a different dataset to rescore submissions after the competition ends, then overfitting to the leaderboard is a valid choice.😁
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+5
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 10 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 11 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 12 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 13 ---
+arrow_drop_up
+2
+more_vert

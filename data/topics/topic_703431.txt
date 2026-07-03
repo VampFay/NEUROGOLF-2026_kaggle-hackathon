@@ -1,0 +1,110 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+T.-C. CHANG · 2145TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+0
+more_vert
+question for the current #1: Neural Networks vs. Pure Functional Topology?
+
+First of all, massive congratulations on holding the #1 spot in such a brutal competition!
+
+I’ve been heavily experimenting with local phase transitions and spatial shifting in this dataset. Recently, my team achieved a massive score boost by completely bypassing CNNs. We discovered that for many tasks (like local object translations), the shift vectors are actually constant across the dataset. By compiling pure functional tensor math (with 0 parameters) directly into ONNX, we reached perfect accuracy with minimal Cost penalty.
+
+Without revealing your secret sauce before the deadline, I’m incredibly curious about your macro-architecture: Are you relying on Neural Networks (like massive Transformers/CNNs) that have genuinely learned to generalize these spatial rules, or is your top-scoring solution heavily leaning towards Program Synthesis (DSL) and deterministic rule-hardcoding similar to our pure ONNX approach?
+
+Best of luck in the final stretch!@crodoc, I'd be very interested in your take on this if you're willing to share some high-level thoughts."
+
+Artificial Intelligence
+Computer Science
+Puzzles
+Python
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+CroDoc
+
+Posted a month ago
+
+· 7th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I think you'll have to wait until July 16th. Who knows even what happens by then. @yiheng won't stop pushing his score 😂
+
+T.-C. Chang
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 2145th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+haha that's nice day!
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

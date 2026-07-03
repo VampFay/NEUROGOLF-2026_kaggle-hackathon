@@ -1,0 +1,115 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+PS · 116TH IN THIS COMPETITION · POSTED 2 DAYS AGO
+arrow_drop_up
+2
+more_vert
+Below 999 cost
+
+Can someone tell me how many tasks were you guys able to optimize and get it below 4 digits? And what's your costliest task?
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+len8487
+
+Posted 2 days ago
+
+· 81st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+the hardest task for me is now nearly 30k cost.
+
+len8487
+
+Posted 2 days ago
+
+· 81st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Quite many things and there are few 1-cost tasks too.
+
+PS
+TOPIC AUTHOR
+
+Posted 2 days ago
+
+· 116th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+this might be helpful for me thanks a lot man!
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert

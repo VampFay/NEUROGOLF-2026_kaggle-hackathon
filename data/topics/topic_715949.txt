@@ -1,0 +1,101 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+LEN8487 · 80TH IN THIS COMPETITION · POSTED 4 DAYS AGO
+arrow_drop_up
+1
+more_vert
+Question about Task 008
+
+I am interested in maximum score of 008. Is there anyone who reached more than 20 in score? This task and 002 are way harder than others in 001-010 tasks.
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+Yiheng Wang
+
+Posted 4 days ago
+
+· 5th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+My 008 and 002 scores are much lower than 20
+
+This comment has been deleted.
+
+len8487
+TOPIC AUTHOR
+
+Posted a day ago
+
+· 80th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+For me, 002 : 16.724878, 008 : 17.699527. If you don't mind, could you share yours too?
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

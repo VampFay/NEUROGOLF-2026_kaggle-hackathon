@@ -1,0 +1,164 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+CHRIS DEOTTE · 11TH IN THIS COMPETITION · POSTED 2 MONTHS AGO
+arrow_drop_up
+27
+more_vert
+EDA - Neural Networks Solving Tasks
+
+Hi. It's pretty amazing that a neural network can convert the input grid to output grid. So I made some EDA notebooks (with the help of Codex) to help us visualize what the ONNX networks are doing to solve these ARC-AGI puzzles.
+
+Task 026 here
+Task 032 here
+Task 038 here
+Task 083 here
+Task 116 here
+Task 129 here
+
+I chose a few different puzzles to illustrate a few different patterns that our neural networks need to learn. Enjoy!
+
+Task 116 Example
+Pattern to Learn - Mirror then Stack
+
+ONNX Solution
+
+ONNX Layer 1
+
+ONNX Layer 2
+
+ONNX Layer 3
+
+ONNX Layer 4
+
+ONNX Layer 5
+
+Starter Notebook
+
+View more fun examples here, here, here, here, here, here. Enjoy!
+
+5
+6
+7
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+Navneet
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the Neural Networks Solving Tasks @cdeotte
+
+Adithya Giridharan
+
+Posted 2 months ago
+
+· 1791st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+truly amazing..spoke my mind out with an actual implementation of visualisation ..thanks a ton! @cdeotte
+
+Chris Deotte
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 11th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Thanks. Before this visualization, i was a little confused how NN can make the transformation. But after displaying a few ONNX, i can see what is going on.
+
+This is one of the great things about LLM coding tools, they can help us visualize whatever we want to see in any data science project.
+
+emoji_people
+jacekwl
+
+Posted 2 months ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I remember I initially thought we will have to train neural networks with all that gradient descent, epochs of training stuff etc. But then when I joined I realized that we are just creating symbolic solvers using tensors / ONNX operators which is much more approachable.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+2
+more_vert

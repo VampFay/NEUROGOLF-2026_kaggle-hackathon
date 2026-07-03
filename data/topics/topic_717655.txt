@@ -1,0 +1,183 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+RYUHKI KIMURA · 10TH IN THIS COMPETITION · POSTED A DAY AGO
+arrow_drop_up
+8
+more_vert
+How do you avoid getting matched with people who just leech off the team without contributing anything when merging teams?
+
+In this competition, I previously teamed up with someone who didn't contribute anything at all. Instead, they kept asking how many more points we could gain and what rank we were likely to finish with, which became quite frustrating. Do you have any advice on how to avoid ending up with teammates like this in future competitions?
+
+Please sign in to reply to this topic.
+
+comment
+8 Comments
+Hotness
+emoji_people
+jacekwl
+
+Posted a day ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+7
+more_vert
+
+Don't team up too early unless it's someone you know. There are many people that push in early stage and then stop. Sometimes they just ran out of ideas, or don't have time/energy/change their priorities, sometimes it's their strategy push early, team-up early and then benefit from work done by other people. I was team leader only twice, but the amount of offers I got that didn't make any sense is absurd. Better be safe. Also it's better to be solo than being slowed down by teammates and blocked from teaming up in a better way later in the competition.
+
+NNMax
+
+Posted a day ago
+
+· 99th in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+I made a terrible mistake of joining a team and now it's just me who's working hard for a medal
+
+Never doing this again🫠
+
+Ryuhki Kimura
+TOPIC AUTHOR
+
+Posted a day ago
+
+· 10th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+I'm putting in everything I can to earn a medal. Thinking that someone who did absolutely nothing might end up getting the same medal because of my work is incredibly frustrating.
+
+emoji_people
+Jan Vorel
+
+Posted a day ago
+
+· 12th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+This is why I have stayed solo so far and decided it to merge only if I get offer from teams above me that I can complement with my points. If I stay solo till the end no problem … I know I could benefit from extra computing power but …
+
+emoji_people
+Jan Vorel
+
+Posted a day ago
+
+· 12th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+But of course there is risk 5 members teams will just overrun me and I will end up Silver
+
+4 more replies
+arrow_drop_down
+Marko Rupnik
+
+Posted a day ago
+
+arrow_drop_up
+2
+more_vert
+
+As someone who mostly had luck teaming up on Kaggle I feel sorry for you. I wish there were some actionable advice except for don't team up too early in a competition and don't judge a profile by its past success or rank. I really wish there were a streamlined way of expressing satisfaction when working with someone or the opposite honest bad experiences with teammates.
+
+Good luck going forward in the competition, don't worry too much about what someone else will get due to your work, you will get the medal in the end and that is all that matters.
+
+emoji_people
+Will
+
+Posted a day ago
+
+· 51st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I tend to check people records on competitions. Did they do a few solo before with decent scores (like top 20% at least)? I sometime also team up with beginers but more so on the tabular serie or if we have a team with 2 competition expert or above.
+
+I also got burned once with someone having 2 accounts which led to the team to be disqualified so on medal competitions I tend to only team up with more experienced players.
+
+Fususu
+
+Posted a day ago
+
+· 34th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Maybe looking for a solo, with entries submit regularly ^^! minutes to hours, not days :D
+
+emoji_people
+Jan Vorel
+
+Posted a day ago
+
+· 12th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Sometime it is hard to submit each hour if you have 2 jobs and this is just backside activity 🤣

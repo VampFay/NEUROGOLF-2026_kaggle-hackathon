@@ -1,0 +1,85 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+KEN KRIGE · 25TH IN THIS COMPETITION · POSTED 17 DAYS AGO
+arrow_drop_up
+2
+more_vert
+Score Grid
+
+During Code Golf 2025, there was a public spreadsheet of top scores per task. I found that useful as a rough guide on how I was doing. Is there anything similar in this competition? I have not found one.
+
+Please sign in to reply to this topic.
+
+comment
+1 Comment
+Hotness
+emoji_people
+Triston Morgan
+
+Posted 17 days ago
+
+· 33rd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+This may indeed involve some privacy and strategic considerations. After all, if you publish your scores, it becomes easier for others to see which tasks still have room for improvement, and potentially easier for them to overtake you.
+
+I tried to set up a per-task leaderboard about two months ago, but perhaps for this reason, not many people responded: https://www.kaggle.com/competitions/neurogolf-2026/discussion/694305
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert

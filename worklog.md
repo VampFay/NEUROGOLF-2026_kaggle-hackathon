@@ -78,3 +78,39 @@ Stage Summary:
   3. Strategy PDF (88 KB, 7 sections, professional layout)
   4. Baseline analysis HTML (248 KB, charts + tables)
 - Ready for user to upload submission.zip to Kaggle and validate I/O convention
+
+---
+Task ID: 3
+Agent: main
+Task: Detailed research + step-by-step implementation plan.
+
+Work Log:
+- Launched 5 parallel research streams via sub-agents:
+  1. Kaggle discussion forums (4 key threads fetched: 697079, 707993, 711989, 712047)
+  2. ONNX minimization techniques (measured byte savings on our actual primitives)
+  3. ARC-AGI task taxonomy (16 concept families, public solver implementations)
+  4. LLM-based program synthesis (Greenblatt, Berman, SOAR, onnxscript, cost analysis)
+  5. Codebase audit (5 confirmed bugs, 4 stub solvers, cost inefficiencies)
+- Research outputs: 2,359 lines of Markdown across 4 reports in /home/z/my-project/data/
+- 5 critical findings that reshape strategy:
+  F1. Scoring is FRACTIONAL: task_points = (25 - ln(cost)) × held_out_fraction
+  F2. MACs and node count are FREE; only params + intermediate tensors count
+  F3. Top teams COMPILE reference ARC DSL programs into opset-10 ONNX, not train CNNs
+  F4. Grader uses ORT 1.24.4 with optimizations DISABLED; one bad file zeroes submission
+  F5. LLM synthesis at $0.85/task (Gemini 3.5 Flash High) gets 92.5% accuracy on ARC-AGI
+- Wrote 16-page implementation plan PDF with 6 phases over 12 days:
+  Phase 0 (Day 1): Foundation fixes — faithful scorer, fix MirrorConcat+ScaleUp bugs, regression tests, submit to Kaggle
+  Phase 1 (Day 2): Cost optimization — int8 quant, drop attrs, memory-golf wrapper
+  Phase 2 (Days 3-5): Missing solver families — extended CA, flood fill, object extract, count→dim, draw line, conditional
+  Phase 3 (Days 6-8): ARC DSL transpiler — clone Hodel's arc-dsl, build ONNX transpiler core, transpile reference programs
+  Phase 4 (Days 9-10): LLM synthesis loop — onnxscript, Gemini 3.5 Flash High, fresh-seed validation
+  Phase 5 (Day 11): Memory golf and final push — apply to all, onnxsim, scs4onnx, manual byte-level golf
+  Phase 6 (Day 12): Final submission and monitoring
+- Plan saved to /home/z/my-project/download/NeuroGolf_Implementation_Plan.pdf (113 KB, 16 pages)
+
+Stage Summary:
+- 28 concrete implementation steps with effort estimates, dependencies, success criteria
+- Realistic outcome: ~3,500 score, rank ~250 (top 10%)
+- Optimistic outcome: ~4,500 score, rank ~80 (Bronze edge)
+- Stretch outcome: ~6,000+ score, rank ~30 (Silver possible)
+- Critical dependencies: Gemini API access ($200-400 budget), onnxruntime 1.24.4, onnxscript, Hodel's arc-dsl, RE-ARC generator

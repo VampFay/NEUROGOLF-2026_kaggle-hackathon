@@ -1,0 +1,128 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+BENEDEK BRANDSCHOTT · 1102ND IN THIS COMPETITION · POSTED 14 DAYS AGO
+arrow_drop_up
+3
+more_vert
+Scoring accepts solutions that don't match the generator's literal rule — is the private set curated to avoid this? (task002 example)
+
+The per-task generators are public: the ARC-GEN repo at https://github.com/google/ARC-GEN (one file per task under tasks/), the published ARC-GEN-100K dataset at https://www.kaggle.com/datasets/arcgen100k/the-arc-gen-100k-dataset, and the paper https://arxiv.org/abs/2511.00162.
+
+Using these generators I can synthesize my own examples for a task. For task002 (00d62c1b, tasks/task_00d62c1b.py), the generator's final step fills cells with a single-pass, row-major is_surrounded check (mutating the grid in place) — not a flood-fill of enclosed regions. So a black cell in a ≥2-wide enclosed pocket is left black, whereas a flood-fill colors it yellow. 
+
+The consequence is a contradiction:
+
+My self-generated examples can fail — drawing fresh examples straight from the generator, a flood-fill solution disagrees with the generator's literal output on ~6% of them (always on these pocket cells).
+The uploaded/scored examples don't fail — the published arc-gen set for task002 happens to contain none of these cases. Reproducing the generator deterministically (random.seed(2025 + i)), the 262 published examples are offsets 0–277 with exactly 16 offsets missing — and all 16 are precisely the ambiguous pocket draws.
+So by the literal rule ("only exact solutions … can be said to be correct") a flood-fill solution looks like it should score 0, yet it scores full points, because the divergent cases aren't in the scored set. Both my submission and the public 7015 notebook use flood-fill here and both score full.
+
+My question to the hosts: is the private/hidden benchmark curated the same way (these ambiguous, generator-quirk cases excluded), or can it include raw generator draws? If the latter, flood-fill solutions to such tasks would silently score 0. And is there a documented policy for how the private per-task examples are sampled/filtered relative to ARC-GEN-100K? task002 is the one I verified concretely, but the same situation could arise for any generator whose ground truth is order-dependent or otherwise ambiguous.
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 14 days ago
+
+arrow_drop_up
+0
+more_vert
+
+A similar question came up here:
+
+https://www.kaggle.com/competitions/neurogolf-2026/discussion/698249
+
+Our policy is that, if there is some task where your solver passes all public test cases but still fails the official grader, we're happy to look into the private test cases for that task to confirm whether or not they are all "well-formed."
+
+This comment has been deleted.
+
+Benedek Brandschott
+TOPIC AUTHOR
+
+Posted 14 days ago
+
+· 1102nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the response. I want to lay out why, on tasks like 00d62c1b, the missing ground truth makes the network-design problem ill-posed rather than just an edge case.
+
+The public examples for 00d62c1b are consistent with two different functions: the canonical "flood-fill every enclosed region" transformation, and the generator's literal output. Because is_surrounded is a local 4-neighbor test applied in a single in-place row-major pass, the literal output leaves any enclosed black region of size >=2 unfilled (only 1x1 enclosed cells get filled). The 262 published examples are the deterministic sequence (random.seed(2025+i)) over offsets 0-277 with exactly the 16 order-dependent pocket draws removed -- i.e. precisely the draws on which those two functions disagree. So the public set cannot tell me which function is the intended target, and there is no original ARC ground truth that resolves it either.
+
+That ambiguity propagates straight into the ONNX graph I have to submit and forces a choice between two bad options:
+
+Build the contradiction-free, canonical solution (true flood-fill, correct on every valid input). This is a strictly larger / more complex graph than one that only reproduces the filtered public behavior, so optimizing for full correctness works directly against the "smallest network" objective. And if the private set scores against the generator's literal output on any divergent draw, this more-correct graph would actually fail those cases -- so the extra size buys nothing.
+
+Build only to the scored set (public + private). Since the private set is hidden, the only way to find out whether a smaller graph still passes is to keep submitting and reading the grader -- i.e. probe the submission system on essentially every such task to discover empirically how far I can shave the graph. That turns network minimization into grader-probing: it burns the submission budget, is gameable, and rewards probing over principled design.
+
+Neither is what the competition intends, and both come from the same root: there is no single ground truth I can design against. This is not specific to 00d62c1b -- it applies to any task whose generator ground truth is order-dependent or otherwise ambiguous, and a competitor aiming for global correctness pays the size cost across all of them.
+
+Could you clarify, per task where the generator's literal output diverges from the canonical transformation: (a) which one is the scored target -- the canonical transformation, or the literal generator output; and (b) whether the private set applies the same divergence filter as the public set, so that a single contradiction-free canonical graph is guaranteed to score correctly without grader-probing?
+
+With that I can make a principled size-vs-correctness tradeoff. Without it, I'm pushed toward either an oversized graph or brute-forcing the grader.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+1
+more_vert

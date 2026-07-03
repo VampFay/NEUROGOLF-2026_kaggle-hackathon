@@ -1,0 +1,343 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+MICHAEL D. MOFFITT · POSTED 2 MONTHS AGO
+·
+COMPETITION HOST
+arrow_drop_up
+14
+more_vert
+NeuroGolf Update for April 28th
+
+Thanks again to all teams for their helpful and detailed feedback. As telegraphed last week, we're rolling out a metric update to ensure competition rules are strictly and fairly enforced:
+
+We now correctly incorporate parameter contributions from constant values, addressing an issue reported by @mukundan314 and @tonylica.
+Our constraint requiring statically-defined shapes is now explicitly enforced in response to discoveries made by @asalhi and @mukundan314. In particular, networks that are invalid or contain dynamic shapes—e.g., symbolic dim parameters or missing dimension values after shape inference—should now yield zero points as originally stated (you can use our starter notebook to perform this same check locally).
+To insulate contestants against profiling idiosyncrasies, our memory footprint calculation is now just a simple sum over the bytes consumed by all static shapes (excluding input & output layers).
+
+As always, we'll continue to listen to community feedback and will provide further clarity if needed. The batch rescoring process should be starting soon!
+
+[Refer to the bottom of our welcome message for a complete list of all contest updates]
+
+7
+
+Please sign in to reply to this topic.
+
+comment
+17 Comments
+Hotness
+hengck23
+
+Posted 2 months ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+i suggest to add version tag in the file "neurogolf_utils.py". This helps kagglers to keep track of changes and also faciliate discussion that follows
+
+NEUROGOLF_FILE_VERSION='28-apr.00'
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Yes, and in addition to that, we can create a section toward the top listing all the changes so far (along with the dates that we made them).
+
+Thanks for the suggestion!
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+3
+more_vert
+
+A quick update for 4/29:
+
+Yesterday's LB batch rescoring process has completed!
+Many thanks to @pavelsavchenkov + @robga + @cudacoding + @asalhi for discovering & sharing two new exploits. These issues affect fewer than four or five teams at present, but do need to be addressed.
+
+The fixes are seemingly straightforward, so we're sharing them here (to solicit community feedback) before making any changes:
+
+_EXCLUDED_OP_TYPES = ["LOOP", "SCAN", "NONZERO", "UNIQUE", "SCRIPT", "FUNCTION",
+                      "COMPRESS"]  # <--- this op is new
+...
+
+def calculate_memory(filename):
+    ...
+    init_names = {init.name for init in graph.initializer}
+    io_names = {t.name for t in list(graph.input) + list(graph.output)}
+    if io_names.intersection(init_names): return None
+    if model.functions: return None
+    for opset in model.opset_import:
+        if opset.domain not in {"", "ai.onnx"}: return None
+    for node in graph.node:
+        for attr in node.attribute:
+            if attr.type in [onnx.AttributeProto.GRAPH,
+                             onnx.AttributeProto.GRAPHS]:
+                return None
+
+
+Also, since math.log() currently fails for the handful of tasks that can be solved at zero cost, we're planning a change that gives full credit (25 points) to such solutions.
+
+Pavel
+
+Posted 2 months ago
+
+· 7th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Yes, I think the proposed change fixes 2 linked bugs. Thank you!
+
+Pavel
+
+Posted 2 months ago
+
+· 7th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Even with this fix, I think there is another scorer issue derived from the already familiar Tensor.get_numpy() behavior: when runtime values are unknown, onnx-tool fabricates zeros.
+
+You can insert a Compress gate at the beginning of the graph so onnx-tool infers a zero-volume tensor and then profiles all downstream computation with batch size 0. This can heavily undercount MACs. The gate adds some memory cost, but the MAC undercount can be larger.
+
+To keep the host static-shape check happy, the model can also include a value_info entry for the gated tensor with its real non-zero shape.
+
+Attached are two task-1 submissions. They solve the same task and differ only by this input gate. The gated version scores lower cost / higher points.
+
+Cost:
+
+baseline: 253982
+bugged: 118818
+
+These are not absolute minimum cost for task 1. The intention is to show how to lower the cost of a honest model by exploiting onnx-tool and onnx.
+
+Profiling MACs for the bugged model:
+
+item	node count	reported MACs by scorer	true / expected MACs	wrong?	comment
+_gate_reduce_max	1	9000	9000	no	Gate cost is charged correctly.
+_gate_greater	1	1	1	no	Gate cost is charged correctly.
+_gate_compress	1	0	0	no	The issue is not Compress MACs; it is the zero-batch shape inferred after it.
+downstream Conv	2	0	180000	yes	These identity convs execute at runtime, but onnx-tool profiles them with batch size 0.
+downstream Mul	1	0	81	yes	Runtime batch is 1; scorer profiles zero-volume output.
+downstream ReduceMax	1	0	81	yes	Runtime batch is 1; scorer profiles zero-volume output.
+downstream Sub	1	0	9	yes	Runtime batch is 1; scorer profiles zero-volume output.
+total	8	9001	189172	yes	Reported total only includes the gate; expected total includes gate plus downstream computation.
+task1_dynamic_gate_bug.zip
+Pavel
+
+Posted 2 months ago
+
+· 7th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+One more thing about MACs accounting in onnx-tool.
+
+It looks like zero MACs for ArgMax, TopK, and OneHot in onnx-tool is not intended.
+
+onnx-tool does not use MACs as literal multiply-adds only. Its own profiler comments describe an instruction-style cost model, and it defines CMP_MACS = 1 for comparisons [code].
+
+Comparable non-multiply-add ops are already charged: Less [code], Equal [code], Greater [code], ReduceMax via ReduceMinNode.profile() [code], and MaxPool [code].
+
+The zero cost happens because the default Node.profile() returns [0, 0] [code], and these classes implement inference but do not override profile():
+
+ArgMaxNode computes np.argmax, then the next class starts with no profile override [code].
+TopKNode computes top-k selection, then the next class starts with no profile override [code].
+OneHotNode uses helper code based on equality comparison, but also has no profile override [code].
+
+So under current onnx-tool policy, these should have non-zero comparison/selection cost; they end up zero only because their profile() methods are missing.
+
+Do you think the scorer should keep this behaviour?
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
++1 to fixing the Compress issue (see our latest update above). It introduces the same sorts of issues as NonZero and Unique.
+
+As for the other corner cases: there will definitely be bugs that teams can leverage to bring their MAC counts down (perhaps by a lot). In the interest of providing a stable metric for the remainder of the contest, we're willing to tolerate these edge cases, and will only take action in the event of a truly catastrophic exploit.
+
+4 more replies
+arrow_drop_down
+emoji_people
+theredbluepill
+
+Posted 2 months ago
+
+· 56th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks. I really thought it was going end-game like this soon, 10K score.
+
+Durga Kumari
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the clarification and transparency also this makes the competition much fairer.
+
+emoji_people
+Chan Kha Vu
+
+Posted 2 months ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Let the new round of reward hacking begin!
+
+Time to make our LLMs anxious y'all 
+
+prvi
+
+Posted 2 months ago
+
+· 158th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Some task has zero sum for mac's memory and parameter count after excluding the input output tensor sizes. Are they handled properly? I got an error.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Great question -- yes, there are one or two tasks that can be solved at zero cost, which (ideally) should yield a full score of 25 points. We'll have an update about this soon.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+This issue should be fixed as of yesterday's update. Specifically: if teams manage to find a legitimate zero-cost solution to a task, it will earn them the full 25 points.
+
+hengck23
+
+Posted 2 months ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+how to we use the new profiler in our local PC environment? download the new neurogolf_utils.py, install new version of onnx-tool from github or ????
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+3
+more_vert
+
+As long as you're using our newest public dataset (which has the latest neurogolf_utils.py), you should be all set. As for onnx-tool, v1.0.1 is OK -- these updates don't require any new versions of that.
+
+Please feel free to reach out if you need any additional help reproducing these scores locally!
+
+This comment has been deleted.
+
+This comment has been deleted.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the question -- there are no explicit changes to allowed Ops, as long as they survive the "shape inference" pass that is now performed before network scoring.

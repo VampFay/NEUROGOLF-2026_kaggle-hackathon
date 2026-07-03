@@ -1,0 +1,99 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+HEMANTHRAJU311 · 116TH IN THIS COMPETITION · POSTED 2 DAYS AGO
+arrow_drop_up
+4
+more_vert
+How do you recognize possible 0-cost or 1-cost tasks?
+
+For the tasks that end up at 25 points or nearly 25 points, do people usually find them by manually spotting identity/transpose style transformations or is there a more systematic way to detect that a task can be represented with only attributes and no initializers? I am curious about whether there are good structural signs in the ARC examples before trying ONNX candidates.
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+len8487
+
+Posted a day ago
+
+· 81st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+just by chance. I currently got 3 and i believe there are at least more than 10.
+
+HemanthRaju311
+TOPIC AUTHOR
+
+Posted a day ago
+
+· 116th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Same here, just wondering how people are even finding more than 10 such tasks 🥀
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+1
+more_vert

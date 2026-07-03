@@ -1,0 +1,133 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+LEN8487 · 80TH IN THIS COMPETITION · POSTED A DAY AGO
+arrow_drop_up
+0
+more_vert
+I recently reached 86 on Task 001. Is this really limit? Anyone has reached less than 86 cost?
+
+I recently reached 86 on Task 001. Is this really limit? Anyone has reached less than 86 cost?
+
+Please sign in to reply to this topic.
+
+comment
+4 Comments
+Hotness
+zjzhujie
+
+Posted 17 hours ago
+
+· 133rd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Incredible score。 My current solution is still in the 200+ cost range, mostly bottlenecked by explicit 3×30 layout selectors, and I’ve mainly been searching under opset 18. I’m trying to understand whether pushing the cost much lower requires replacing those selectors with some native ONNX stride/layout semantics, or whether it may depend on a specific operator / opset behavior.I’d really appreciate any hint or guidance. :)
+
+len8487
+TOPIC AUTHOR
+
+Posted 13 hours ago
+
+· 80th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I was also stuck for a while trying to optimize the explicit 3×30 selectors, but that turned out to be the wrong object to optimize.
+
+The useful reframing was that the output layout is not really a “layout tensor”. It is a relation between a few small input indices and the final output indices. Once I treated it that way, I could generate [1,10,30,30] directly (based on 13th's comment) and avoid the expensive intermediate selector/materialized layout entirely.
+
+So my hint would be.. don’t look for a special opset trick first. Opset 18 is fine. Look for an ONNX operator/formulation where the routing relation is represented compactly as parameters/initializers, rather than as explicit 3×30 masks or selectors.
+
+If you are still carrying large selector tensors, even sparse-looking ones, the cost is probably being spent before the real computation starts.
+
+By the way, I reached further (cost : 90) with this method in this task. Good luck!
+
+OverfitOracle
+
+Posted a day ago
+
+· 10th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+our score is 100 for this task
+
+OverfitOracle
+
+Posted a day ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+so yes i think so its the max we can reach
+
+len8487
+TOPIC AUTHOR
+
+Posted 4 hours ago
+
+· 80th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I just reahced 88 so.. I think there is more margin we can take.

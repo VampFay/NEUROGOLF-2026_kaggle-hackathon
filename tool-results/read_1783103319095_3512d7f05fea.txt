@@ -1,0 +1,1331 @@
+  2000→ Solving the tasks using code did not work for me
+  2001→ 
+  2002→ 
+  2003→ 
+  2004→ 
+  2005→ 
+  2006→ 
+  2007→- 
+  2008→ 
+  2009→ 
+  2010→ The quality of the datasets is relevant
+  2011→ 
+  2012→ 
+  2013→ 
+  2014→ 
+  2015→ 
+  2016→ 
+  2017→- 
+  2018→ 
+  2019→ 
+  2020→ The right model size
+  2021→ 
+  2022→ 
+  2023→ 
+  2024→ 
+  2025→ 
+  2026→ 
+  2027→- 
+  2028→ 
+  2029→ 
+  2030→ Training using problem augmentation is helpful
+  2031→ 
+  2032→ 
+  2033→ 
+  2034→ 
+  2035→ 
+  2036→ 
+  2037→- 
+  2038→ 
+  2039→ 
+  2040→ Learning the inputs distribution is helpful to solve ARC problems
+  2041→ 
+  2042→ 
+  2043→ 
+  2044→ 
+  2045→ 
+  2046→ 
+  2047→ 
+  2048→ 
+  2049→ 
+  2050→ 
+  2051→ 
+  2052→- 
+  2053→ 
+  2054→ 
+  2055→ Conclusion
+  2056→ 
+  2057→ 
+  2058→ 
+  2059→ 
+  2060→ 
+  2061→ 
+  2062→- 
+  2063→ 
+  2064→ 
+  2065→ Future steps
+  2066→ 
+  2067→ 
+  2068→ 
+  2069→ 
+  2070→ 
+  2071→ 
+  2072→- 
+  2073→ 
+  2074→ 
+  2075→ Links
+  2076→ 
+  2077→ 
+  2078→ 
+  2079→ 
+  2080→ 
+  2081→ 
+  2082→- 
+  2083→ 
+  2084→ 
+  2085→ Acknowledgments
+  2086→ 
+  2087→ 
+  2088→ 
+  2089→ 
+  2090→ 
+  2091→ 
+  2092→ 
+  2093→ 
+  2094→ 
+  2095→ 
+  2096→ 
+  2097→
+  2098→ 
+  2099→ 
+  2100→ 
+  2101→ 
+  2102→ 
+  2103→ 
+  2104→ 
+  2105→ 
+  2106→ 
+  2107→ 
+  2108→ 
+  2109→ 
+  2110→ 
+  2111→ 
+  2112→ 
+  2113→ 
+  2114→ 
+  2115→ 
+  2116→ 
+  2117→ 
+  2118→ 
+  2119→ 
+  2120→ 
+  2121→ 
+  2122→ 
+  2123→- 
+  2124→ 
+  2125→ 
+  2126→ 
+  2127→ 
+  2128→ 
+  2129→ 
+  2130→ 
+  2131→ 
+  2132→ 
+  2133→ 
+  2134→ 
+  2135→ 
+  2136→ Utils
+  2137→ 
+  2138→ 
+  2139→
+  2140→ 
+  2141→ 
+  2142→ 
+  2143→ 
+  2144→ 
+  2145→ 
+  2146→ Utils
+  2147→ 
+  2148→ 
+  2149→ 
+  2150→ 
+  2151→ 
+  2152→ 
+  2153→ 
+  2154→ 
+  2155→ 
+  2156→ 
+  2157→- 
+  2158→ 
+  2159→ 
+  2160→ 
+  2161→ 
+  2162→ Challenge workflow
+  2163→ 
+  2164→ 
+  2165→
+  2166→ 
+  2167→ 
+  2168→ 
+  2169→
+  2170→ 
+  2171→ 
+  2172→ 
+  2173→ 
+  2174→ 
+  2175→ 
+  2176→ 
+  2177→ 
+  2178→ 
+  2179→- 
+  2180→ 
+  2181→ 
+  2182→ 
+  2183→ 
+  2184→ Markdown cheatsheet
+  2185→ 
+  2186→ 
+  2187→
+  2188→ 
+  2189→ 
+  2190→ 
+  2191→
+  2192→ 
+  2193→ 
+  2194→ 
+  2195→ 
+  2196→ 
+  2197→ 
+  2198→ 
+  2199→ 
+  2200→ 
+  2201→- 
+  2202→ 
+  2203→ 
+  2204→ 
+  2205→ 
+  2206→ Methodology
+  2207→ 
+  2208→ 
+  2209→
+  2210→ 
+  2211→ 
+  2212→ 
+  2213→
+  2214→ 
+  2215→ 
+  2216→ 
+  2217→ 
+  2218→ 
+  2219→ 
+  2220→ 
+  2221→
+  2222→ 
+  2223→ 
+  2224→ 
+  2225→ 
+  2226→ 
+  2227→ 
+  2228→ 
+  2229→ 
+  2230→ 
+  2231→ 
+  2232→ 
+  2233→ 
+  2234→ 
+  2235→
+  2236→ 
+  2237→ 
+  2238→ 
+  2239→ 
+  2240→ 
+  2241→ 
+  2242→ 
+  2243→ 
+  2244→ 
+  2245→ Table of contents
+  2246→ 
+  2247→ 
+  2248→ 
+  2249→ 
+  2250→- 
+  2251→ 
+  2252→ 
+  2253→ Abstract
+  2254→ 
+  2255→ 
+  2256→ 
+  2257→ 
+  2258→ 
+  2259→ 
+  2260→- 
+  2261→ 
+  2262→ 
+  2263→ Intro
+  2264→ 
+  2265→ 
+  2266→ 
+  2267→ 
+  2268→ 
+  2269→ 
+  2270→ 
+  2271→- 
+  2272→ 
+  2273→ 
+  2274→ Abstraction and Reasoning Challenge
+  2275→ 
+  2276→ 
+  2277→ 
+  2278→ 
+  2279→ 
+  2280→ 
+  2281→ 
+  2282→ 
+  2283→ 
+  2284→ 
+  2285→ 
+  2286→- 
+  2287→ 
+  2288→ 
+  2289→ Motivation of my approach
+  2290→ 
+  2291→ 
+  2292→ 
+  2293→ 
+  2294→ 
+  2295→ 
+  2296→ 
+  2297→- 
+  2298→ 
+  2299→ 
+  2300→ How can we learn from few high-dimensional examples?
+  2301→ 
+  2302→ 
+  2303→ 
+  2304→ 
+  2305→ 
+  2306→ 
+  2307→- 
+  2308→ 
+  2309→ 
+  2310→ How can we learn a good representation of the ARC problems?
+  2311→ 
+  2312→ 
+  2313→ 
+  2314→ 
+  2315→ 
+  2316→ 
+  2317→- 
+  2318→ 
+  2319→ 
+  2320→ Omni-ARC: Training a single model to do multiple ARC-related tasks
+  2321→ 
+  2322→ 
+  2323→ 
+  2324→ 
+  2325→ 
+  2326→ 
+  2327→ 
+  2328→ 
+  2329→ 
+  2330→ 
+  2331→ 
+  2332→- 
+  2333→ 
+  2334→ 
+  2335→ Prior work
+  2336→ 
+  2337→ 
+  2338→ 
+  2339→ 
+  2340→ 
+  2341→ 
+  2342→ 
+  2343→- 
+  2344→ 
+  2345→ 
+  2346→ MindsAI
+  2347→ 
+  2348→ 
+  2349→ 
+  2350→ 
+  2351→ 
+  2352→ 
+  2353→- 
+  2354→ 
+  2355→ 
+  2356→ Ryan Greenblatt
+  2357→ 
+  2358→ 
+  2359→ 
+  2360→ 
+  2361→ 
+  2362→ 
+  2363→ 
+  2364→ 
+  2365→ 
+  2366→ 
+  2367→ 
+  2368→- 
+  2369→ 
+  2370→ 
+  2371→ Approach
+  2372→ 
+  2373→ 
+  2374→ 
+  2375→ 
+  2376→ 
+  2377→ 
+  2378→ 
+  2379→- 
+  2380→ 
+  2381→ 
+  2382→ Training
+  2383→ 
+  2384→ 
+  2385→ 
+  2386→ 
+  2387→ 
+  2388→ 
+  2389→ 
+  2390→- 
+  2391→ 
+  2392→ 
+  2393→ Data
+  2394→ 
+  2395→ 
+  2396→ 
+  2397→ 
+  2398→ 
+  2399→ 
+  2400→- 
+  2401→ 
+  2402→ 
+  2403→ Data augmentation
+  2404→ 
+  2405→ 
+  2406→ 
+  2407→ 
+  2408→ 
+  2409→ 
+  2410→- 
+  2411→ 
+  2412→ 
+  2413→ Problem augmentation
+  2414→ 
+  2415→ 
+  2416→ 
+  2417→ 
+  2418→ 
+  2419→ 
+  2420→- 
+  2421→ 
+  2422→ 
+  2423→ Problem representation
+  2424→ 
+  2425→ 
+  2426→ 
+  2427→ 
+  2428→ 
+  2429→ 
+  2430→- 
+  2431→ 
+  2432→ 
+  2433→ Training hyperparameters
+  2434→ 
+  2435→ 
+  2436→ 
+  2437→ 
+  2438→ 
+  2439→ 
+  2440→ 
+  2441→ 
+  2442→ 
+  2443→ 
+  2444→ 
+  2445→- 
+  2446→ 
+  2447→ 
+  2448→ Test-time fine-tuning
+  2449→ 
+  2450→ 
+  2451→ 
+  2452→ 
+  2453→ 
+  2454→ 
+  2455→- 
+  2456→ 
+  2457→ 
+  2458→ Inference
+  2459→ 
+  2460→ 
+  2461→ 
+  2462→ 
+  2463→ 
+  2464→ 
+  2465→- 
+  2466→ 
+  2467→ 
+  2468→ Ensemble
+  2469→ 
+  2470→ 
+  2471→ 
+  2472→ 
+  2473→ 
+  2474→ 
+  2475→- 
+  2476→ 
+  2477→ 
+  2478→ Results
+  2479→ 
+  2480→ 
+  2481→ 
+  2482→ 
+  2483→ 
+  2484→ 
+  2485→ 
+  2486→ 
+  2487→ 
+  2488→ 
+  2489→ 
+  2490→- 
+  2491→ 
+  2492→ 
+  2493→ Learnings
+  2494→ 
+  2495→ 
+  2496→ 
+  2497→ 
+  2498→ 
+  2499→ 
+  2500→ 
+  2501→- 
+  2502→ 
+  2503→ 
+  2504→ Prompting is not enough, test-time fine-tuning is needed
+  2505→ 
+  2506→ 
+  2507→ 
+  2508→ 
+  2509→ 
+  2510→ 
+  2511→- 
+  2512→ 
+  2513→ 
+  2514→ It's possible to train the model to verify the correctness of the tasks
+  2515→ 
+  2516→ 
+  2517→ 
+  2518→ 
+  2519→ 
+  2520→ 
+  2521→- 
+  2522→ 
+  2523→ 
+  2524→ Solving the tasks using code did not work for me
+  2525→ 
+  2526→ 
+  2527→ 
+  2528→ 
+  2529→ 
+  2530→ 
+  2531→- 
+  2532→ 
+  2533→ 
+  2534→ The quality of the datasets is relevant
+  2535→ 
+  2536→ 
+  2537→ 
+  2538→ 
+  2539→ 
+  2540→ 
+  2541→- 
+  2542→ 
+  2543→ 
+  2544→ The right model size
+  2545→ 
+  2546→ 
+  2547→ 
+  2548→ 
+  2549→ 
+  2550→ 
+  2551→- 
+  2552→ 
+  2553→ 
+  2554→ Training using problem augmentation is helpful
+  2555→ 
+  2556→ 
+  2557→ 
+  2558→ 
+  2559→ 
+  2560→ 
+  2561→- 
+  2562→ 
+  2563→ 
+  2564→ Learning the inputs distribution is helpful to solve ARC problems
+  2565→ 
+  2566→ 
+  2567→ 
+  2568→ 
+  2569→ 
+  2570→ 
+  2571→ 
+  2572→ 
+  2573→ 
+  2574→ 
+  2575→ 
+  2576→- 
+  2577→ 
+  2578→ 
+  2579→ Conclusion
+  2580→ 
+  2581→ 
+  2582→ 
+  2583→ 
+  2584→ 
+  2585→ 
+  2586→- 
+  2587→ 
+  2588→ 
+  2589→ Future steps
+  2590→ 
+  2591→ 
+  2592→ 
+  2593→ 
+  2594→ 
+  2595→ 
+  2596→- 
+  2597→ 
+  2598→ 
+  2599→ Links
+  2600→ 
+  2601→ 
+  2602→ 
+  2603→ 
+  2604→ 
+  2605→ 
+  2606→- 
+  2607→ 
+  2608→ 
+  2609→ Acknowledgments
+  2610→ 
+  2611→ 
+  2612→ 
+  2613→ 
+  2614→ 
+  2615→ 
+  2616→ 
+  2617→ 
+  2618→ 
+  2619→ 
+  2620→ 
+  2621→ 
+  2622→ 
+  2623→ 
+  2624→ 
+  2625→ 
+  2626→ 
+  2627→ 
+  2628→
+  2629→ 
+  2630→ 
+  2631→
+  2632→## Solution Summary
+  2633→
+  2634→ 
+  2635→
+  2636→## Abstract
+  2637→
+  2638→ This paper presents the Omni-ARC approach to the 2024 Abstraction and Reasoning Challenge (ARC), focusing on data efficiency and the abstraction aspect of the challenge. The core of this solution lies in training a transformer to perform multiple tasks related to ARC problems, going beyond the challenge's primary objective of predicting outputs from input-output examples. This multi-task learning approach aims to develop a robust representation of the ARC problem space.
+  2639→
+  2640→ Omni-ARC leverages publicly available LLMs, fine-tuning them on various ARC-related tasks, including output prediction and input distribution learning, using augmented data from multiple ARC datasets. The solution incorporates test-time fine-tuning to enhance accuracy on the private test set, achieving a score of 40 on the public leaderboard, securing 3rd place in the challenge.
+  2641→
+  2642→ Further analysis demonstrates the potential of training models to verify output correctness and select the most probable solution from multiple options, paving the way for future research in integrating reasoning capabilities into the Omni-ARC framework.
+  2643→
+  2644→## Intro
+  2645→
+  2646→## Abstraction and Reasoning Challenge
+  2647→
+  2648→ There are two different definitions of artificial intelligence. The first says that artificial intelligence is
+  2649→the science of creating machines that can do the tasks that humans can do. According to this definition
+  2650→we would be very close to artificial general intelligence (AGI) because systems like ChatGPT can do many
+  2651→tasks that only humans were able to do before such as solving math problems, answering all kind of questions,
+  2652→improving the style of some text... Many AI researchers believe that scale is all we need, and simply
+  2653→scaling the models and the data will lead to AGI.
+  2654→
+  2655→ But there is also another view championed by François Chollet that says that skill is not intelligence,
+  2656→that intelligence is the ability to handle novelty and learn new skills.
+  2657→
+  2658→ 
+  2659→ The intelligence of a system is a measure of its skill-acquisition efficiency over a scope of tasks, with respect to priors, experience, and generalization difficulty.
+  2660→
+  2661→ 
+  2662→ According to this definition we are far from AGI because the accuracy of the current deep learning models
+  2663→on some task does not depend on the complexity of the task, but on the familiarity of the model with the task.
+  2664→
+  2665→ To spark research into this view of intelligence Chollet created the Abstraction and Reasoning Corpus (ARC)
+  2666→and so far it has resisted the test of time. Whereas LLMs are saturating all kind of publicly available
+  2667→benchmarks, they still do very poorly on the ARC dataset. This can be explained by two big reasons:
+  2668→
+  2669→ 
+  2670→
+  2671→- The test dataset is private 
+  2672→
+  2673→- All the problems in the test dataset are novel 
+  2674→ 
+  2675→ In 2024 Chollet joined forces with Mike Knoop to launch the ARC Prize 2024, with a total prize pool of 1M$.
+  2676→The goal was to rise awareness of the unbeaten ARC and to increase the number of people working to solve it.
+  2677→
+  2678→## Motivation of my approach
+  2679→
+  2680→ In the ARC challenge we have to learn a transformation rule given a few
+  2681→high-dimensional pairs of input and output images. The images can have a size of up to 30x30 pixels
+  2682→and each pixel can take 10 different colors. The images are not as complex as real world images, but nevertheless
+  2683→they are high dimensional data.
+  2684→
+  2685→## How can we learn from few high-dimensional examples?
+  2686→
+  2687→ 
+  2688→
+  2689→ To solve each ARC problem we have to find the right representation of the data. When humans solve the
+  2690→tasks, the biggest challenge is to find the right perspective to look at the problem. Once we have the right
+  2691→perspective of the data the ARC problems are trivial to solve.
+  2692→
+  2693→ The right representation of the data allows to decrease the dimensionality of the data and makes
+  2694→possible to learn the transformation from very few examples.
+  2695→
+  2696→ 
+  2697→
+  2698→## How can we learn a good representation of the ARC problems?
+  2699→
+  2700→ If we train a model to do tasks that require a good representation of the data, it's likely that the
+  2701→model will internally develop the required representation.
+  2702→
+  2703→ My insight was that we could use the ARC problems in many different ways to learn that representation,
+  2704→not just in the original proposed task that asks to generate the output for an image given a few input-output pairs.
+  2705→The next section shows the different ways to use the ARC problems.
+  2706→
+  2707→## Omni-ARC: Training a single model to do multiple ARC-related tasks
+  2708→
+  2709→ 
+  2710→ 
+  2711→ 
+  2712→ examples + input -> output 
+  2713→ examples -> code 
+  2714→ code + input -> output 
+  2715→ 
+  2716→ 
+  2717→ 
+  2718→ 
+  2719→ 
+  2720→ 
+  2721→ 
+  2722→ 
+  2723→ 
+  2724→ inputs -> input 
+  2725→ code -> inputs 
+  2726→ inputs -> code 
+  2727→ 
+  2728→ 
+  2729→ 
+  2730→ 
+  2731→ 
+  2732→ 
+  2733→ 
+  2734→ 
+  2735→ 
+  2736→
+  2737→- examples + input -> output . The original task of the ARC dataset. 
+  2738→
+  2739→- inputs -> input . Generating new inputs requires to understand the distribution of the grids. It could also be done with the outputs, that should also follow some distribution. 
+  2740→
+  2741→- examples -> code . This is the approach used by Ryan Greenblat with GPT-4o, generate code to solve the task given some ARC examples. 
+  2742→
+  2743→- code + input -> output . This is equivalent to the first task, but instead of giving examples as input, it gives the code definition of the problem. 
+  2744→
+  2745→- code -> inputs . Each input to a task follows some distribution, given a description of the
+  2746→ distribution the model should be able to generate samples of that distribution. 
+  2747→
+  2748→- inputs -> code . We could also do the opposite task, given some inputs write code to generate that distribution. 
+  2749→
+  2750→- examples + input + output -> is the output correct? . It is possible to train the model to verify wether a proposed output is correct. 
+  2751→
+  2752→- examples + input + output options-> select the correct output . We can train a model to select the correct output between multiple options. 
+  2753→ 
+  2754→ All the listed tasks require that the model learns some useful representation of the ARC image. The idea
+  2755→behind the Omni-ARC approach is to train a single model to do all the tasks, with the expectation that a shared
+  2756→representation across all the tasks will generalize better than training the model to do a single task.
+  2757→
+  2758→ 
+  2759→
+  2760→ Omni-ARC, a single model that does all the ARC-related tasks (and it has a very cool logo) 
+  2761→
+  2762→## Prior work
+  2763→
+  2764→## MindsAI
+  2765→
+  2766→ The most relevant prior work is the information given by the MindsAI team about they approach. On
+  2767→interviews they have told that they biggest contribution is to do test-time fine-tuning. There was little
+  2768→information but enough to make educated guesses and replicate their results:
+  2769→
+  2770→ 
+  2771→
+  2772→- Test-Time Augmentation to solve ARC, interview with Jack Cole 
+  2773→
+  2774→- Machine Learning Street Talk | Chollet's ARC Challenge + Current Winners 
+  2775→ 
+  2776→ 
+  2777→ Our ARC solution stands out due to several key elements. Firstly, we fine-tune models on synthetic and augmented data. Secondly, we employ test-time fine-tuning. Lastly, we have developed an approach called AIRV (augment, inference, reverse augmentation, and vote), which is analogous to test-time augmentation. These innovations are crucial, as transformer models perform relatively poorly on ARC without them.
+  2778→
+  2779→ 
+  2780→ I could summarize my solution as an extension of the MindsAI approach, in addition to the three points
+  2781→cited above my approach trains the model to perform more tasks around the ARC data. That way we can
+  2782→improve the data efficiency of the system and get better results for the same amount of data.
+  2783→
+  2784→## Ryan Greenblatt
+  2785→
+  2786→ 
+  2787→ I recently got to 50%1 accuracy on the public test set for ARC-AGI by having GPT-4o generate a huge number of Python implementations of the transformation rule (around 8,000 per problem) and then selecting among these implementations based on correctness of the Python programs on the examples (if this is confusing, go to the next section)2. I use a variety of additional approaches and tweaks which overall substantially improve the performance of my method relative to just sampling 8,000 programs.
+  2788→
+  2789→ 
+  2790→ The approach taken by Ryan Greenblatt was very inspiring because he didn't fine-tune any model for the ARC challenge.
+  2791→
+  2792→ I tried to emulate his approach using open and smaller LLMs with the aim to combine it with the MindsAI
+  2793→approach but my efforts failed. However I believe that if I devote more work to this approach it might work.
+  2794→
+  2795→## Approach
+  2796→
+  2797→ 
+  2798→
+  2799→ The solution on a nutshell:
+  2800→
+  2801→ 
+  2802→
+  2803→- Take Qwen2.5-0.5B-Instruct and fine-tune it on publicly available ARC datasets. The model was fine-tuned to: 
+  2804→
+  2805→- generate the outputs for the test samples 
+  2806→
+  2807→- learn the inputs distribution and generate new inputs. 
+  2808→ 
+  2809→ 
+  2810→
+  2811→- Do test-time fine-tuning with the private test data, only for the task of generating the test outputs. 
+  2812→
+  2813→- Inference with data augmentation, and voting to select the predictions 
+  2814→
+  2815→- Ensemble with the 2020 public solution 
+  2816→ 
+  2817→ 
+  2818→
+  2819→## Training
+  2820→
+  2821→## Data
+  2822→
+  2823→ I used the following publicly available datasets for training:
+  2824→
+  2825→ 
+  2826→ 
+  2827→ 
+  2828→ dataset 
+  2829→ number of unique tasks 
+  2830→ 
+  2831→ 
+  2832→ 
+  2833→ 
+  2834→ original ARC dataset 
+  2835→ 800 
+  2836→ 
+  2837→ 
+  2838→ Michael Hodel's RE-ARC dataset 
+  2839→ 400 
+  2840→ 
+  2841→ 
+  2842→ PQA dataset 
+  2843→ 7 
+  2844→ 
+  2845→ 
+  2846→ Simon Strandgaard's Tama dataset 
+  2847→ 50 
+  2848→ 
+  2849→ 
+  2850→ Mini-ARC 
+  2851→ 149 
+  2852→ 
+  2853→ 
+  2854→ nosound's hand crafted ARC tasks 
+  2855→ 9 
+  2856→ 
+  2857→ 
+  2858→ Andy Penrose's tasks 
+  2859→ 5 
+  2860→ 
+  2861→ 
+  2862→ TOTAL 
+  2863→ 1420 
+  2864→ 
+  2865→ 
+  2866→ 
+  2867→ For all the datasets I trained the model to do two tasks:
+  2868→
+  2869→ 
+  2870→
+  2871→- examples + input -> output . The original task of the ARC dataset. 
+  2872→
+  2873→- inputs -> input . Generating new inputs requires to understand the distribution of the grids. It could also be done with the outputs, that should also follow some distribution. 
+  2874→ 
+  2875→ 
+  2876→ Click to see examples of newly generated inputs 
+  2877→ 
+  2878→
+  2879→ 
+  2880→
+  2881→ 
+  2882→
+  2883→ 
+  2884→
+  2885→ 
+  2886→
+  2887→ 
+  2888→
+  2889→ 
+  2890→
+  2891→ 
+  2892→
+  2893→## Data augmentation
+  2894→
+  2895→ For each problem the same data augmentation was applied to all the inputs and outputs. Data augmentation
+  2896→was a composition of the following augmentations:
+  2897→
+  2898→ 
+  2899→
+  2900→- Rotations 
+  2901→
+  2902→- Flips 
+  2903→
+  2904→- Color changes 
+  2905→
+  2906→- Swap between train and test examples 
+  2907→ 
+  2908→
+  2909→## Problem augmentation
+  2910→
+  2911→ In addition to the data augmentation I also did problem augmentation by applying a transformation
+  2912→only to the inputs or to the outputs. This transformation created new ARC problems by composing the
+  2913→original ARC transformation with randomly chosen new ones.
+  2914→
+  2915→ These new transformations needed to be reversible, otherwise the new generated problems might not
+  2916→be solvable. I used the following additional transformations:
+  2917→
+  2918→ 
+  2919→
+  2920→- Rotations and/or flips 
+  2921→
+  2922→- Padding the image 
+  2923→
+  2924→- Upscale 
+  2925→
+  2926→- Mirror 
+  2927→ 
+  2928→ 
+  2929→ Click to see examples of problem augmentation 
+  2930→ Original task:
+  2931→
+  2932→ 
+  2933→
+  2934→ Rotate the inputs:
+  2935→
+  2936→ 
+  2937→
+  2938→ Upscale x2 the outputs:
+  2939→
+  2940→ 
+  2941→
+  2942→ Add padding to the inputs:
+  2943→
+  2944→ 
+  2945→
+  2946→ Mirroring the outputs:
+  2947→
+  2948→ 
+  2949→
+  2950→ 
+  2951→
+  2952→## Problem representation
+  2953→
+  2954→ I used a very simple text representation of the ARC grids as an input to the LLMs. The grid was enclosed
+  2955→on a Markdown code snippet, the shape was defined at the first line and each row was numbered.
+  2956→
+  2957→ ```grid shape: 3x3
+  2958→1 100
+  2959→2 010
+  2960→3 001
+  2961→```
+  2962→ 
+  2963→
+  2964→## Training hyperparameters
+  2965→
+  2966→ The model was fine-tuned using LoRA. No significative improvement was found when doing full model fine-tuning and
+  2967→also on test-time fine-tuning it seemed to be beneficial to just fine-tune the already trained LoRA adapter
+  2968→instead of creating a fresh new adapter.
+  2969→
+  2970→ 
+  2971→
+  2972→- Model: Qwen2.5-0.5B-Instruct 
+  2973→
+  2974→- LoRA rank: 128 (17M of parameters) 
+  2975→
+  2976→- Learning rate: 5e-5, with a linear schedule with warmup 
+  2977→
+  2978→- Batch size: 16 
+  2979→
+  2980→- Training steps: 2e5 
+  2981→
+  2982→- Max sequence length: 8196 
+  2983→
+  2984→- Trained on 2xA6000 GPUs 
+  2985→ 
+  2986→ I used huggingface's trl and accelerate libraries for the training.
+  2987→
+  2988→## Test-time fine-tuning
+  2989→
+  2990→ Fine-tuning a model on ARC tasks is not enough to do well on the private test set. By applying test-time fine-tuning we could improve the number of solved problems from 11 to 33 for one of the models that I trained along the challenge.
+  2991→
+  2992→ This is my interpretation of the test-time fine-tuning:
+  2993→
+  2994→ 
+  2995→
+  2996→- For each test problem that had n train samples, I fine-tuned the model using n-1 train samples and
+  2997→ using the remaining sample as a test sample. The selection of the test sample was done randomly on the fly during training. 
+  2998→
+  2999→- I used data augmentation just like in the previous training 
+  3000→
+  3001→- I fine-tuned a model for each of the test problems, so 100 fine-tuned models were generated on each submission. 
+  3002→
+  3003→- I used batch size 1 in the test-time fine-tuning to be able to learn the new problems as fast as possible. 
+  3004→
+  3005→- The model was fine-tuned for ~300 steps on each problem 
+  3006→
+  3007→- Suprisingly the best learning rate for test-time fine-tuning was 8e-5, higher than the one used for
+  3008→ training (5e-5). It's very likely that better results could be obtained if more computation was
+  3009→ available, training with a slower learning rate, with higher batch size and for longer. 
+  3010→ 
+  3011→ Due to the limited submission time test-time fine-tuning was only applied to the canonical ARC task
+  3012→of predicting the test outputs. But it could also be applied to the task of generating new inputs, or
+  3013→to the tasks of verifying the correctness of the outputs.
+  3014→
+  3015→ The unusual configuration of training a single model for each task with batch size 1 arose due to the
+  3016→limitations of compute and submission time. It was the configuration that allowed to learn faster the new
+  3017→test problems.
+  3018→
+  3019→## Inference
+  3020→
+  3021→ Data augmentation was applied also at inference, and the data augmentation was reverted from the prediction to get the original output. 96 predictions were done for each problem and voting was used to select the most
+  3022→promising predictions. So just like MindsAI's AIRV (augment, inference, reverse augmentation, and vote).
+  3023→
+  3024→ Inference was done using a temperature of 0.
+  3025→
+  3026→ vLLM was used to generate the predictions. Each fine-tuned model was used to generate predictions for its problem.
+  3027→
+  3028→## Ensemble
+  3029→
+  3030→ I ensembled my model predictions with the 2020 solution . Since the 2020 solution only requires CPU, I managed to run
+  3031→it on the background while I used the GPU for fine-tuning and inference with my model. I only had to
+  3032→be careful with the RAM usage because both jobs had to share the same memory.
+  3033→
+  3034→ The ensemble strategy was very simple, just take the first attempt from each solution.
+  3035→
+  3036→## Results
+  3037→
+  3038→ This approach scored 40 on the ARC leaderboard.
+  3039→
+  3040→ 
+  3041→
+  3042→ The same approach (without test-time fine-tuning) could solve 32% of the evaluation tasks, and when using voting with 32 predictions
+  3043→it achieved a top_2 accuracy of 22%. Due to limited hardware resources I didn't usually evaluate
+  3044→the models with test-time fine-tuning on the evaluation dataset. Kaggle provides 30 hours of GPU each week,
+  3045→but we could make 3 submissions a day which is equivalent to 36 hours of compute. Thus it was much
+  3046→cheaper to use the submissions to see the performance of the test-time fine-tuning where we had 7 times
+  3047→more compute available per week.
+  3048→
+  3049→## Learnings
+  3050→
+  3051→## Prompting is not enough, test-time fine-tuning is needed
+  3052→
+  3053→ Clearly this competition has shown that LLMs need test-time fine-tuning to do new tasks. Few-shot prompting is not enough for the model to learn novel tasks.
+  3054→
+  3055→## It's possible to train the model to verify the correctness of the tasks
+  3056→
+  3057→ During the last weeks of the challenge I tried to continue with the Omni-ARC approach and train the model to:
+  3058→
+  3059→ 
+  3060→
+  3061→- Verify if an output is correct 
+  3062→
+  3063→- Select the correct output between two options 
+  3064→ 
+  3065→ The idea was that we could improve the leaderboard (LB) score if we replaced the voting selection mechanism by a more accurate one.
+  3066→Using trained models I generated wrong predictions for the original ARC dataset using a sampling temperature close to 1.
+  3067→
+  3068→ 
+  3069→ 
+  3070→ 
+  3071→ method 
+  3072→ top 1 accuracy 
+  3073→ top 2 accuracy 
+  3074→ 
+  3075→ 
+  3076→ 
+  3077→ 
+  3078→ voting 
+  3079→ 60.0% 
+  3080→ 70.0% 
+  3081→ 
+  3082→ 
+  3083→ verification 
+  3084→ 59.3% 
+  3085→ 77.4% 
+  3086→ 
+  3087→ 
+  3088→ selection 
+  3089→ 68.7% 
+  3090→ 81.0% 
+  3091→ 
+  3092→ 
+  3093→ 
+  3094→ As the table above shows I was able to achieve promising results on the evaluation dataset. Those numbers are for 32 predictions.
+  3095→
+  3096→ However I was not able to improve the LB score using this approach. My hypothesis is that the distribution
+  3097→of the predictions of a test-time fine-tuned model is different from the distribution of a frozen model. Thus
+  3098→the accuracy of voting for a test-time fine-tuned model might be much higher than the shown in the table
+  3099→for a frozen model.
+  3100→
+  3101→ This verifier models could benefit from test-time fine-tuning, but I could not test the hypothesis due
+  3102→to the limited submission time.
+  3103→
+  3104→ More information on Iteration 47 and Iteration 45 .
+  3105→
+  3106→## Solving the tasks using code did not work for me
+  3107→
+  3108→ I also tried to expand on the Omni-ARC approach by training the model to do the additional tasks:
+  3109→
+  3110→ 
+  3111→
+  3112→- examples -> code . This is the approach used by Ryan Greenblat with GPT-4o 
+  3113→
+  3114→- code + input -> output . This is equivalent to the first task, but instead of giving examples as input, it gives the code definition of the problem. 
+  3115→ 
+  3116→ To do so I built a small domain specific language (DSL) and recreated 285 of the ARC training tasks
+  3117→with python code. This was a laborious process that took around 3 weeks.
+  3118→
+  3119→ Unfortunately the model did not generalize well. It could only solve 5% of the evaluation tasks, and those
+  3120→tasks were very similar to the training tasks. On the private test set a lucky submission was able to
+  3121→solve 1 task.
+  3122→
+  3123→ I believe this approach has great potential, but I had to change to other approaches because the end
+  3124→of the challenge was close and other teams were improving in the leaderboard.
+  3125→
+  3126→ More info on Iteration 26 , Iteration 40 and Iteration 42 .
+  3127→
+  3128→## The quality of the datasets is relevant
+  3129→
+  3130→ On the last weeks of the challenge I tried adding the BARC datasets to the training data. Surprisingly despite the enormous
+  3131→claimed number of different tasks (400k) I did not see any significative improvement either on the
+  3132→evaluation dataset or in the leaderboard. More information on Iteration 48. More external data .
+  3133→
+  3134→ This is surprising because the original ARC dataset shows a clear trend when increasing the number
+  3135→of training tasks:
+  3136→
+  3137→ 
+  3138→
+  3139→ My guess is that the automatically generated tasks by GPT4 did not have too much novelty respect
+  3140→to the original ARC tasks.
+  3141→
+  3142→## The right model size
+  3143→
+  3144→ Qwen2.5-0.5B was the right model size for my approach and the available compute for submission.
+  3145→
+  3146→ On a first step I tried smaller models such as SmolLM2-135M and NanoLM-0.3B but they did not
+  3147→achieve the same accuracy as Qwen2.5-0.5B . More on Iteration 46. Revisit small LLMs 
+  3148→
+  3149→ On my final attempt I also tried bigger models such as Qwen2.5-1.5B and Qwen2.5-7B .
+  3150→These models exhibit a higher data efficiency, they reach a smaller training loss for the same amount
+  3151→of training steps. The problem with these models is that they are slower to fine-tune and inference at submission.
+  3152→Moreover due to VRAM requirements we have to decrease the length of the training samples. It's very
+  3153→likely that LB score could be improved with this bigger models if better hardware and more submission
+  3154→time is given.
+  3155→
+  3156→## Training using problem augmentation is helpful
+  3157→
+  3158→ The plot below shows the accuracy of a model on the evaluation dataset when being trained with a different
+  3159→amount of problem augmentation. Using problem augmentation 50% of the times seems to be the best option. Accuracy measures how many of the predictions made by the model are correct and it's a more robust and stable metric than vote_2 or pass_n (because it is computed with a bigger number of samples).
+  3160→
+  3161→ 
+  3162→
+  3163→ More info on Iteration 21. More data augmentation 
+  3164→
+  3165→## Learning the inputs distribution is helpful to solve ARC problems
+  3166→
+  3167→ The table below shows the results on the evaluation dataset of an experiment that tried to see if
+  3168→learning the inputs and/or the outputs distribution was helpful. There is a clear improvement on accuracy
+  3169→when learning the inputs distribution. However learning the outputs distribution does not seem to be
+  3170→helpful.
+  3171→
+  3172→ 
+  3173→ 
+  3174→ 
+  3175→ new tasks 
+  3176→ accuracy 
+  3177→ correct_pixels 
+  3178→ correct_size 
+  3179→ pass_n 
+  3180→ vote_2 
+  3181→ 
+  3182→ 
+  3183→ 
+  3184→ 
+  3185→ - 
+  3186→ 4.61% 
+  3187→ 68.54% 
+  3188→ 87.34% 
+  3189→ 17.25% 
+  3190→ 10.73% 
+  3191→ 
+  3192→ 
+  3193→ 5k inputs 
+  3194→ 5.36% 
+  3195→ 69.40% 
+  3196→ 88.38% 
+  3197→ 19.75% 
+  3198→ 13.13% 
+  3199→ 
+  3200→ 
+  3201→ 5k inputs, 5k outputs 
+  3202→ 5.13% 
+  3203→ 68.34% 
+  3204→ 87.18% 
+  3205→ 19.75% 
+  3206→ 12.37% 
+  3207→ 
+  3208→ 
+  3209→ 2.5k inputs 2.5k outputs 
+  3210→ 4.68% 
+  3211→ 68.55% 
+  3212→ 87.66% 
+  3213→ 17.38% 
+  3214→ 11.99% 
+  3215→ 
+  3216→ 
+  3217→ 
+  3218→ Iteration 22. Learning the inputs distribution 
+  3219→
+  3220→## Conclusion
+  3221→
+  3222→## Future steps
+  3223→
+  3224→ The approach of using a transformer and test-time fine-tuning could likely keep improving and maybe
+  3225→solve the ARC prize if we generate enough synthetic data to densely cover the space of the ARC problems.
+  3226→However that kind of solution won't give us more knowledge about how to reach AGI. It might be worth
+  3227→pursuing that direction just to know where it can get us, but I don't feel it is interesting.
+  3228→
+  3229→ On this year competition I have focused on abstraction, on building the best possible representation
+  3230→of the ARC problems. But the reasoning part was missing from my solution. When I try to solve the ARC
+  3231→problems I make a hypothesis of the transformation, see if it works on the train data and fix it if
+  3232→it doesn't. Finding the solution is typically an iterative process of trial and error.
+  3233→
+  3234→ I believe that we can teach a model to reason, just like OpenAI is developing the new o1 models. First we will
+  3235→need to have a model that is able to generate code to solve the problems, otherwise we cannot verify
+  3236→the solution and iterate over the results. Then we will generate many reasoning traces for the training
+  3237→tasks and the model could learn to iteratively create a python code solution to the problems. The main
+  3238→obstacle that I see to this approach is that it will require a much bigger context size than the current
+  3239→MindsAI approach because in addition to the original task the prompt will also have the different
+  3240→code iterations and the outputs. So we could be talking about using up to 50k tokens instead of the
+  3241→current 10k tokens. That requires better hardware both for training and inference.
+  3242→
+  3243→ Probably the best approach is the one that first tries to generate code to solve the problems and finally
+  3244→uses test-time fine-tuning only on the problems that the code approach could not solve. Thus I believe that
+  3245→the Omni-ARC approach, training a single model to do multiple ARC-related tasks, has a great change of
+  3246→being used in the solution that beats the 85% goal.
+  3247→
+  3248→ Finally I'm going to buy an Omni-man funko pop figure to celebrate the prize.
+  3249→
+  3250→## Links
+  3251→
+  3252→ 
+  3253→
+  3254→- Documentation of all the work done during the challenge 
+  3255→
+  3256→- Github repo 
+  3257→
+  3258→- Submission notebook 
+  3259→
+  3260→- Kaggle post 
+  3261→
+  3262→- TODO: create a Youtube video explaining my approach and comparing to other teams solutions. 
+  3263→
+  3264→- NotebookLM podcast 
+  3265→
+  3266→- LinkedIn profile 
+  3267→
+  3268→- Twitter profile 
+  3269→ 
+  3270→
+  3271→## Acknowledgments
+  3272→
+  3273→ 
+  3274→
+  3275→- Veridas for providing me access to its compute cluster during all the challenge. Most of the experiments were done on Veridas cluster, using A6000 GPUs with 48GB of VRAM. 
+  3276→
+  3277→- Strong Compute for providing compute for training the last models for
+  3278→ the challenge. They gave me access to A100 GPUs with 80GB of VRAM, which allowed me to train bigger models. 
+  3279→
+  3280→- Qwen for training and releasing a family of very capable LLMs with
+  3281→ many different sizes. 
+  3282→
+  3283→- Weigths and Biases I used it to track all the experiments in a single place.
+  3284→ It's an amazing tool and free for individuals. 
+  3285→
+  3286→- Lambdalabs . I did some short (but expensive) experiments on the last
+  3287→ week of the challenge in Lambdalabs. They provide me with some free credits that partially covered
+  3288→ this experiments. 
+  3289→
+  3290→- ARC team. It's been a pleasure to work in this super interesting challenge for a few months. Thanks
+  3291→ for creating the challenge and specially to Chollet for all his wisdom and teachings. 
+  3292→
+  3293→- Family. I couldn't have done all this work without the help of my wife and the appreciation from
+  3294→ my children. My family followed my progress during the challenge and cheered me up when I advanced in the leaderboard. 
+  3295→ 
+  3296→
+  3297→ 
+  3298→ 
+  3299→ 
+  3300→ 
+  3301→
+  3302→ 
+  3303→ 
+  3304→ 
+  3305→ 
+  3306→ 
+  3307→ 
+  3308→ 
+  3309→ 2024-12-08
+  3310→ 
+  3311→
+  3312→ 
+  3313→ 
+  3314→ 
+  3315→ 
+  3316→ 
+  3317→
+  3318→ 
+  3319→ 
+  3320→ 
+  3321→ 
+  3322→ 
+  3323→ 
+  3324→ 
+  3325→ 
+  3326→ 
+  3327→ 
+  3328→ 
+
+[showing lines 2000-3328 of 3329; use offset=3329 with limit to continue reading]

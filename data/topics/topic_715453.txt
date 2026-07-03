@@ -1,0 +1,162 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+TRISTON MORGAN · 33RD IN THIS COMPETITION · POSTED 5 DAYS AGO
+arrow_drop_up
+1
+more_vert
+Question about submission score fluctuations
+
+I recently submitted the same submission.zip file multiple times, but the scores I got were different:
+
+7006.91
+6950.35
+6952.43
+
+All three results are different, and the gap between the highest and lowest scores is more than 50 points. I’m sure that I submitted the exact same file, so I’m a bit confused about why this happened. Has anyone else encountered this situation before?
+
+Please sign in to reply to this topic.
+
+comment
+4 Comments
+Hotness
+emoji_people
+jacekwl
+
+Posted 5 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Maybe: https://www.kaggle.com/competitions/neurogolf-2026/discussion/699840
+
+Giovanny Rodríguez
+
+Posted 5 days ago
+
+· 50th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Do you know if they are using ONNX Runtime v1.26.0 or still using v1.24.4 for the competitions?
+
+NNMax
+
+Posted 4 days ago
+
+· 97th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+However, for contestants who are running their experiments locally on ARM64, two other things may be needed:
+
+An upgrade to ONNX Runtime v1.26.0
+An additional session option: options.add_session_config_entry("mlas.disable_kleidiai", "1")
+
+
+I assume they upgraded to ORT v1.26.0
+
+robga
+
+Posted 4 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+I don't think it is upgraded. I tried ops introduced in ORT v1.25 and they fail. Changing a pinned version is probably not a good idea at this stage. @mmoffitt may be able to confirm for certain though.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 4 days ago
+
+arrow_drop_up
+3
+more_vert
+
+We've kept our scorer's version pinned at v1.24.4 … we mentioned the newer version for local evaluation only because v1.24.4 is even more unstable on MacBooks (due to some kind of hardware acceleration feature).
+
+emoji_people
+Triston Morgan
+TOPIC AUTHOR
+
+Posted 5 days ago
+
+· 33rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+thx a lot for reminding me
+
+Fususu
+
+Posted 2 days ago
+
+· 34th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+The same here!

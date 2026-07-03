@@ -1,0 +1,499 @@
+     1→Redwood Research blog
+     2→
+     3→SubscribeSign in
+     4→
+     5→Discover more from Redwood Research blog
+     6→
+     7→We research catastrophic AI risks and techniques that could be used to mitigate them.
+     8→
+     9→Over 4,000 subscribers
+    10→
+    11→Subscribe
+    12→
+    13→By subscribing, you agree Substack's Terms of Use, and acknowledge its Information Collection Notice and Privacy Policy.
+    14→
+    15→Already have an account? Sign in
+    16→
+    17→Getting 50% (SoTA) on ARC-AGI with GPT-4o
+    18→
+    19→You can just draw more samples
+    20→
+    21→Ryan Greenblatt
+    22→
+    23→Jun 17, 2024
+    24→
+    25→130
+    26→
+    27→45
+    28→
+    29→12
+    30→
+    31→Share
+    32→
+    33→I recently got to 50%1 accuracy on the public test set for ARC-AGI by having GPT-4o generate a huge number of Python implementations of the transformation rule (around 8,000 per problem) and then selecting among these implementations based on correctness of the Python programs on the examples (if this is confusing, go to the next section)2. I use a variety of additional approaches and tweaks which overall substantially improve the performance of my method relative to just sampling 8,000 programs.
+    34→
+    35→[This post is on a pretty different topic than the usual posts on our substack. So regular readers should be warned!]
+    36→
+    37→The additional approaches and tweaks are:
+    38→
+    39→I use few-shot prompts which perform meticulous step-by-step reasoning.
+    40→
+    41→I have GPT-4o try to revise some of the implementations after seeing what they actually output on the provided examples.
+    42→
+    43→I do some feature engineering, providing the model with considerably better grid representations than the naive approach of just providing images. (See below for details on what a “grid” in ARC-AGI is.)
+    44→
+    45→I used specialized few-shot prompts for the two main buckets of ARC-AGI problems (cases where the grid size changes vs doesn’t).
+    46→
+    47→The prior state of the art on a similarly difficult dataset was 34% accuracy, so this is a significant improvement.3 (Edit: But see this comment and this comment for important clarifications.)
+    48→
+    49→On a held-out subset of the train set, where humans get 85% accuracy, my solution gets 72% accuracy.4 (The train set is significantly easier than the test set as noted here.)
+    50→
+    51→Additional increases of runtime compute would further improve performance (and there are clear scaling laws), but this is left as an exercise to the reader.
+    52→
+    53→Subscribe
+    54→
+    55→In this post:
+    56→
+    57→I describe my method;
+    58→
+    59→I analyze what limits its performance and make predictions about what is needed to reach human performance;
+    60→
+    61→I comment on what it means for claims that François Chollet makes about LLMs. Given that current LLMs can perform decently well on ARC-AGI, do claims like "LLMs like Gemini or ChatGPT [don't work] because they're basically frozen at inference time. They're not actually learning anything." make sense? (This quote is from here.)
+    62→
+    63→Thanks to Fabien Roger and Buck Shlegeris for a bit of help with this project and with writing this post.
+    64→
+    65→What is ARC-AGI?
+    66→
+    67→ARC-AGI is a dataset built to evaluate the general reasoning abilities of AIs. It consists of visual problems like the below, where there are input-output examples which are grids of colored cells. The task is to guess the transformation from input to output and then fill out the missing grid. Here is an example from the tutorial:
+    68→
+    69→This one is easy, and it’s easy to get GPT-4o to solve it. But the tasks from the public test set are much harder; they’re often non-trivial for (typical) humans. There is a reported MTurk human baseline for the train distribution of 85%, but no human baseline for the public test set which is known to be significantly more difficult.
+    70→
+    71→Here are representative problems from the test set5, and whether my GPT-4o-based solution gets them correct or not.
+    72→
+    73→Problem 1:
+    74→
+    75→Problem 2:
+    76→
+    77→Problem 3:
+    78→
+    79→My method
+    80→
+    81→The main idea behind my solution is very simple: get GPT-4o to generate around 8,000 python programs which attempt to implement the transformation, select a program which is right on all the examples (usually there are 3 examples), and then submit the output this function produces when applied to the additional test input(s). I show GPT-4o the problem as images and in various ascii representations.
+    82→
+    83→My approach is similar in spirit to the approach applied in AlphaCode in which a model generates millions of completions attempting to solve a programming problem and then aggregates over them to determine what to submit.
+    84→
+    85→Actually getting to 50% with this main idea took me about 6 days of work. This work includes constructing few-shot prompts, building better text representations of these grids, iterating against the train set, and implementing various other tweaks to improve performance.
+    86→
+    87→I started on this project a few days before Dwarkesh Patel recorded the recent podcast with Chollet. This was inspired by Dwarkesh talking to my coworker Buck about ARC-AGI, and then Buck being like “come on, surely you can do better than current SOTA using LLMs”. Then, I tested GPT-4o a bit and it seemed to get what was going on. I’ve recently been doing some research that involved getting Claude 3 Opus to do reasoning right at the edge of its capabilities, and thought I might have an edge based on my experience from that project.
+    88→
+    89→At a high level, the method I use is:
+    90→
+    91→Provide the ARC-AGI problem to GPT-4o, with both an image representation and with various text representations for each grid in the problem. The text representations include showing which cells are occupied by different connected components of colors and showing diffs between the input and output (in cases where the grid shapes are the same).
+    92→
+    93→Instruct GPT-4o to reason about what the transformation is, reason how to implement the transformation as code, and then finally actually implement the transformation in code.
+    94→
+    95→Use a few-shot prompt with several carefully handwritten examples of step-by-step reasoning6 to actually get GPT-4o to do this reasoning somewhat effectively. The resulting prompt is usually around 30k tokens long including images.
+    96→
+    97→We actually have a pair of few-shot prompts: one prompt for when the grid size changes (in any of the examples) and one for when it doesn’t.
+    98→
+    99→We also ensemble over multiple pairs of few-shot prompts. This doesn’t help much, but I already had the samples in the cache.
+   100→
+   101→Sample vast, vast numbers of completions (~5,000 per problem) from GPT-4o.
+   102→
+   103→Take the most promising 12 completions for each problem, and then try to fix each by showing GPT-4o what this program actually outputs on the examples, and then asking GPT-4o to revise the code to make it correct. We sample ~3,000 completions that attempt to fix per problem in total across these 12 starting implementations.
+   104→
+   105→We use a few-shot prompt for revisions with step-by-step reasoning.
+   106→
+   107→We also have a text representation which shows the diff between the actual output and the expected output.
+   108→
+   109→Then, we select 3 submissions7 to make based on a majority vote over programs which get the examples correct. (In the case where we don’t have 3 distinct submissions from programs which get the examples right, we apply some heuristics to pick a submission, but this doesn’t matter much.).
+   110→
+   111→In addition to iterating on the training set, I also did a small amount of iteration on a 100 problem subset of the public test set. All the results I presented here were computed on a different subset of the public test set that does not overlap.  The train and test set are not IID, and the test set is both much harder and somewhat qualitatively different (I think), so using a subset of the test set for iteration was useful for quickly getting a better sense of how things change with difficulty. It's unfortunate that these sets aren’t IID: it makes iteration harder and more confusing.8
+   112→
+   113→More of the details of my approach and a bunch of tricks I use to improve performance, can be found at the bottom of this post. You can find the full solution in this GitHub repo: https://github.com/rgreenblatt/arc_draw_more_samples_pub.
+   114→
+   115→What are the returns to more sampling?
+   116→
+   117→We can analyze how more samples improves performance on test. For ease of interpretation (and implementation), I show returns to samples on the primary and most performant prompting variant I use (in the section below, it has the name “V2”)9. I also don’t incorporate revision (as this would require a separate run for each number of samples).
+   118→
+   119→There appears to be a relatively clean scaling law10. Of course, a linear fit from log(k) to accuracy can’t go on forever as it would imply you eventually go above 100% accuracy!11
+   120→
+   121→The fit is in terms of log base 2. So, it indicates an additional 3% correct per doubling of k.
+   122→
+   123→While the number of samples I use is large, using far more samples is certainly possible. (For reference, AlphaCode uses up to a million samples per problem).
+   124→
+   125→What are the returns to better prompting and code fixing?
+   126→
+   127→I find that improving prompting and adding a revision step is important to improve the accuracy. Huge numbers of samples, better prompting, and a revision step are all essential for the performance I achieve.
+   128→
+   129→Here is a breakdown of the performance by version of the prompt:
+   130→
+   131→V0 - 1024 samples/pb: 25% (test set performance). This version doesn’t split into two buckets and doesn’t use the ascii representations described above. (It does show a simple ascii grid like 8|0|3 where 8, 0, 3 are the colors of that row.)
+   132→
+   133→V1 - 1024 samples/pb: 27%. This variant splits into two buckets and uses the spreadsheet style ascii representations (when in the equal image size bucket). It uses different few-shot prompt examples (though the examples overlap with V0).
+   134→
+   135→V1.1 - 1024 samples/pb: 28%: This is just a variant with somewhat arbitrarily different prompts for diversity and because I thought these prompts might be better. (They aren’t really better.)
+   136→
+   137→V2 - 1024 samples/pb: 30%. This variant includes the ascii diff between the input and output and again includes different examples.
+   138→
+   139→V2 - 2048 samples/pb: 34%
+   140→
+   141→V0 (1024) + V1 (1024) + V1.1 (1024) + V2 (2048): 37%.
+   142→
+   143→This performance is the same as what I would expect from 4096 samples from V2, so the diversity doesn’t seem to help more than the downside of V0/V1/V1.1 being worse than V2.
+   144→
+   145→To reach 37% with just V0, I would need around 43,000 samples! (Based on the fit I show below.) So, using better prompting and representations makes a big difference.
+   146→
+   147→Final version (Revision step (3040 / pb with most problems selected) + V0 (1024) + V1 (1024) + V1.1 (1024) + V2 (2048)): 50%
+   148→
+   149→To reach 50% with just samples from V2, I would need 100,000 samples! So the revision is doing a huge amount of work. (With just V0, I would need 1,500,000 samples.)
+   150→
+   151→I was surprised by how much revision helps.
+   152→
+   153→Further rounds of revision might also help, but I didn’t get around to running this. (I had this implemented in an earlier version, but I removed it.)
+   154→
+   155→Revision seems to fix around 20% of the remaining incorrect solutions on both test and train. As in, if we’re getting 37% correct, then we get an additional 0.63 * 0.2 = 0.13 correct for a total of 0.5. Accordingly, revision yields a notably smaller absolute improvement on train (an absolute improvement of only 6% vs 13%).
+   156→
+   157→I don’t have numbers for cutting reasoning while using comparable amounts of samples.
+   158→
+   159→I use the exact same settings for the train distribution numbers I report.
+   160→
+   161→We can also compare the scaling of different prompts:
+   162→
+   163→Above, I noted that revision seems to fix around 20% of the remaining incorrect. Supposing that this scales indefinitely (a dubious assumption), we can see how long it takes to reach various performance thresholds with my current method and various ablations.
+   164→
+   165→Getting to “just” 70% performance with my current method would take 2^21 samples (around 2 million)! I think 70% is probably similar to the performance of typical people on MTurk on the test set, though no number is known.
+   166→
+   167→Qualitative analysis
+   168→
+   169→GPT-4o is limited by failures other than reasoning, such as:
+   170→
+   171→GPT-4o’s vision is terrible on grids. When asked to describe what is in a somewhat large grid, it often fails to “see” the input correctly, and states wrong facts about what colors are in some location or what shapes are present.
+   172→
+   173→In particular, it totally fails to extract the colors of cells from an image for images >12x12 and is quite bad at 8x8.
+   174→
+   175→If humans had visual abilities as poor as GPT-4o, it would often take them quite a bit of effort to solve even simple ARC-AGI problems. (If you want a frustrating time, try solving some ARC-AGI problems without using vision other than reading: that is, try to do them without ever drawing out the grids in 2d, forcing yourself to instead just interact with a textual representation of the data. For hard mode, you could try doing this blindfolded, with a friend allowing you to dictate Python lines of code to run on the image. I think this would be quite hard.)
+   176→
+   177→GPT-4o isn’t that good at coding (especially not for these sort of geometric manipulation problems), and makes simple mistakes like off-by-one errors extremely often.
+   178→
+   179→We don’t do multi-round debugging because it’s probably cheaper and more effective to just get more samples in the current regime.
+   180→
+   181→GPT-4o is worse at using long contexts than other models:
+   182→
+   183→I think the long context for GPT-4o is quite bad and starts taking a big hit after about ~32k to 40k tokens (based on my qualitative impression), which limited my ability to use longer prompts with more examples and more detailed representations.
+   184→
+   185→It doesn't seem to respect my few-shot prompt and often does somewhat worse stuff than what it should do based on the few-shot examples. For instance, it systematically responds with much shorter completions than it is supposed to (even if I give it very specific instructions to do otherwise!).
+   186→
+   187→Not having flexible prefix caching substantially limits approaches. With the n option in the OpenAI api, but without more flexible prefix caching, efficient approaches are limited to just drawing lots of samples rather than efficiently having a large number of reasoning traces which diverge, proceed in parallel, and receive outputs from code (while sharing a few-shot prompt). This massively increases costs for approaches which focus more on doing multi rounds of revision and iteration on all or most implementations rather than just doing a large number of 1-step revisions on one implementation (or a small number of implementations).
+   188→
+   189→Removing these non-reasoning weaknesses would improve the performance of my solution by a significant amount. Vision is an especially large weakness.
+   190→
+   191→To be clear, GPT-4o is also limited by being very dumb. A smart human with only access to the text representation could substantially outperform GPT-4o by spending a bunch of time on each problem.
+   192→
+   193→Caveats
+   194→
+   195→I used over 1000x more runtime compute per problem than prior work on this benchmark. Maybe prior work on this benchmark scales well with compute and would have gotten higher accuracy with higher resources.
+   196→
+   197→There is a broad distribution of problem difficulty even in the test set. For example, some of the problems have a difficult-to-guess component which only has a few sensible options (e.g. pick which of two possible colors to use in some location), and the evaluation metric is top-3 accuracy. Therefore, the gap between our solution’s performance and human performance in the test set may be larger than you would expect when just looking at the numbers.
+   198→
+   199→In practice, changing to top-2 accuracy only affects performance by a tiny amount. (it goes to 48% on test and 70% on train)
+   200→
+   201→To decrease cost and to allow for having a subset to iterate on (especially for the train set!), I only ran my solution on a randomly selected set of 100 train and 100 test problems. The resulting standard error of the mean is reasonably tight (5%), but this means my results might be slightly overoptimistic.
+   202→
+   203→This submission is ineligible for the ARC-AGI prize and main leaderboard as it uses a closed source model and too much runtime compute.
+   204→
+   205→I haven’t yet submitted to the private leaderboard. (I need to port it into a kaggle notebook and make sure it doesn’t use too much RAM).
+   206→
+   207→Predictions
+   208→
+   209→70% probability: A team of 3 top research ML engineers with fine-tuning access to GPT-4o (including SFT and RL), $10 million in compute, and 1 year of time could use GPT-4o to surpass typical naive MTurk performance at ARC-AGI on the test set while using less than $100 per problem at runtime (as denominated by GPT-4o API costs).
+   210→
+   211→Note that typical naive MTurk performance is probably not 85% on the test set (the prior baseline is on the easier train set) and there is no known human baseline. (Perhaps performance is around 70%?)
+   212→
+   213→35% probability: Under the above conditions, 85% on the test set would be achieved. It’s unclear which humans perform at >=85% on the test set, though this is probably not that hard for smart humans.
+   214→
+   215→60% probability: If a next generation frontier LLM (e.g. GPT-5) was much better at basic visual understanding (e.g. above 85% accuracy on Vibe-Eval hard), using my exact method (with minor adaptation tweaks as needed) on that LLM would surpass typical naive MTurk performance.
+   216→
+   217→30% probability: Under the above conditions, 85% on the test set would be achieved.
+   218→
+   219→80% probability: next generation multi-model models (e.g. GPT-5) will be able to substantially advance performance on ARC-AGI.
+   220→
+   221→What it means about current LLMs
+   222→
+   223→Chollet says:
+   224→
+   225→If you were right [that LLMs can do in-context learning], LLMs would do really well on ARC puzzles because ARC puzzles are not complex. Each one of them requires very little knowledge. Each one of them is very low on complexity. You don't need to think very hard about it. They're actually extremely obvious for human [sic]
+   226→
+   227→Even children can do them but LLMs cannot. Even LLMs that have 100,000x more knowledge than you do still cannot. The only thing that makes ARC special is that it was designed with this intent to resist memorization. This is the only thing. This is the huge blocker for LLM performance.
+   228→
+   229→If you look at LLMs closely, it's pretty obvious that they're not really synthesizing new programs on the fly to solve the task that they're faced with.
+   230→
+   231→Contra Chollet, I think that current LLMs are well described as doing at least some useful learning when doing in-context learning.
+   232→
+   233→In particular, given my results you have to reject one of the following claims:
+   234→
+   235→Getting modest performance on ARC-AGI (e.g. 50%+ on test) requires at least a little runtime "learning" on each problem.
+   236→
+   237→Program selection on only a moderate (e.g. 6,000) number of programs (like the way I do it) doesn't count as "learning" in the typical way people think of learning.
+   238→
+   239→Current LLMs never "learn" at runtime (e.g. the in-context learning they can do isn't real learning).
+   240→
+   241→Claim 1 seems likely true to me for a reasonable notion of “learning”. I think François Chollet agrees here. Most of my doubts about this claim are concerns that you can basically brute force ARC-AGI without interestingly doing learning (e.g. brute-force search over some sort of DSL or training on a huge array of very similar problems). These concerns apply much less to the kind of approach I used.
+   242→
+   243→Claim 2 seems true to me: the distribution of programs you are searching over has to be pretty close to the right program for Best-of-6k to work at all: if you did best-of-6k for random python programs, this would not work! Perhaps François Chollet disagrees here, but I think this view would be unreasonable.
+   244→
+   245→Therefore, I think Claim 3 is false: I think LLMs actually do some relevant “learning” when doing in-context learning. Overall performance is very weak (otherwise I wouldn’t have needed to draw thousands of samples in my solution), but it’s some learning nevertheless. (Though there are various obstacles to GPT-4o performing well other than reasoning and learning ability such as vision and coding limitations.)
+   246→
+   247→(One caveat is that this could be false if a substantial fraction of GPT-4o’s performance comes from dataset contamination. This seems very unlikely to me.)
+   248→
+   249→It’s worth emphasizing that GPT-4o’s learning within a single context seems much less competent than typical human learning. But it is learning nonetheless. My view isn’t that GPT-4o is smart relative to humans in the typical way we mean smart, but I do think it has something which is well described as intelligence.
+   250→
+   251→What ARC-AGI tells us about AGI
+   252→
+   253→Progress has not stalled. I think ARC-AGI will be one benchmark among many that just gets solved by scale, and that as LLMs are scaled up, we should expect them to be able to solve tasks of increasing complexity when used with the appropriate tools, resources and prompting/scaffolding. (In this case, performance is due to scale and 6 days of iteration.)
+   254→
+   255→I think it is plausible that scaling LLMs12 by another 2-10 OOMs in effective training compute, and giving them tools, resources and scaffolding to solve real-world tasks can result in "AGI"13, understood as AI capable of massively accelerating R&D. Such a technology would likely be the most transformative technology in human history, and I prefer to refer to this as "Transformative AI” (TAI) due to the potential ambiguity of "AGI".
+   256→
+   257→TAI poses huge risks. Making mistaken predictions about where LLMs are heading could result in a dramatic underestimate of the dangers they could pose. If, like Mike Knoop (co-host of the ARC-AGI prize), you oppose bills like SB-1047 because you think LLMs won’t scale14, then it really matters that you are right about LLMs not scaling. And every time you get evidence that indicates that scaling might be dangerously powerful (and I hope this post provided some), you should update appropriately in favor of more caution.
+   258→
+   259→ARC-AGI probably isn't a good benchmark for evaluating progress towards TAI: substantial "elicitation" effort could massively improve performance on ARC-AGI in a way that might not transfer to more important and realistic tasks. I am more excited about benchmarks that directly test the ability of AIs to take the role of research scientists and engineers, for example those that METR is developing. (I think developing these evaluations and the science of conducting these evaluations is a highly leveraged way of reducing the risk that powerful AGI takes humanity by surprise; if you’re interested in contributing to them, you can see open roles at METR here. Note that I have various COIs with METR.) I still think that work like ARC-AGI can be good on the margin for getting a better understanding of current AI capabilities.
+   260→
+   261→(I'm ambivalent about advancing AI progress overall, especially in a broadly proliferated fashion. If I thought that my work on ARC-AGI would likely substantially advance AI progress, I would not have published this blog post.)
+   262→
+   263→More minimally, I think that ARC-AGI would be a better evaluation of progress towards TAI if it used purely text based problems or at least had a text based subset: good vision isn’t necessary for TAI and improved vision has outsized effects on ARC-AGI relative to TAI progress.
+   264→
+   265→I also think that the ARC-AGI prize is made worse by not allowing SOTA (closed source) LLMs in submission and by overly restricting runtime computation15. (There is an open leaderboard which has no such constraints.) I expect that SOTA LLMs will be pushing the frontier of progress in ARC-AGI based on these results and general views about what will happen with SOTA LLMs in the next few years. Higher limits on runtime compute seem important for advance warning: if an approach currently costs 10x human labor costs but can do a task, then it will probably cost way less in a few years (or less time) as further optimizations accrue. For instance, substantially optimizing the runtime compute used by my approach seems doable.
+   266→
+   267→Overall, I appreciate the approach of ARC-AGI and I appreciate that Chollet and Knoop have made strong and relatively specific claims. (Some of which now seem to be contradicted!) Nonetheless, I think there are substantially better ways to benchmark progress toward transformative AI.
+   268→
+   269→Appendix: A bunch of tricks used in my solutions
+   270→
+   271→I use a bunch of tricks to improve performance:
+   272→
+   273→I split problems into two buckets: problems where the grid is the same size in the input and the output (in the examples) and problems where the size differs on any example input. I use a different prompt for these two cases. I use different examples and I also use a more extensive ascii representation in the case where the grids are the same size, as this representation is more useful in this case. I also use different prompts when having GPT-4o fix attempted implementations.
+   274→
+   275→I use various ascii representations (in the case where grids are the same size) to make it easier for GPT-4o, which is very bad at this type of vision, to analyze the grid. Few-shot examples use these representations when reasoning. We show:
+   276→
+   277→The grid as a 2d array where each location has both the color and that location is spreadsheet/chess style notation (e.g. A7, B3, etc.)
+   278→
+   279→The list of all locations (in spreadsheet style notation) at which a given color occurs. We split this up into connected components to make shapes easier to understand.
+   280→
+   281→A normalized view of connect components (shapes) which shows the spreadsheet notation with shapes translated to have minimum row and column at 0. This makes it easier to compare shapes without getting confused by offsets.
+   282→
+   283→A “diff” between the input and output represented as pairs of distinct colors and the locations at which the input has the first color and the output has the second color (e.g., black changes to green).[^diffonly] This is only used in a subset of examples (see below about ensembling over few-shot prompts).
+   284→
+   285→When revising implementations, I also show an ascii diff between the expected and actual output for each of the examples. This is shown regardless of whether the input/output grid for the examples are the same size. (Though it can only be shown if the expected and actual output have the same shape.)
+   286→
+   287→I do a bit of local search to optimize prompts (on different subsets of the data from the subsets where I report performance!). Mostly, this looks like deciding which few-shot examples to include and which to put at the start/end of the prompt (which the model probably pays more attention to).
+   288→
+   289→I use a few-shot prompt for the revision operation rather than just asking the model to revise. In the few shot prompt, I include some cases where revision is both reasonably doable and the model failed to successfully revise (on a prior version of the prompt on the train set). 
+   290→
+   291→I use a somewhat non-trivial hamming distance approach for picking which implementations to revise though I don’t think details here matter much (based on my testing). I end up selecting 12 solutions which are ranked in closeness to the output and then using 3040 samples split over these solutions. I allocate the samples by reducing the samples by 25% for each successive item (the first item gets 384 samples, the second gets 288, the third 224 (I round to the closest 32), and so on). 
+   292→
+   293→I use the geometric mean of the hamming distance ranks to each of the outputs in the examples. (That is, I get the distances for each implementation, I rank them based on these distances, and then I take the geometric mean of these ranks across examples.) I also encourage slightly more diversity by penalizing for being too close to the solutions I’ve already selected. I only revise implementations that produce valid grids. I also skip implementations that produce a grid with a size that doesn’t match the expected output for problems where the size shouldn’t change (based on the examples).
+   294→
+   295→I somewhat arbitrary upsample completions from better prompts, in particular the V2 prompt described above is upsampled. I just guessed at a constant offset to add for V2 to to remove for V0 based on some eyeballing of the typical geometric mean and what I thought might make sense. I didn’t optimize these values.
+   296→
+   297→I only do revision on problems with fewer than 32 solutions that are correct on the examples with the idea being that we probably got the other solutions correct and thus don’t need to run this. I filter out solutions which are correct on the examples (as it's unclear what revision should do in this case).
+   298→
+   299→I ensemble over several few-shot prompts. I think this somewhat improves performance over more samples with a fixed few-shot prompt (the diversity improvement is larger on the test distribution than the train distribution I think) and I already had a bunch of these samples from prior runs.
+   300→
+   301→To pick what to submit, I do a majority vote and pick the top-3. First, I do a majority vote over the implementations which are correct on the training set. If this doesn’t produce three outputs (because there are less than 3 distinct outputs from implementations which are correct on the training set), I do a majority vote over implementations where I weight implementations based on how close they are to the expected output on the examples. In particular, I use the same geometric mean of hamming distance ranks metric discussed above where the weight for the majority vote is the reciprocal of this geometric mean.
+   302→
+   303→I don’t think the details of this matter much (and it isn’t optimized), I just thought something like this would be a good idea.
+   304→
+   305→I also reject outputs which are equal to the test input. There are no cases in ARC-AGI where the test output is equal to the test input. This is more important than you might have thought because implementations which make no changes sometimes do well according to the hamming distance metric but are surely wrong. (If there are multiple test inputs, we reject if any are the same.)
+   306→
+   307→I use the n option from the GPT-4 API to make more samples cheaper.
+   308→
+   309→Some tricks I don’t use that might improve performance:
+   310→
+   311→I currently spend the same number of samples on each problem. You could terminate early on problems which are consistently solved. I think this might reduce cost by perhaps 25-35%.
+   312→
+   313→In the OpenAI API, I use n < 128 (typically 32 or 16) because n=128 typically errors from what I’ve seen. Currently it seems like about half of my cost is input tokens, so going to n=128 would roughly halve the cost.
+   314→
+   315→It would probably help to divide the problems into substantially more categories and then build specialized prompts and tools for each category. This somewhat defeats the point of ARC-AGI though and I’m not sure what these categories would be.
+   316→
+   317→Doing a second or third revision round could help substantially. (Relative to spending these samples elsewhere.)
+   318→
+   319→Further extending the debugging/revision process could help substantially.
+   320→
+   321→Fine-tuning of GPT-4o to better understand the representations I use (and be able to see) would surely help a bunch (though it would be expensive).
+   322→
+   323→Appendix: results for the train set
+   324→
+   325→Around 2^15 or 32,000 samples would be required to reach MTurk performance on the train set.
+   326→
+   327→Appendix: Returns to revision samples
+   328→
+   329→1
+   330→
+   331→The number being exactly 50% is a coincidence. An earlier version of this method got 51%, but then I fixed a bug and reran and ended up at 50% by chance.
+   332→
+   333→2
+   334→
+   335→I haven’t yet submitted to the public leaderboard, but I’ll do this at some point. (I haven’t done this yet because this requires writing a kaggle notebook and might require me to reduce ram usage somewhat. (My ram usage is highly unoptimized.))
+   336→
+   337→3
+   338→
+   339→Prior results didn't have access to SOTA LLMs nor did they use nearly as much compute as I did. Also, prior results are evaluated on a private test set, though this shouldn’t matter much since it’s supposed to be basically IID with the public test set.
+   340→
+   341→4
+   342→
+   343→I hold out 100 problems from the train set which I avoid doing any iteration or prompt optimization on. I then test on this held out set and report these numbers.
+   344→
+   345→5
+   346→
+   347→These problems were picked from the public evaluation set, and I chose the third random sample of three problems, as the first sample didn’t seem representative and the second sample didn’t have the AI getting one right for a prior version of my method (it now gets one right on this second sample). These are problems named '642d658d.json', '0934a4d8.json', 'fafd9572.json' on ARC-AGI’s GitHub repository. You can find more here by selecting “Public evaluation set” as test set instead of the default “tutorial”. You can submit up to 3 answers per problem (accuracy is top-3 accuracy); my solution got the first right on its first try. Interestingly, this third problem was actually done correctly by my method (on the first try) on a prior run of the approach, but after I fixed a bug and reran the revision step, it now is incorrect.
+   348→
+   349→6
+   350→
+   351→In practice, GPT-4o seems to not really bother doing a good job of following my reasoning examples, so being this meticulous in the reasoning is probably not that useful (though it probably helps some). I tried it because I’ve previously found that extremely detailed few-shot prompts have been really helpful for eliciting high-quality reasoning from LMs.
+   352→
+   353→7
+   354→
+   355→ARC-AGI allows for 3 submissions per problem (based on the description on the github) and I assume prior SOTA and the human baseline is reported with 3 submissions per problem. It seems like the contest maybe now only allows for 2 submissions. When lowering to 2 submissions, I get 70% (rather than 72%) on the train set and 48% (rather than 50%) on the test set.
+   356→
+   357→8
+   358→
+   359→Early in this project I didn’t realize these sets differed so much and thought I had made much more progress! This is clearly pointed out in the current technical guide and was noted somewhere on the old website, so this is mostly on me.
+   360→
+   361→9
+   362→
+   363→It’s non-obvious how to budget samples when using multiple few-shot prompts for diversity. In practice, I find that more samples from V2 basically dominates diversity from the prompt ensemble I use.
+   364→
+   365→10
+   366→
+   367→For the fit, I cut off sample counts lower than 8 as I found that this sometimes makes the fit considerably worse in the regime we care about. There are good reasons to expect different scaling for small numbers due to using top-3 accuracy.
+   368→
+   369→11
+   370→
+   371→We could resolve this by changing the y axis to log(1-accuracy) which should have the intended asymptotic properties. I’ve looked at this and this fit seems slightly worse in this regime. Probably both fits start to fail after less than 10 more doublings.
+   372→
+   373→12
+   374→
+   375→By LLMs, I really mean AIs which heavily utilize semi-supervised pretraining and are basically a continuation of the current paradigm of SOTA LLMs.
+   376→
+   377→13
+   378→
+   379→I don't like the term AGI. I prefer using the term transformative AI and ideally defining this term to mean something specific like "AI capable of massively accelerating R&D".
+   380→
+   381→14
+   382→
+   383→I don’t think that this is actually a good argument against SB 1047, since this bill only requires that companies that spend at least $100M on a training run measure dangerous capabilities (which is very cheap compared to the training run itself), and apply appropriate safety measures if the evaluation shows that the resulting AI can cause a catastrophe. I discuss my thoughts on SB-1047 in more detail in this blog post.
+   384→
+   385→15
+   386→
+   387→That said, I understand why heavily restricting runtime compute might be important for kaggle.
+   388→
+   389→Subscribe to Redwood Research blog
+   390→
+   391→Launched 2 years ago
+   392→
+   393→We research catastrophic AI risks and techniques that could be used to mitigate them.
+   394→
+   395→Subscribe
+   396→
+   397→By subscribing, you agree Substack's Terms of Use, and acknowledge its Information Collection Notice and Privacy Policy.
+   398→
+   399→130 Likes∙
+   400→12 Restacks
+   401→
+   402→130
+   403→
+   404→45
+   405→
+   406→12
+   407→
+   408→Share
+   409→
+   410→PreviousNext
+   411→
+   412→Discussion about this post
+   413→
+   414→CommentsRestacks
+   415→
+   416→Melanie Mitchell 
+   417→
+   418→Jun 19, 2024
+   419→
+   420→Liked by Buck Shlegeris
+   421→
+   422→Have you published the actual prompts you used anywhere? Thanks!
+   423→
+   424→Like (4)
+   425→
+   426→Reply
+   427→
+   428→Share
+   429→
+   430→1 reply by Buck Shlegeris
+   431→
+   432→osmarks 
+   433→Jun 17, 2024
+   434→
+   435→Liked by Buck Shlegeris
+   436→
+   437→Is it possible that the issues with vision are because the size of the cells in the input is different from GPT-4o's patch size? 
+   438→
+   439→Like (3)
+   440→
+   441→Reply
+   442→
+   443→Share
+   444→
+   445→2 replies
+   446→
+   447→43 more comments...
+   448→
+   449→TopLatestDiscussions
+   450→
+   451→If Mythos actually made Anthropic employees 4x more productive, I would radically shorten my timelines
+   452→
+   453→Better estimates of uplift at AI companies seem helpful
+   454→
+   455→Apr 11 • Ryan Greenblatt
+   456→
+   457→64
+   458→
+   459→5
+   460→
+   461→4
+   462→
+   463→Current AIs seem pretty misaligned to me
+   464→
+   465→In my experience, AIs often oversell their work, downplay problems, and cheat
+   466→
+   467→Apr 15 • Ryan Greenblatt
+   468→
+   469→70
+   470→
+   471→10
+   472→
+   473→11
+   474→
+   475→The inaugural Redwood Research podcast
+   476→
+   477→With Buck Shlegeris and Ryan Greenblatt
+   478→
+   479→Jan 4 • Buck Shlegeris
+   480→
+   481→27
+   482→
+   483→15
+   484→
+   485→2
+   486→
+   487→3:52:01
+   488→
+   489→See all
+   490→
+   491→Ready for more?
+   492→
+   493→Subscribe
+   494→
+   495→© 2026 Buck Shlegeris · Privacy ∙ Terms ∙ Collection notice
+   496→
+   497→ Start your SubstackGet the app
+   498→
+   499→Substack is the home for great culture

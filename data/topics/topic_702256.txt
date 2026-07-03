@@ -1,0 +1,144 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+ANDREY YUNOSHEV · 58TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+0
+more_vert
+Question on scoring: per-task score appears to differ between single-file and full-bundle submissions
+
+I'm trying to understand the exact scoring mechanism for submissions and noticed what looks like a discrepancy. Could anyone (especially the organizers) clarify?
+
+Setup — controlled experiment with 3 submissions of the same task262 ONNX file:
+
+Submission	Files in zip	Public LB returned
+(1) Only task262.onnx (my candidate, ~600 bytes cost)	1	18.60
+(2) 400-task bundle that includes the same task262.onnx	400	6404.04
+(3) Same 400 bundle but task262.onnx removed	399	6403.62
+
+Implied contribution of task262 in bundle context = (2) − (3) = 0.42 LB
+
+But the same file scored 18.60 LB when submitted alone. So the per-task score appears to depend on whether other files are present.
+
+The expected per-task points formula is max(1.0, 25.0 - log(memory + params)) from neurogolf_utils.verify_network, which gives ~18.6 for my file's cost ≈ 596. This matches the single-file score exactly, but not the bundle contribution.
+
+The competition Overview says the official scorer "will also employ a private dataset (containing a smaller number of examples per task)". My local validation passes 100/100 on a holdout of ARC-GEN-style samples I generate myself, but the bundle score behaves as if private examples failed.
+
+Questions:
+
+Is the private dataset evaluated for every submission (single-file or bundled), or only when the bundle contains a network for the corresponding task?
+When a network passes all train / test / arc-gen examples but fails on the private dataset, what is the per-task contribution? Is it 0, the cost_pts, or something else (e.g., a fixed penalty)?
+Is there a documented spec for what the single-file Public LB number actually represents, given that 399 of the 400 task slots are missing from the zip?
+
+A pointer to documentation would be perfect. Thanks!
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+Chris Deotte
+
+Posted a month ago
+
+· 11th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Maybe this is related to this discussion here
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted a month ago
+
+arrow_drop_up
+2
+more_vert
+
++1, I believe that is the root cause (specifically, there is a bug in ONNX Runtime that retains state between consecutive task executions when networks are malformed).
+
+@andreyyunoshev Take a look at that discussion, and see if it might apply to these tasks in your bundle: #272, #294, #317
+
+emoji_people
+Andrey Yunoshev
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 58th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I checked all three for the bias_len < out_channels pattern — task272/294 already had bias=10/out_ch=10, task317 had no bias (I added zero bias). Upgraded ir/opset on ir=6 tasks. Check also all other tasks. So bias-OOB hypothesis doesn't appear to be the live bug for my bundle — possibly something else (state retention?). Anyone have additional reproducer patterns?
+
+5 more replies
+arrow_drop_down
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert

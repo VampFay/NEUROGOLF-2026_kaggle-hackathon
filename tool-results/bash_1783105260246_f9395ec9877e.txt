@@ -1,0 +1,183 @@
+
+############################################################
+# 697079  (full body 8282 chars)
+############################################################
+The 2026 NeuroGolf Championship | Kaggle
+menu Skip to content Create search ​ explore Home emoji_events Competitions leaderboard Benchmarks smart_toy Game Arena code Data Hub expand_more format_list_bulleted More expand_more menu Skip to content search ​ Sign In Register Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic. Learn more OK, Got it. The Neurosynthetic Research Institute · Research Prediction Competition · 12 days to go Join Competition more_horiz The 2026 NeuroGolf Championship Design the smallest neural networks to solve ARC-AGI image transformations The 2026 NeuroGolf Championship Overview Data Code Models Discussion Leaderboard Rules ymg_aq · 18th in this Competition · Posted 2 months ago arrow_drop_up 20 more_vert Proposal: Use ONNX file size as a simple deterministic score to reduce scorer exploit risk First of all, I would like to thank the competition organizers and the operations team for creating and running this interesting competition. Solving ARC-style tasks under the ONNX submission constraint is a very engaging setting, and it has been fun to think about how to express and compress solvers in this format.
+That said, I have some concerns about the current scoring method.
+The current scorer estimates memory and params from the ONNX graph, and then computes the score from those values. However, this makes it possible to optimize not only for simple and efficient task solvers, but also for gaps in the scorer's static analysis logic.
+In fact, I have already confirmed that it is possible to obtain 25 points on an arbitrary task under the current scorer . I am intentionally not describing the exploit details here, but the important point is that this is not just a theoretical concern.
+This means that a theoretical 25 * 400 = 10000 score can be reachable through scorer-specific behavior. This is different from the original goal of solving ARC tasks well and efficiently in ONNX.
+Another concern is that, with the current static scoring approach, a participant who finds an exploit could keep it private and use it only for the final submission. It would also be possible to update the score gradually in order to maintain the leaderboard lead. This affects not only fairness between participants, but also the reliability of the leaderboard.
+As I understand it, recalculation for the first-place duration prize starts from May 6. If scorer exploits can move the leaderboard significantly, the operations team may need to spend more and more effort on remeasurement, investigation, and scorer fixes. From the participant side as well, attention may shift from improving ARC task solutions to searching for the next scorer exploit, making it harder to focus on the original purpose of the competition.
+Of course, individual scorer issues can be fixed. However, ONNX has many complex aspects: shape inference, constant folding, runtime behavior, operator semantics, and tooling differences. It seems very difficult to estimate memory and compute perfectly, statically, and fairly. Even if one exploit is fixed, another one may be found quickly. If the leaderboard changes significantly each time, the competition becomes unstable.
+For this reason, I would like to propose a simpler and more deterministic scoring method: use the submitted ONNX file size.
+For example, each task could be scored as follows:
+score = max( 1 . 0 , 25 . 0 - log(max( 1 . 0 , onnx_file_size_bytes)))
+Here, log is the natural logarithm.
+This has several clear advantages:
+It is very simple to implement.
+It depends much less on scorer internals.
+It is less affected by ONNX tooling, runtime, or profiler differences.
+It evaluates the submitted artifact itself, so the exploit surface is smaller.
+It matches the NeuroGolf goal of building short, simple, and efficient ONNX solvers.
+As in last year's CodeGolf competition, optimizing byte size is not just superficial compression. It often leads participants to discover simpler and more efficient task-solving ideas and representations. I think the same applies here: minimizing ONNX file size would guide participants toward concise and essential ONNX solutions.
+Of course, file size is not a perfect proxy for runtime memory or compute. A small graph can still create large intermediate tensors. However, the more complex the scorer's memory and compute estimation logic becomes, the more that estimation logic itself becomes the optimization target. For a competition metric, a simple and stable proxy may be preferable to a more sophisticated but exploitable estimator.
+As a reference, I analyzed the 400 ONNX files from my current solution set, which corresponds to my leaderboard score of 6454.15 . The ONNX file-size distribution was:
+Applying the file-size-based formula above to this solution set gives a total score of about 6657.0 . This keeps the score in a similar overall scale to the current memory/params-based scoring.
+I also checked the correlation between ONNX file size and the current scorer's metrics.
+So file size is reasonably correlated with the current scoring intent, especially with memory and memory + params. 1 1 1 Please sign in to reply to this topic. comment 8 Comments 1 appreciation comment Hotness Michael D. Moffitt Competition Host Posted 2 months ago arrow_drop_up 4 more_vert It is a tempting proposal! We received a similar suggestion over email from @tonylica , and it definitely has its merits.
+However, there's a risk (and I think it's significant) that teams would begin to find & exploit loopholes in the underlying protobuf file format. I have studied that format in depth myself, and believe me when I say that it's not something most contestants would enjoy hacking around. ymg_aq Topic Author Posted 2 months ago · 18th in this Competition arrow_drop_up 1 more_vert I imagine metrics like this were already considered carefully from the organizer side as well, and your point about introducing a different class of risks makes perfect sense.
+Really appreciate all the effort and consideration that’s clearly going into designing and maintaining the competition. Pavel Posted 2 months ago · 7th in this Competition arrow_drop_up 2 more_vert Interesting suggestion!
+A few points which immediately come to mind though:
+correlation between file size and memory + params when models are optimized for memory + params does not imply their correlation if we start optimizing for file size (e.g. materializing huge tensors dynamically will become free)
+file size can also potentially be optimized (maybe hacked) in non-algorithmic ways: short tensor names, field ordering, omitting defaults, opset/IR choices, initializer encoding, metadata stripping, storing tensor data outside of .onnx, etc. The initial metric also looked good before everybody started optimizing against it.
+ymg_aq Topic Author Posted 2 months ago · 18th in this Competition arrow_drop_up 1 more_vert Thanks for the thoughtful points. Yes, I agree that file size is not a perfect metric and can be subject to certain optimizations.
+The intent of this proposal is less about finding an ideal proxy, and more about improving robustness against exploits and overall scoring stability. The current metric also seems to have its own vulnerabilities in that regard.
+In any case, all metrics involve trade-offs, so I think it’s best that these perspectives are discussed, and ultimately the decision is made by the organizers. Pavel Posted 2 months ago · 7th in this Competition arrow_drop_up 0 more_vert Yeah, I guess my main point is that, at the very least, someone should run a strong agent against any new candidate metric and see what it finds before officially switching to it. This comment has been deleted. This comment has been deleted. ymg_aq Topic Author Posted 2 months ago · 18th in this Competition arrow_drop_up 2 more_vert I agree there is no clearly correct metric, and the final decision should be left to the hosts. File size is not perfect, but my main point is that it may reduce the exploit surface and help keep the competition focused on ARC-solving rather than scorer-specific tricks. This comment has been deleted. Appreciation (1) Navneet Posted 2 months ago arrow_drop_up -1 more_vert Thanks for the ONNX file @ymgpalaqs
+--- END 697079 ---
+
+
+############################################################
+# 707993  (full body 13995 chars)
+############################################################
+The 2026 NeuroGolf Championship | Kaggle
+menu Skip to content Create search ​ explore Home emoji_events Competitions leaderboard Benchmarks smart_toy Game Arena code Data Hub expand_more format_list_bulleted More expand_more menu Skip to content search ​ Sign In Register Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic. Learn more OK, Got it. The Neurosynthetic Research Institute · Research Prediction Competition · 12 days to go Join Competition more_horiz The 2026 NeuroGolf Championship Design the smallest neural networks to solve ARC-AGI image transformations The 2026 NeuroGolf Championship Overview Data Code Models Discussion Leaderboard Rules souldrive · 270th in this Competition · Posted 21 days ago arrow_drop_up 1 more_vert Compile, Don't Train: the opset-10 ONNX trick that scores ~2× on held-out TL;DR. In NeuroGolf the per-task score rewards small, simple nets that nail the held-out examples. We stopped training per-task CNNs and started compiling reference ARC programs into opset-10 ONNX. Compiled rules generalize (~0.93–1.0 held-out) and are tiny, so they beat trained memorizers (~0.42) by roughly 2× of public value. Below: how to reason about the metric, an empirical "scoring is fractional" finding, the reusable opset-10 golf tricks, a debugging method, and an honest list of what this can't do.
+▶ Runnable companion notebook (every trick below as a real, verified opset-10 graph): https://www.kaggle.com/code/souldrive/compile-don-t-train-onnx-golf-that-scores-2x
+The metric, restated as a strategy
+Per task, score ≈ (25 - ln(mem + params)) × (fraction of held-out scored examples predicted exactly) .
+Two forces fall out of that single line:
+Smaller is more. Because it's 25 - ln(mem + params) , every byte you shave is logarithmic points back. "Memory" here is mostly intermediate tensor size , not weights — that distinction is where most of the points hide (see Memory Golf below).
+Right beats close, but close beats zero. The second factor is a fraction , so a net that implements the true rule on more held-out examples scores strictly more.
+That second point reframes the whole competition. If you believe scoring is binary (exact-on-everything or zero), you train a CNN to memorize your visible examples and hope. If scoring is fractional , you should instead implement the rule that produced the examples — because the rule is what transfers to the held-out split.
+The empirical finding: scoring is FRACTIONAL, not all-or-nothing
+We didn't assume this — we measured it. We took several "near-miss" transpiles (programs exact on ~90–99% of our examples, not 100%) and submitted them on empty task slots. Public score went up ~+25 .
+Under all-or-nothing scoring that change is +0 . The only model consistent with "+25" is:
+task_points = base_points × (held- out exact fraction )
+This is the single most useful thing we learned, because it tells you what to optimize : not "fit my visible examples" but "implement the rule that generates them." Memorizers cap out near their visible-set fraction on held-out data; rule-implementers ride the fraction up toward 1.0.
+A public ARC DSL ships ground-truth solve_<id>(I) programs for many tasks. Transpile those into compact ONNX and you get both metric factors at once — tiny and correct:
+The mental model that makes this click: a trained CNN approximates the input→output map from a few points; a compiled program is the map. Held-out is exactly where that difference shows up.
+One honest caveat up front, because it shapes how you should use all of this: a fairly complete transpiler tops out around ~3400 local , which is below this competition's Bronze cutoff . So treat this as a strong rank-climb plus a reusable engineering technique — not a guaranteed-medal method.
+The reusable part: opset-10 ONNX-golf tricks
+This is the section to steal even if you never touch ARC. opset-10 is deliberately spartan — no Loop , no Unique , no NonZero , no CumSum , and Min / Max are float-only — so the "obvious" implementations are gone and you express everything as fixed-shape tensor algebra. These patterns transfer to any compact-ONNX / net-golf target.
+1. Enumerate components without Loop : the fixed-K peel
+You can't iterate an unknown number of objects. Pick a budget K and peel the highest remaining component K times:
+remaining = labels # int/ float grid , 0 = background
+for k in range (K): # K is a compile - time constant -> fully unrolled
+comp = Greater(remaining, mx - 0.5 ) * Greater(mx, 0.5 ) # the top object (empty if none)
+remaining = remaining * ( 1 - comp) # erase it, continue
+K iterations yield up to K objects in descending-label order; iterations past the last object produce empty masks that fold away. Pick K = your worst-case object count.
+2. Connected-component labeling via unrolled max-propagation
+To get those labels, seed each foreground cell with a unique id, then propagate the neighbor-max for H + W steps — BFS flood unrolled to its worst-case diameter:
+ids = unique_id_per_cell * foreground # e.g. row *W + col + 1 , zeroed on background
+nbr = max (ids, shift_up(ids), shift_down(ids), shift_left(ids), shift_right(ids))
+ids = nbr * foreground # re-mask so labels never leak into background
+After convergence every cell carries its component's max id — a stable label you feed straight into Trick 1. Shifts are Pad + Gather (Trick 6), so everything stays static-shape.
+3. Prefix sums without CumSum : triangular MatMul
+A prefix sum along an axis is exactly a multiply by a triangular ones-matrix:
+L = lower_triangular_ones(N, N) # constant initializer, L[i,j] = 1 if j <= i
+Use the strict ( j < i ) variant for exclusive sums. This is the workhorse for compaction : prefix-sum a 0/1 keep-mask to get each kept element's destination index.
+4. Variable-length outputs (compress / dedupe / split / crop) via a permutation MatMul
+compress / dedupe / split / crop all produce a variable number of lines — normally a NonZero + Gather job you can't do here. Instead build a 0/1 permutation matrix that scatters kept lines to the top-left, and apply it with MatMul :
+keep = (row is kept) # 0/1 vector, length H
+dest = strict_prefix_sum(keep) * keep # Trick 3: kept row i -> position dest[i]
+R = on ehot_scatter(dest, keep) # R[dest[i], i] = 1 for kept rows
+rows_compacted = MatMul(R, grid) # rows pulled to the top; rest zero
+# columns: build Cm the same way and do MatMul(grid, Cm)
+Rows use a left-multiply, columns a right-multiply. The output stays a static H×W ; kept content lands top-left, the rest is zero.
+5. Canvas mode: keep the output shape STATICALLY inferable
+This one is load-bearing. The scorer sizes your net via shape-inference, so your output shape must be statically inferable. A dynamic Slice makes the shape runtime-only → the net is unscoreable .
+So for variable-size outputs, always emit onto a fixed 30×30 canvas, content packed top-left, with a runtime keepmask that zeros everything beyond the runtime (H, W) extent:
+canvas[30, 30] # static shape -> shape-inference is happy
+keep = (row_idx < H) * (col_idx < W) # runtime mask from the data, broadcast to 30x30
+Variable size lives in the values , never in the shape .
+Corollary: subgrid / crop is two static-shape Gather s , never a dynamic Slice . The index values can be data-dependent; the index shape is static, so the output shape is too — and this is also how every "shift" in Trick 2 is built.
+6. The all-zeros profiling pass → clamp every index
+The scorer profiles each net on an all-zeros input to measure cost. That's a trap: with an empty grid your masks are empty, your "first kept index" is garbage, and a Gather happily reads out of bounds . Clamp every data-derived index into [0, N-1] before you gather. opset-10 Min / Max are float-only, so clamp in float and cast back:
+Do this on every index that derives from data, not just the obvious ones. The all-zeros pass will find the one you forgot.
+7. Memory golf: trace on the compact frame, then Pad back
+Points scale with 25 - ln(mem + params) , and most of mem is intermediate tensor size, not weights. So the biggest lever is often: don't run your pipeline on the full 30×30 . Crop the input to its content bounding box B×B (two Gathers, Trick 5), run the entire trace on the compact frame, then Pad back to 30×30 :
+B = content_extent(grid) # bounding box of non-background
+core = Gather2D(grid, B) # run everything on B x B
+out = Pad(core, to= 30 x30) # restore static canvas at the end
+On one heavy net this dropped "memory" from ~59.7M → ~1.6M — a large, basically-free gain, because the cost is logarithmic in mem + params .
+Two strict-equality footguns (these cost me real submissions)
+These aren't opset tricks — they're equality-contract traps. Both produce nets that "look right" and fail the strict compare.
+Refill channel 0. The harness compares the full one-hot , and colour 0 means channel-0 = 1 , not "all channels 0". Any cell you zero across all channels reads as invalid , not colour-0, and fails strict equality even though it renders identically:
+ch0 = 1 - ReduceSum(onehot, axis=channels) # cells now empty
+onehot [..., 0 ] = onehot[..., 0 ] + ch0 # refill background so 0 == channel- 0 = 1
+Clip fills to the content extent. A flood/fill that overshoots paints the zero-padding outside (H, W) → off-grid colours that fail the strict 30×30 compare. Clip every fill to the real extent (the Trick 5 keepmask does it).
+The F-lever: one substrate, a whole family of tasks
+Once you can enumerate objects (Trick 1), one substrate unlocks a family of tasks: a general higher-order sfilter /apply over enumerated objects .
+objects = peel_K(mask) # Trick 1
+keep = [ coerce_bool(predicate(o)) for o in objects ] # any per-object test
+result = union( o * keep_o for o in objects ) # gate + union survivors
+Evaluate any predicate per single-component object (size, colour count, symmetry, touches-border, unique-colour, …), coerce to a keep-bool, gate the cells, union the survivors. Most "select the objects that …" tasks collapse into picking the predicate. Build the substrate once; reuse it everywhere.
+Debugging: partial-program verify
+When a transpiled program is wrong but you don't know where , build synthetic targets from the reference program's intermediate state :
+Run the reference solve_<id>(I) up to intermediate variable x_k .
+Make a synthetic example whose target output is x_k .
+Run your transpiled graph truncated to the same point and compare.
+The first x_k that diverges is the exact statement your transpiler got wrong. This turns "the net is wrong somewhere" into "node 37 mismatches" — the difference between an afternoon and five minutes.
+Companion heuristic: the compiles-but-wrong per-example diff is your highest-yield signal. A net that compiles but misses a few examples almost always encodes one concrete bug or a single semantic gap, and the per-example diff points right at it. Chase those before anything else.
+Honest limits — what this cannot do
+I'd rather you trust the rest of the post, so here's the unflattering half:
+The DSL has to actually reproduce the scored examples. The transpiler can only bank a task where the reference program matches the scored arc-gen examples (~306/400 for us). The rest are arc-quirk : the reference disagrees with the generator (classic case — the DSL keeps a border the scored output strips). A perfect transpile of the wrong rule is still wrong — unbankable, so detect and skip rather than burn hours.
+Order-dependent selection is fragile. Ops like "take the first / extract over a set" depend on iteration order, and our connected-component ordering differs from the reference's frozenset order. A few tasks mismatch purely on order. We skip those rather than ship a wrong net.
+There's a ceiling, and it's below Bronze (~3400 local, as noted above). This is a rank-climb and a reusable technique, not a guaranteed medal — I'd rather say that plainly than oversell it.
+The exact-verify gate is the unsung hero of the honest version: every banked net is verified exact on our examples before it ships, so the failure mode is "we skip a task," never "we silently submit a wrong net."
+Takeaways you can reuse tomorrow
+On any net-golf metric, first decide if scoring is fractional — submit a near-miss on an empty slot and watch the delta. It changes your entire strategy.
+If it's fractional, implement rules, don't memorize examples — rules ride the held-out fraction toward 1.0.
+The opset-10 patterns ( fixed-K peel, max-propagation labeling, triangular-MatMul prefix sums, permutation-MatMul variable outputs, static canvas + keepmask, clamp-every-index, bounding-box memory golf ) port to any compact-ONNX target.
+Build one higher-order substrate (the F-lever) and reuse it across a whole task family.
+Verify exact before you ship , and partial-program-verify to localize bugs fast.
+If you're new here: you don't need to train anything to make progress. Pick one task with a known reference program, hand-compile it to opset-10 using the tricks above, verify it exact, and submit it on an empty slot. Watch the score move. That single loop taught us more than any amount of model tuning.
+▶ Want to run it? Every trick above is a real, executable opset-10 graph in the companion notebook: https://www.kaggle.com/code/souldrive/compile-don-t-train-onnx-golf-that-scores-2x — fork it, run it, and the vmirror + compress demos verify exact in seconds.
+Happy to go deeper on any of these — the permutation-MatMul and the canvas/keepmask shape trick especially have details I compressed here. A couple of open questions I'd genuinely love help with:
+Better tricks for order-stable component enumeration in opset-10? That's our biggest remaining source of skips.
+Does "compile, don't train" generalize to other net-golf metrics you've seen? I suspect it does, well beyond ARC.
+What net-golf tricks have you found? Replies and questions very welcome. Please sign in to reply to this topic. comment 0 Comments Hotness
+--- END 707993 ---
+
+
+############################################################
+# 711989  (full body 3509 chars)
+############################################################
+The 2026 NeuroGolf Championship | Kaggle
+menu Skip to content Create search ​ explore Home emoji_events Competitions leaderboard Benchmarks smart_toy Game Arena code Data Hub expand_more format_list_bulleted More expand_more menu Skip to content search ​ Sign In Register Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic. Learn more OK, Got it. The Neurosynthetic Research Institute · Research Prediction Competition · 12 days to go Join Competition more_horiz The 2026 NeuroGolf Championship Design the smallest neural networks to solve ARC-AGI image transformations The 2026 NeuroGolf Championship Overview Data Code Models Discussion Leaderboard Rules emoji_people Vincent Sirius · 267th in this Competition · Posted 11 days ago arrow_drop_up 8 more_vert Looking for general tips on agent workflows and ONNX golf strategy Hi everyone🙇,
+I’ve been working on optimizing my NeuroGolf submissions for a while, but I feel like I’m hitting a wall now.
+In the earlier rounds, asking agents to rewrite the ONNX architecture, avoid large intermediate tensors, push big ops to the final output node, use uint8/bool, crop early, try Einsum/RoiAlign/Conv tricks, etc. gave me some decent gains. But recently the improvements have slowed down a lot. I’m spending a huge amount of tokens per task, and most attempts either fail correctness/stress or only shave off a tiny bit of cost.
+For people who are still making steady progress: do you have any practical tips?
+Prompting / agent workflow: how do you ask agents to explore without wasting tons of tokens?
+Optimization strategy: when do you stop trying to force a task below some cost threshold and move on?
+Any useful ONNX/code-golf patterns that changed how you approach hard tasks?
+I’m mostly looking for general advice on how to avoid getting stuck in the same unproductive loop.
+Thanks! 1 Please sign in to reply to this topic. comment 1 Comment Hotness Georgy Mamarin Posted 9 days ago · 547th in this Competition arrow_drop_up 0 more_vert A few things that pulled me out of that exact loop:
+Put a local scorer and a per-file validator in the agent's hands, not just the task. Once the agent can measure params/memory/cost itself with a faithful copy of the server scorer, and check correctness after every rewrite, it stops guessing and burning tokens on attempts that were never going to score. That one change cut my wasted iterations the most.
+Gate every lossy rewrite against fresh generator seeds, not just train/test. The hidden set comes from the same ARC-GEN generator, so I generate a few hundred fresh examples per task and run the candidate against them. It catches the "passes locally, 0 on private" overfits before they cost a submit, and tells the agent right away when a clever shortcut broke generalization.
+On when to stop: measure the delta, not the absolute, and keep a dead-ends list. A few "free lunch" ideas just don't pay under this metric. Sub-byte/INT4 packing doesn't help because params count elements, not bytes. sparse_initializer looks free but materializes back to dense, and the memory eats the params win. "Closed-form" one-big-MatMul flood-fill loses because the NxN intermediate dominates. If a task won't drop after a couple of honest attempts, it's usually a structural floor, not a missing trick. The model that helped me most: MACs are free here, tensors aren't, so cost is the count and size of your intermediates, not the ops.
+Happy to go deeper on any of these.
+--- END 711989 ---
+
+
+############################################################
+# 712047  (full body 6368 chars)
+############################################################
+The 2026 NeuroGolf Championship | Kaggle
+menu Skip to content Create search ​ explore Home emoji_events Competitions leaderboard Benchmarks smart_toy Game Arena code Data Hub expand_more format_list_bulleted More expand_more menu Skip to content search ​ Sign In Register Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic. Learn more OK, Got it. The Neurosynthetic Research Institute · Research Prediction Competition · 12 days to go Join Competition more_horiz The 2026 NeuroGolf Championship Design the smallest neural networks to solve ARC-AGI image transformations The 2026 NeuroGolf Championship Overview Data Code Models Discussion Leaderboard Rules Georgy Mamarin · 528th in this Competition · Posted 11 days ago arrow_drop_up 5 more_vert Don't lose a daily submission to one bad file out of 400 I lost a full submission to a single ERROR . A node I'd built with TopK ran fine on my local onnxruntime , but the scoring server rejected it and the whole submission.zip came back zero. Chasing it down taught me the operator wasn't the problem. It was how I'd wired it. None of this showed up in a normal local run: the grader uses an older pinned runtime (ORT 1.24.4, optimizations disabled), and any one bad file zeroes everything.
+So I rebuilt the scoring pipeline locally and put it in a public notebook, in case it saves you the same day: NeuroGolf Survival Kit . It's plumbing every entry needs rather than any kind of strategy. What's inside:
+A local scorer that reproduces the official cost. params, memory, cost, and points all line up with the grader on real submission files, so you can see what a task will score before you spend a submit on it.
+A pre-submit validator that opens a real ORT 1.24.4 session on each .onnx and flags load errors, banned ops, graphs the grader can't score, and file-size overflow. Point it at your folder of 400 and it runs the whole set. Attach the competition data and it probes each file on that task's own example grids, so you skip the false alarms you'd get from random or all-zero inputs.
+One myth-bust: TopK is not banned on the server runtime. I checked it directly. You can reproduce the runtime locally and test an operator yourself instead of trusting a forum thread.
+There's a "run it on your own submission" cell at the end, plus a few reference visualizations of the cost breakdown (dtype to bytes, an operator-safety table). Nothing here is a scoring recipe. It's just the tooling, so you stop losing submits to files that looked fine locally. Thanks to everyone sharing on the forum. If you hit a case where the local numbers diverge from the server, drop it in the comments and I'll fix it. Optimization Neural Networks 1 Please sign in to reply to this topic. comment 3 Comments Hotness Georgy Mamarin Topic Author Posted 8 days ago · 528th in this Competition arrow_drop_up 1 more_vert Another update. I added a section for the one failure the pre-submit validator can't catch: the silent zero. A file can pass every public example and still score 0 on the hidden test, because the hidden set is the same ARC-GEN generators with different seeds. If a file learned the public examples instead of the transformation, it works on what you can see and quietly fails on what you can't.
+The new section reproduces this on a self-contained toy task: a correct model versus one that overfit, with the cells the overfit model gets wrong highlighted, so you can watch the silent zero happen. The check is simple. Before you spend a submit, run each file on fresh samples it has never seen; if it breaks on those, it would break on the hidden set too. I keep the full 400-task version for my own pre-submit, but the idea and a working demo are in the kit now.
+Same offer as before: if your local numbers disagree with mine, say so and I'll dig in.
+Georgy Mamarin Topic Author Posted 9 days ago · 528th in this Competition arrow_drop_up 3 more_vert Week-later update. A couple of dead ends I checked against the pinned scorer (the params/memory math in neurogolf_utils, runtime reproduced on ORT 1.24.4), in case they save someone time.
+params are counted in elements, not bytes. That kills two "free lunch" ideas at once. Sub-byte / INT4 packing doesn't change the element count, so params don't drop. And sparse_initializer (or a Constant with sparse_value) only counts nnz, which looks almost free. In my runs it still didn't come out ahead: once the tensor gets consumed, the dense form shows up in memory. On a real task (a table that's ~80% zeros) cost went 27671 to 28496, a bit worse. The params discount is real, the memory side just eats it.
+On the iterative MaxPool flood-fill from today's tips thread: under this metric it really does beat a "closed-form" transitive-closure / one big MatMul. Memory here is the sum of intermediate tensors, and a reachability matrix for a 30x30 grid is 900x900, around 3.2 MB of intermediate. That dominates and scores far worse than the iterative version, even with fewer ops. MACs are free, tensors aren't, so the usual "just do it in one matrix op" instinct is backwards.
+No recipe here, just two things that didn't work and one that did. Shout if your local numbers disagree with mine. Georgy Mamarin Topic Author Posted 4 days ago · 528th in this Competition arrow_drop_up 0 more_vert A couple more updates to the kit since the last note.
+First, going from pass/fail to a diagnosis: the validator tells you a file fails, not why. So diagnose() now runs each file through the grader's gauntlet (load & size, banned-op scan, a runtime probe, then the scorability checks) and reports the exact gate it dies at, the cause, and the fix. Two things worth flagging if you build the same: the grader runs the file before it scores it, so a runtime error is caught before the scorability checks; and If isn't on the op deny-list, it's rejected later as a control-flow body.
+Second, a short "what the metric charges for" note: MACs and node count are free (the host eliminated MACs in the May 4 update), so the only things you pay for are params and the intermediate tensors you keep. And since score is 25 - ln(cost), a points target converts straight to a byte budget (to score 20, a task's whole cost has to fit in ~150 bytes).
+Same as always: if your local numbers disagree with the server, say so and I'll dig in.
+--- END 712047 ---

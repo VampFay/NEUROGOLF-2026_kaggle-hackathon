@@ -1,0 +1,136 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+RICARDO.M.ZHANG · 227TH IN THIS COMPETITION · POSTED 13 DAYS AGO
+arrow_drop_up
+0
+more_vert
+Tasks throw an error after submission
+
+I'm confusing why several tasks score correctly in the local environment, but throw an error after submission with a sentance:"Error processing onnx networks for tasksXXX." Are there any hidden tests which can make them overfitting when submitting online?
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+emoji_people
+Ricardo.M.Zhang
+TOPIC AUTHOR
+
+Posted 13 days ago
+
+· 227th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+like this
+
+emoji_people
+jacekwl
+
+Posted 13 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Yes, there are hidden tests but that's probably not the reason here. Overfitting would just return score 0.0. Make sure you use the same onnx version as kaggle scorer and you don't use any not allowed technique.
+
+robga
+
+Posted 13 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Overfitting gets 0.00 You should be able to catch all these other legality problems through using the exact scorer in the kaggle data, plus the pinned versions of libraries: numpy (2.4.4), onnx (1.21.0), onnxruntime (1.24.4)
+
+emoji_people
+Ricardo.M.Zhang
+TOPIC AUTHOR
+
+Posted 13 days ago
+
+· 227th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks bro i got it. I'm using wrong version.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+1
+more_vert

@@ -1,0 +1,93 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+HARISH · 1187TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+0
+more_vert
+Compact ONNX patterns for dynamic corridor / empty-rectangle fill?
+
+Hi all, I’m exploring compact ONNX representations for ARC-style tasks where the rule seems to identify large empty corridors or border-touching empty rectangles, erode/trim them, and fill selected zero cells. I’m trying to avoid Loop/Scan/NonZero and keep node count low. So far I’m considering patterns based on ReduceSum over row/column masks, MaxPool-style morphology, and Where-based fills, but maximal-rectangle style selection tends to explode in node count if implemented naively. Do people have general low-node ONNX patterns for:
+
+detecting long empty row/column corridors,
+trimming/eroding corridor endpoints,
+selecting border-connected empty regions,
+avoiding overfitting to public examples? Not asking for task-specific solutions, just general ONNX golfing patterns or tradeoffs people found useful. Thanks!
+
+Please sign in to reply to this topic.
+
+comment
+1 Comment
+Hotness
+Georgy Mamarin
+
+Posted 9 days ago
+
+· 548th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+The thing that reframed all of this for me: node count is basically free here. The cost is params plus the memory of your intermediates, and MACs don't count, so a graph with more nodes but small intermediates beats a "clever" compact one that builds a big tensor. Your maximal-rectangle worry is really a memory worry, not a node-count one: if the DP table is HxW it's fine, if it's NxN it isn't.
+
+Corridors (your first bullet): the ReduceSum over row/column masks you mentioned is the right call. Each reduction collapses a line to a scalar, so the intermediate is 1D and cheap no matter how many ops you stack on it. Endpoint erosion is then a small 1D MaxPool/MinPool on that per-line vector before you broadcast it back.
+
+Border-connected regions: flood from the frame, reach = Min(MaxPool(reach, 3x3, pad=1), passable), repeated N times where N is the family's worst-case path length (winding corridors need more steps than the grid is wide). Border-connected = the reach mask itself; enclosed = passable AND NOT reach. Andrey Yunoshev posted this same flood recipe in 713210, worth a read. What cost me time before I found it: the closed-form version, an NxN reachability matrix, is correct but that NxN intermediate dominates memory, so the iterative morphology wins here even though it runs more ops.
+
+Overfitting: I gate every candidate against a few hundred freshly generated ARC-GEN samples for that task, not just public train/test, since the hidden set is the same generator with different seeds. It catches patterns that fit the public examples and nothing else.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert

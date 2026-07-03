@@ -1,0 +1,349 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+FRITZ CREMER · 1ST IN THIS COMPETITION · POSTED 18 DAYS AGO
+arrow_drop_up
+27
+more_vert
+Score by Bucket
+
+I don't want to give away too much though I think bucket-of-5 still may be safe enough, and perhaps serves as a good reference for others thinking about teaming up:
+
+Buckets of 10:
+
+Bucket	Sum
+001-010	188.69
+011-020	185.10
+021-030	188.11
+031-040	194.36
+041-050	193.17
+051-060	196.68
+061-070	190.24
+071-080	184.24
+081-090	187.44
+091-100	186.26
+101-110	187.49
+111-120	187.50
+121-130	196.29
+131-140	183.18
+141-150	196.45
+151-160	185.06
+161-170	191.58
+171-180	196.08
+181-190	185.49
+191-200	187.17
+201-210	179.60
+211-220	187.10
+221-230	193.36
+231-240	184.60
+241-250	194.55
+251-260	191.50
+261-270	191.32
+271-280	188.10
+281-290	179.58
+291-300	199.96
+301-310	198.64
+311-320	200.27
+321-330	188.71
+331-340	194.89
+341-350	190.77
+351-360	189.44
+361-370	169.18
+371-380	190.95
+381-390	187.17
+391-400	189.97
+
+Buckets of 5:
+
+Bucket	Sum
+001-005	91.07
+006-010	97.63
+011-015	93.69
+016-020	91.41
+021-025	90.69
+026-030	97.41
+031-035	97.64
+036-040	96.72
+041-045	95.70
+046-050	97.47
+051-055	95.63
+056-060	101.05
+061-065	93.00
+066-070	97.23
+071-075	98.14
+076-080	86.10
+081-085	99.20
+086-090	88.24
+091-095	92.76
+096-100	93.50
+101-105	91.82
+106-110	95.66
+111-115	96.93
+116-120	90.58
+121-125	92.75
+126-130	103.53
+131-135	88.28
+136-140	94.91
+141-145	96.35
+146-150	100.10
+151-155	99.21
+156-160	85.86
+161-165	96.93
+166-170	94.65
+171-175	93.70
+176-180	102.38
+181-185	91.38
+186-190	94.11
+191-195	92.54
+196-200	94.63
+201-205	88.24
+206-210	91.37
+211-215	96.97
+216-220	90.13
+221-225	97.45
+226-230	95.91
+231-235	91.23
+236-240	93.38
+241-245	96.45
+246-250	98.09
+251-255	93.71
+256-260	97.79
+261-265	95.65
+266-270	95.67
+271-275	97.23
+276-280	90.87
+281-285	87.84
+286-290	91.74
+291-295	100.84
+296-300	99.12
+301-305	97.74
+306-310	100.90
+311-315	102.35
+316-320	97.92
+321-325	94.12
+326-330	94.58
+331-335	99.36
+336-340	95.52
+341-345	95.70
+346-350	95.07
+351-355	95.52
+356-360	93.92
+361-365	86.19
+366-370	82.99
+371-375	100.31
+376-380	90.64
+381-385	93.03
+386-390	94.15
+391-395	98.31
+396-400	91.66
+
+Interested to see, post your would-be ensemble scores or your buckets in the thread!
+
+1
+4
+2
+
+Please sign in to reply to this topic.
+
+comment
+7 Comments
+Hotness
+1++++++++
+
+Posted 16 days ago
+
+· 12th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+Thanks for your information！ 016-020 98.81 91.41 +7.40 086-090 93.51 88.24 +5.27 241-245 101.08 96.45 +4.63 326-330 99.20 94.58 +4.62 061-065 97.22 93.00 +4.22 081-085 103.03 99.20 +3.83 201-205 91.96 88.24 +3.72 091-095 96.37 92.76 +3.61 131-135 91.67 88.28 +3.39 286-290 94.87 91.74 +3.13 I hope these can be helpful
+
+Yiheng Wang
+
+Posted 18 days ago
+
+· 5th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+buckets 10 + ~4, buckets 5 + ~11, so probably + 20 - 50
+
+Fritz Cremer
+TOPIC AUTHOR
+
+Posted 18 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Interesting to hear! I assume you are primarily going for that solo gold 😄?
+
+Yiheng Wang
+
+Posted 18 days ago
+
+· 5th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+solo gold > team prize > team gold > solo silver : ) Will decide if team up with others before merge deadline
+
+CroDoc
+
+Posted 18 days ago
+
+· 7th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+time to become GM? 😎
+
+emoji_people
+Chan Kha Vu
+
+Posted 18 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Yea @yiheng, you don't need the 9th team gold 😂 a Kaggler of your caliber should get a solo gold and you can do it!
+
+Mohit
+
+Posted 17 days ago
+
+arrow_drop_up
+0
+more_vert
+
+Does it work u sure ?
+
+This comment has been deleted.
+
+Fritz Cremer
+TOPIC AUTHOR
+
+Posted 18 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I would guess +50-70 is possible in this scenario
+
+Jokrasa
+
+Posted 16 days ago
+
+· 49th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+score diff last year was actually even lower if you exclude the large diff between top 3 and 4-12 - the diff between 3 and 4 was higher than the one between 1-3 and 4-12 (top 3 were manual, experienced golfers who outperformed llms, there werent enough manual golfers of that level who were motivated to grind the challenge to fill all gold slots)
+
+though i think the % difference in easy to achieve vs max scores per task is higher this year
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+1
+more_vert

@@ -1,0 +1,212 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+AKIHIRO · 93RD IN THIS COMPETITION · POSTED 23 DAYS AGO
+arrow_drop_up
+3
+more_vert
+Question about public score vs hidden evaluation
+
+I’d like to confirm whether the public leaderboard score is the actual final score for this competition, or whether there is any hidden/private evaluation set that may affect the final ranking.
+
+This matters because it changes the optimization strategy.
+
+If the public score is final, then highly specialized solvers that fit the visible tasks very well seem reasonable. But if there is hidden data, then a solver that performs well on the available training/public examples might still be overfitting and fail to generalize.
+
+So I’m wondering what the intended direction is:
+
+Should we focus on general rule-based solvers that are robust beyond the visible examples, or is it acceptable to optimize directly for the public task distribution, even if the solution is highly specialized?
+
+I’d appreciate any clarification.
+
+Please sign in to reply to this topic.
+
+comment
+4 Comments
+Hotness
+emoji_people
+Jan Vorel
+
+Posted 23 days ago
+
+· 13th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+From first page Overview:
+
+Evaluation
+
+For any of the 400 tasks in the ARC-AGI public training v1 benchmark suite, your team will earn a score of max(1, 25 - ln(cost)) for a functionally correct network whose cost is the sum of the following:
+
+The total number of parameters in the network The total memory footprint of the network (in bytes) Functional correctness will be determined by validating the network against the original ARC-AGI benchmarks and a small private benchmark suite (so as to prevent teams from overfitting their solutions). To be eligible for points, your network must produce correct results across all of these tests. - so it is not final, and overfitting should be avoided
+
+akihiro
+TOPIC AUTHOR
+
+Posted 23 days ago
+
+· 93rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+@evolvion
+
+Thanks, that makes sense. I had missed that part in the Overview.
+
+So the public leaderboard is not necessarily the full final evaluation, and functional correctness is also checked against a small private benchmark suite to prevent overfitting.
+
+That clarifies the intended direction for me: solvers should not only fit the visible public examples, but should remain general enough to pass unseen variants as well.
+
+Thanks for pointing it out.
+
+Fritz Cremer
+
+Posted 23 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+I understood it differently: We can't overfit on the tasks visible to us, as there are more tasks on LB. But these additional tasks won't change between public/private LB. On the leaderboard page it states: "This leaderboard is calculated with all of the test data." which would imply scores won't change. But clarification here would be great as this is a very important detail @mmoffitt
+
+emoji_people
+Jan Vorel
+
+Posted 23 days ago
+
+· 13th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+In my opinion test data is only test cases defined in original task definition file. It is not final dataset that will be used for final testing. But lets organisers clarify
+
+robga
+
+Posted 23 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Organiser has said "Since the LB includes all tasks—including private—the scores you see there are all 100% verified (and there won't be a separate leaderboard after the competition deadline has passed)."
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 23 days ago
+
+arrow_drop_up
+11
+more_vert
+
+Let me know if this clarification is sufficient: there is indeed a small private benchmark suite (to prevent overfitting to the public ARC-GEN examples), but our current LB is already incorporating that hidden benchmark suite.
+
+In other words: you don't need to worry about a separate, post-competition LB that might introduce unexpected surprises — what you're seeing now is all that counts for the final rankings.
+
++cc: @evolvion @akihirokkkkk @fritzcremer @robga
+
+Fritz Cremer
+
+Posted 23 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks, that definitely clears it up!
+
+14 more replies
+arrow_drop_down
++1
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+11
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+1
+more_vert

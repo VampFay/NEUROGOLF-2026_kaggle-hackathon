@@ -1,0 +1,107 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+JAN VOREL · 13TH IN THIS COMPETITION · POSTED 7 DAYS AGO
+arrow_drop_up
+3
+more_vert
+GPT-5.6 Sol
+
+Anybody with access to this model wants to join my team? :)
+
+4
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+David Austin
+
+Posted 6 days ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+8
+more_vert
+
+Until it's out of preview mode and widely accessible, I think its use would not be allowed under the "reasonably accessible to all" standard in competition rule 6b:
+
+b. The use of external data and models is acceptable unless specifically prohibited by the Host. Because of the potential costs or restrictions (e.g., “geo restrictions”) associated with obtaining rights to use external data or certain software and associated tools, their use must be “reasonably accessible to all” and of “minimal cost”. Also, regardless of the cost challenges as they might affect all Participants during the course of the competition, the costs of potentially procuring a license for software used to generate a Submission, must also be considered. The Host will employ an assessment of whether or not the following criteria can exclude the use of the particular LLM, data set(s), or tool(s):
+
+emoji_people
+Jan Vorel
+TOPIC AUTHOR
+
+Posted 6 days ago
+
+· 13th in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+This is why humorously raised this issue. There are here competitors from companies that may have access to it so how this can be enforced? Of course I do not have access to it …
+
+This comment has been deleted.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+8
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+6
+more_vert

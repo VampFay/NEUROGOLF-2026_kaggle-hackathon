@@ -1,0 +1,618 @@
+     1→"""
+     2→neurogolf/solvers/advanced.py — More advanced solvers.
+     3→
+     4→Covers:
+     5→  - ScaleUpSolver: output = input scaled by integer factor k
+     6→  - CropSolver: output = top-left HxW of input (identity works due to validator cropping)
+     7→  - ShiftSolver: output = input shifted by (dh, dw)
+     8→  - TileSolver: output = input repeated (Tile op)
+     9→  - KroneckerSolver: out[i*k+a, j*k+b] = in[a,b] if in[i,j] != 0 else 0
+    10→  - ConcatRepeatSolver: out = input + first K rows repeated (extend pattern)
+    11→  - ConditionalSliceColorMapSolver: slice a sub-region based on a separator color,
+    12→    then apply a color map
+    13→"""
+    14→from __future__ import annotations
+    15→
+    16→from typing import Optional
+    17→
+    18→import numpy as np
+    19→import onnx
+    20→import onnx.helper as h
+    21→from onnx import TensorProto
+    22→
+    23→from .base import Solver
+    24→from .. import dsl
+    25→from ..arc_data import get_pairs
+    26→from ..constants import INPUT_NAME, OUTPUT_NAME, IO_SHAPE, MAX_GRID, NUM_COLORS
+    27→
+    28→
+    29→# ---------------------------------------------------------------------------
+    30→# Helpers
+    31→# ---------------------------------------------------------------------------
+    32→
+    33→
+    34→def _make_io_value_info(name: str, shape=list(IO_SHAPE)) -> onnx.ValueInfoProto:
+    35→    return h.make_tensor_value_info(name, TensorProto.FLOAT, shape)
+    36→
+    37→
+    38→def _make_simple_model(nodes: list[onnx.NodeProto], initializers: list[onnx.TensorProto] = None,
+    39→                       name: str = "neurogolf") -> onnx.ModelProto:
+    40→    initializers = initializers or []
+    41→    graph = h.make_graph(
+    42→        nodes, name,
+    43→        inputs=[_make_io_value_info(INPUT_NAME)],
+    44→        outputs=[_make_io_value_info(OUTPUT_NAME)],
+    45→        initializer=initializers,
+    46→    )
+    47→    model = h.make_model(graph, producer_name="neurogolf",
+    48→                          opset_imports=[h.make_opsetid("", 17)])
+    49→    model.ir_version = 8
+    50→    return model
+    51→
+    52→
+    53→# ---------------------------------------------------------------------------
+    54→# ScaleUpSolver
+    55→# ---------------------------------------------------------------------------
+    56→
+    57→
+    58→class ScaleUpSolver(Solver):
+    59→    """Output is input scaled by an integer factor k (k=2,3,4)."""
+    60→    name = "scale_up"
+    61→
+    62→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+    63→        pairs = get_pairs(task)
+    64→        k = None
+    65→        for inp, out in pairs:
+    66→            if inp.shape[0] == 0 or inp.shape[1] == 0:
+    67→                return None
+    68→            kh = out.shape[0] / inp.shape[0]
+    69→            kw = out.shape[1] / inp.shape[1]
+    70→            if not kh.is_integer() or not kw.is_integer() or kh != kw:
+    71→                return None
+    72→            kk = int(kh)
+    73→            if k is None:
+    74→                k = kk
+    75→            elif k != kk:
+    76→                return None
+    77→        if k is None or k <= 1:
+    78→            return None
+    79→        for inp, out in pairs:
+    80→            scaled = np.repeat(np.repeat(inp, k, axis=0), k, axis=1)
+    81→            if scaled.shape != out.shape or not np.array_equal(scaled, out):
+    82→                return None
+    83→        nodes = [
+    84→            h.make_node("Constant", [], ["roi"],
+    85→                         value=h.make_tensor("roi_v", TensorProto.FLOAT, [0], [])),
+    86→            h.make_node("Constant", [], ["scales"],
+    87→                         value=h.make_tensor("scales_v", TensorProto.FLOAT, [4],
+    88→                                              [1.0, 1.0, float(k), float(k)])),
+    89→            h.make_node("Resize", [INPUT_NAME, "roi", "scales"], [OUTPUT_NAME],
+    90→                         mode="nearest",
+    91→                         nearest_mode="floor",
+    92→                         coordinate_transformation_mode="asymmetric"),
+    93→        ]
+    94→        return _make_simple_model(nodes, name="scale_up")
+    95→
+    96→
+    97→# ---------------------------------------------------------------------------
+    98→# CropSolver
+    99→# ---------------------------------------------------------------------------
+   100→
+   101→
+   102→class CropSolver(Solver):
+   103→    """Output is top-left HxW of input (validator crops automatically)."""
+   104→    name = "crop_top_left"
+   105→
+   106→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+   107→        pairs = get_pairs(task)
+   108→        for inp, out in pairs:
+   109→            H, W = out.shape
+   110→            if inp.shape[0] < H or inp.shape[1] < W:
+   111→                return None
+   112→            sub = inp[:H, :W]
+   113→            if not np.array_equal(sub, out):
+   114→                return None
+   115→        return dsl.identity()
+   116→
+   117→
+   118→# ---------------------------------------------------------------------------
+   119→# ShiftSolver
+   120→# ---------------------------------------------------------------------------
+   121→
+   122→
+   123→class ShiftSolver(Solver):
+   124→    """Output = input shifted by (dh, dw). Pads with 0 (color 0).
+   125→
+   126→    Implemented using Pad + Slice (or just Slice with appropriate offsets).
+   127→    Output dimensions = input dimensions (validator crops).
+   128→    """
+   129→    name = "shift"
+   130→
+   131→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+   132→        pairs = get_pairs(task)
+   133→        # Determine the shift (dh, dw) — must be consistent across all pairs
+   134→        shift = None
+   135→        for inp, out in pairs:
+   136→            if inp.shape != out.shape:
+   137→                return None
+   138→            # Find the shift by trying all possibilities
+   139→            H, W = inp.shape
+   140→            found = None
+   141→            for dh in range(-H + 1, H):
+   142→                for dw in range(-W + 1, W):
+   143→                    # Apply shift: out[i, j] = inp[i - dh, j - dw] if in bounds else 0
+   144→                    candidate = np.zeros_like(inp)
+   145→                    for i in range(H):
+   146→                        for j in range(W):
+   147→                            si = i - dh
+   148→                            sj = j - dw
+   149→                            if 0 <= si < H and 0 <= sj < W:
+   150→                                candidate[i, j] = inp[si, sj]
+   151→                    if np.array_equal(candidate, out):
+   152→                        found = (dh, dw)
+   153→                        break
+   154→                if found:
+   155→                    break
+   156→            if found is None:
+   157→                return None
+   158→            if shift is None:
+   159→                shift = found
+   160→            elif shift != found:
+   161→                return None
+   162→        if shift is None:
+   163→            return None
+   164→        dh, dw = shift
+   165→        if dh == 0 and dw == 0:
+   166→            return dsl.identity()
+   167→        return _shift_model(dh, dw)
+   168→
+   169→
+   170→def _shift_model(dh: int, dw: int) -> onnx.ModelProto:
+   171→    """Build a network that shifts the input by (dh, dw) — out[i,j] = inp[i-dh, j-dw].
+   172→
+   173→    Uses Slice with negative-start trickery inside the 30x30 frame, then
+   174→    places the result back at the top-left.
+   175→    """
+   176→    # Strategy: Slice the input from (dh, dw) to (dh+30, dw+30) within the 30x30 frame.
+   177→    # If dh > 0: source starts at row dh, output starts at row 0.
+   178→    # If dh < 0: source starts at row 0, output starts at row -dh (so we Pad top by -dh).
+   179→    # Simpler: Pad input with zeros on the side opposite to the shift direction,
+   180→    # then slice the top-left 30x30.
+   181→    #
+   182→    # Equivalent: use Slice with starts=[max(0,dh), max(0,dw)] ends=[30+max(0,dh), 30+max(0,dw)]
+   183→    # But this loses cells that fall off the bottom.
+   184→    # Better: Pad then Slice.
+   185→    #
+   186→    # Pad: top = max(0, -dh), bottom = max(0, dh), left = max(0, -dw), right = max(0, dw)
+   187→    # Then slice top-left 30x30.
+   188→
+   189→    top = max(0, -dh)
+   190→    bottom = max(0, dh)
+   191→    left = max(0, -dw)
+   192→    right = max(0, dw)
+   193→    pads = [0, 0, top, left, 0, 0, bottom, right]
+   194→    nodes = [
+   195→        h.make_node("Constant", [], ["pads_c"],
+   196→                     value=h.make_tensor("pads_v", TensorProto.INT64, [8], pads)),
+   197→        h.make_node("Constant", [], ["val_c"],
+   198→                     value=h.make_tensor("val_v", TensorProto.FLOAT, [], [0.0])),
+   199→        h.make_node("Pad", [INPUT_NAME, "pads_c", "val_c"], ["padded"],
+   200→                     mode="constant"),
+   201→        # Slice padded (30+|dh| x 30+|dw|) to top-left 30x30
+   202→        h.make_node("Constant", [], ["starts"],
+   203→                     value=h.make_tensor("starts_v", TensorProto.INT64, [4], [0, 0, 0, 0])),
+   204→        h.make_node("Constant", [], ["ends"],
+   205→                     value=h.make_tensor("ends_v", TensorProto.INT64, [4],
+   206→                                          [1, NUM_COLORS, MAX_GRID, MAX_GRID])),
+   207→        h.make_node("Constant", [], ["axes"],
+   208→                     value=h.make_tensor("axes_v", TensorProto.INT64, [4], [0, 1, 2, 3])),
+   209→        h.make_node("Slice", ["padded", "starts", "ends", "axes"], [OUTPUT_NAME]),
+   210→    ]
+   211→    return _make_simple_model(nodes, name=f"shift_{dh}_{dw}")
+   212→
+   213→
+   214→# ---------------------------------------------------------------------------
+   215→# TileSolver
+   216→# ---------------------------------------------------------------------------
+   217→
+   218→
+   219→class TileSolver(Solver):
+   220→    """Output = input pattern repeated (tile_factor_x, tile_factor_y) times.
+   221→
+   222→    E.g., 3x3 input tiled 3x3 -> 9x9 output where the 3x3 pattern repeats.
+   223→    Implemented using ONNX Tile op.
+   224→    """
+   225→    name = "tile"
+   226→
+   227→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+   228→        pairs = get_pairs(task)
+   229→        # Determine tile factor
+   230→        tf = None
+   231→        for inp, out in pairs:
+   232→            if inp.shape[0] == 0 or inp.shape[1] == 0:
+   233→                return None
+   234→            th = out.shape[0] / inp.shape[0]
+   235→            tw = out.shape[1] / inp.shape[1]
+   236→            if not th.is_integer() or not tw.is_integer():
+   237→                return None
+   238→            t = (int(th), int(tw))
+   239→            if tf is None:
+   240→                tf = t
+   241→            elif tf != t:
+   242→                return None
+   243→        if tf is None or tf == (1, 1):
+   244→            return None
+   245→        # Verify
+   246→        for inp, out in pairs:
+   247→            tiled = np.tile(inp, tf)
+   248→            if tiled.shape != out.shape or not np.array_equal(tiled, out):
+   249→                return None
+   250→        th, tw = tf
+   251→        # Build Tile model: repeats = [1, 1, th, tw]
+   252→        nodes = [
+   253→            h.make_node("Constant", [], ["repeats"],
+   254→                         value=h.make_tensor("repeats_v", TensorProto.INT64, [4],
+   255→                                              [1, 1, th, tw])),
+   256→            h.make_node("Tile", [INPUT_NAME, "repeats"], [OUTPUT_NAME]),
+   257→        ]
+   258→        return _make_simple_model(nodes, name=f"tile_{th}x{tw}")
+   259→
+   260→
+   261→# ---------------------------------------------------------------------------
+   262→# KroneckerSolver — out[i*k+a, j*k+b] = in[a,b] if in[i,j]!=0 else 0
+   263→# ---------------------------------------------------------------------------
+   264→
+   265→
+   266→class KroneckerSolver(Solver):
+   267→    """Kronecker-like product: each non-zero input cell becomes a copy of the
+   268→    input pattern in the output; zero input cells become zero blocks.
+   269→
+   270→    Matches tasks like 007bbfb7 (3x3 -> 9x9 conditional tiling).
+   271→
+   272→    Implementation: out = Tile(input, kxk) * Resize(input, kxk) where
+   273→    Resize gives the "block value" and Tile gives the "within-block value".
+   274→    But we need to handle the "is block non-zero" check correctly in one-hot.
+   275→    """
+   276→    name = "kronecker"
+   277→
+   278→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+   279→        pairs = get_pairs(task)
+   280→        # Determine k
+   281→        k = None
+   282→        for inp, out in pairs:
+   283→            if inp.shape[0] == 0 or inp.shape[1] == 0:
+   284→                return None
+   285→            if inp.shape[0] * inp.shape[1] == 0:
+   286→                return None
+   287→            # Kronecker requires input to be kxk (square)
+   288→            if inp.shape[0] != inp.shape[1]:
+   289→                return None
+   290→            kh = out.shape[0] / inp.shape[0]
+   291→            kw = out.shape[1] / inp.shape[1]
+   292→            if not kh.is_integer() or not kw.is_integer() or kh != kw:
+   293→                return None
+   294→            kk = int(kh)
+   295→            # Input size must equal k (Kronecker pattern: input is the "tile" itself)
+   296→            if inp.shape[0] != kk:
+   297→                return None
+   298→            if k is None:
+   299→                k = kk
+   300→            elif k != kk:
+   301→                return None
+   302→        if k is None or k <= 1:
+   303→            return None
+   304→        # Verify: out[i*k+a, j*k+b] = in[a, b] if in[i, j] != 0 else 0
+   305→        for inp, out in pairs:
+   306→            H, W = inp.shape
+   307→            for i in range(H):
+   308→                for j in range(W):
+   309→                    block = out[i*k:(i+1)*k, j*k:(j+1)*k]
+   310→                    if inp[i, j] == 0:
+   311→                        if not np.array_equal(block, np.zeros((k, k))):
+   312→                            return None
+   313→                            break
+   314→                    else:
+   315→                        if not np.array_equal(block, inp):
+   316→                            return None
+   317→                            break
+   318→        return _kronecker_model(k)
+   319→
+   320→
+   321→def _kronecker_model(k: int) -> onnx.ModelProto:
+   322→    """Build a Kronecker-product network with factor k.
+   323→
+   324→    Requires input to be kxk (placed in top-left of 30x30 frame, rest zero).
+   325→
+   326→    For one-hot input I (1, 10, 30, 30):
+   327→      S = Slice(I, top-left kxk)              → (1, 10, k, k)
+   328→      T1 = Resize(S, scale=k)                 → (1, 10, k*k, k*k)  block-constant tiling
+   329→      T2 = Tile(S, repeats=[1,1,k,k])         → (1, 10, k*k, k*k)  pattern-tiling
+   330→      gate = 1 - T1[0:1]                      → 1 where block non-zero, else 0
+   331→      O_small = T2 * gate                     → (1, 10, k*k, k*k)
+   332→      O = Pad(O_small, to 30x30)              → (1, 10, 30, 30)
+   333→    """
+   334→    kk = k * k
+   335→    pad_h = MAX_GRID - kk
+   336→    pad_w = MAX_GRID - kk
+   337→    nodes = [
+   338→        # Slice input to (1, 10, k, k) — top-left kxk
+   339→        h.make_node("Constant", [], ["s_starts"],
+   340→                     value=h.make_tensor("s_starts_v", TensorProto.INT64, [4], [0, 0, 0, 0])),
+   341→        h.make_node("Constant", [], ["s_ends"],
+   342→                     value=h.make_tensor("s_ends_v", TensorProto.INT64, [4], [1, NUM_COLORS, k, k])),
+   343→        h.make_node("Constant", [], ["s_axes"],
+   344→                     value=h.make_tensor("s_axes_v", TensorProto.INT64, [4], [0, 1, 2, 3])),
+   345→        h.make_node("Slice", [INPUT_NAME, "s_starts", "s_ends", "s_axes"], ["S"]),
+   346→        # T1 = Resize(S, scale=k) → (1, 10, k*k, k*k)
+   347→        h.make_node("Constant", [], ["roi1"],
+   348→                     value=h.make_tensor("roi1_v", TensorProto.FLOAT, [0], [])),
+   349→        h.make_node("Constant", [], ["scales1"],
+   350→                     value=h.make_tensor("scales1_v", TensorProto.FLOAT, [4],
+   351→                                          [1.0, 1.0, float(k), float(k)])),
+   352→        h.make_node("Resize", ["S", "roi1", "scales1"], ["T1"],
+   353→                     mode="nearest", nearest_mode="floor",
+   354→                     coordinate_transformation_mode="asymmetric"),
+   355→        # T2 = Tile(S, repeats=[1,1,k,k]) → (1, 10, k*k, k*k)
+   356→        h.make_node("Constant", [], ["repeats2"],
+   357→                     value=h.make_tensor("repeats2_v", TensorProto.INT64, [4],
+   358→                                          [1, 1, k, k])),
+   359→        h.make_node("Tile", ["S", "repeats2"], ["T2"]),
+   360→        # gate = 1 - T1[0:1] (channel 0 of T1) — shape (1, 1, k*k, k*k)
+   361→        h.make_node("Constant", [], ["g_starts"],
+   362→                     value=h.make_tensor("g_starts_v", TensorProto.INT64, [4], [0, 0, 0, 0])),
+   363→        h.make_node("Constant", [], ["g_ends"],
+   364→                     value=h.make_tensor("g_ends_v", TensorProto.INT64, [4], [1, 1, kk, kk])),
+   365→        h.make_node("Constant", [], ["g_axes"],
+   366→                     value=h.make_tensor("g_axes_v", TensorProto.INT64, [4], [0, 1, 2, 3])),
+   367→        h.make_node("Slice", ["T1", "g_starts", "g_ends", "g_axes"], ["T1_c0"]),
+   368→        # gate = 1 - T1_c0 (broadcasts: (1,1,1,1) - (1,1,k*k,k*k) → (1,1,k*k,k*k))
+   369→        h.make_node("Constant", [], ["one"],
+   370→                     value=h.make_tensor("one_v", TensorProto.FLOAT, [1, 1, 1, 1], [1.0])),
+   371→        h.make_node("Sub", ["one", "T1_c0"], ["gate"]),
+   372→        # O_small = T2 * gate (broadcasts channel)
+   373→        h.make_node("Mul", ["T2", "gate"], ["O_small"]),
+   374→        # Pad O_small to (1, 10, 30, 30)
+   375→        h.make_node("Constant", [], ["pad_c"],
+   376→                     value=h.make_tensor("pad_v", TensorProto.INT64, [8],
+   377→                                          [0, 0, 0, 0, 0, 0, pad_h, pad_w])),
+   378→        h.make_node("Constant", [], ["pad_val"],
+   379→                     value=h.make_tensor("pad_val_v", TensorProto.FLOAT, [], [0.0])),
+   380→        h.make_node("Pad", ["O_small", "pad_c", "pad_val"], [OUTPUT_NAME], mode="constant"),
+   381→    ]
+   382→    return _make_simple_model(nodes, name=f"kronecker_{k}x{k}")
+   383→
+   384→
+   385→# ---------------------------------------------------------------------------
+   386→# ConcatRepeatSolver — extend input by repeating first K rows (or cols)
+   387→# ---------------------------------------------------------------------------
+   388→
+   389→
+   390→class ConcatRepeatSolver(Solver):
+   391→    """Output = input + first K rows of input appended at the bottom (or similar).
+   392→
+   393→    Matches task 017c7c7b (6x3 -> 9x3, output = input + first 3 rows).
+   394→    """
+   395→    name = "concat_repeat"
+   396→
+   397→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+   398→        pairs = get_pairs(task)
+   399→        # Determine direction (rows or cols) and K
+   400→        direction = None
+   401→        K = None
+   402→        for inp, out in pairs:
+   403→            H_in, W_in = inp.shape
+   404→            H_out, W_out = out.shape
+   405→            # Check rows extension
+   406→            if W_in == W_out and H_out > H_in:
+   407→                # Check if out[:H_in] == inp and out[H_in:] == inp[:K] for some K
+   408→                if not np.array_equal(out[:H_in], inp):
+   409→                    return None
+   410→                K_candidate = H_out - H_in
+   411→                if not np.array_equal(out[H_in:], inp[:K_candidate]):
+   412→                    return None
+   413→                if direction is None:
+   414→                    direction = "rows"
+   415→                    K = K_candidate
+   416→                elif direction != "rows" or K != K_candidate:
+   417→                    return None
+   418→            elif H_in == H_out and W_out > W_in:
+   419→                if not np.array_equal(out[:, :W_in], inp):
+   420→                    return None
+   421→                K_candidate = W_out - W_in
+   422→                if not np.array_equal(out[:, W_in:], inp[:, :K_candidate]):
+   423→                    return None
+   424→                if direction is None:
+   425→                    direction = "cols"
+   426→                    K = K_candidate
+   427→                elif direction != "cols" or K != K_candidate:
+   428→                    return None
+   429→            else:
+   430→                return None
+   431→        if direction is None:
+   432→            return None
+   433→        return _concat_repeat_model(direction, K)
+   434→
+   435→
+   436→def _concat_repeat_model(direction: str, K: int) -> onnx.ModelProto:
+   437→    """Build a network that outputs [input, input[:K]] (rows) or [input | input[:,:K]] (cols)
+   438→    in the top-left of the 30x30 frame.
+   439→    """
+   440→    if direction == "rows":
+   441→        # Slice input[:K] (top K rows) — slice on axis 2
+   442→        nodes = [
+   443→            h.make_node("Constant", [], ["starts"],
+   444→                         value=h.make_tensor("starts_v", TensorProto.INT64, [4], [0, 0, 0, 0])),
+   445→            h.make_node("Constant", [], ["ends"],
+   446→                         value=h.make_tensor("ends_v", TensorProto.INT64, [4], [1, NUM_COLORS, K, MAX_GRID])),
+   447→            h.make_node("Constant", [], ["axes"],
+   448→                         value=h.make_tensor("axes_v", TensorProto.INT64, [4], [0, 1, 2, 3])),
+   449→            h.make_node("Slice", [INPUT_NAME, "starts", "ends", "axes"], ["top_K"]),
+   450→            # Concat along axis 2 (rows): input + top_K
+   451→            h.make_node("Concat", [INPUT_NAME, "top_K"], [OUTPUT_NAME], axis=2),
+   452→        ]
+   453→    else:  # cols
+   454→        nodes = [
+   455→            h.make_node("Constant", [], ["starts"],
+   456→                         value=h.make_tensor("starts_v", TensorProto.INT64, [4], [0, 0, 0, 0])),
+   457→            h.make_node("Constant", [], ["ends"],
+   458→                         value=h.make_tensor("ends_v", TensorProto.INT64, [4], [1, NUM_COLORS, MAX_GRID, K])),
+   459→            h.make_node("Constant", [], ["axes"],
+   460→                         value=h.make_tensor("axes_v", TensorProto.INT64, [4], [0, 1, 2, 3])),
+   461→            h.make_node("Slice", [INPUT_NAME, "starts", "ends", "axes"], ["left_K"]),
+   462→            h.make_node("Concat", [INPUT_NAME, "left_K"], [OUTPUT_NAME], axis=3),
+   463→        ]
+   464→    return _make_simple_model(nodes, name=f"concat_repeat_{direction}_{K}")
+   465→
+   466→
+   467→# ---------------------------------------------------------------------------
+   468→# ConditionalSliceColorMapSolver — slice sub-region based on a separator,
+   469→# then apply a color map
+   470→# ---------------------------------------------------------------------------
+   471→
+   472→
+   473→class ConditionalSliceColorMapSolver(Solver):
+   474→    """Find a separator column (a column of a single non-zero color), slice the
+   475→    region to one side of it, and apply a color map.
+   476→
+   477→    Matches task 0520fde7: input 3x7 has a column of 5s at column 3; output is
+   478→    the right half (cols 4-6) with color 1 -> 2.
+   479→    """
+   480→    name = "slice_separators_color_map"
+   481→
+   482→    def attempt(self, task: dict) -> Optional[onnx.ModelProto]:
+   483→        pairs = get_pairs(task)
+   484→        # Find the separator structure (must be consistent across pairs)
+   485→        sep_info = None  # (axis, index, side, color_map)
+   486→        for inp, out in pairs:
+   487→            H_in, W_in = inp.shape
+   488→            H_out, W_out = out.shape
+   489→            # Try horizontal separator (a column of same color)
+   490→            found = None
+   491→            for sep_idx in range(W_in):
+   492→                col = inp[:, sep_idx]
+   493→                if (col == col[0]).all() and col[0] != 0:
+   494→                    sep_color = int(col[0])
+   495→                    # Try left half
+   496→                    left = inp[:, :sep_idx]
+   497→                    if left.shape == out.shape:
+   498→                        # Find color map
+   499→                        m = {}
+   500→                        valid = True
+   501→                        for c in range(10):
+   502→                            in_cells = (left == c)
+   503→                            if in_cells.any():
+   504→                                out_colors = np.unique(out[in_cells])
+   505→                                if len(out_colors) != 1:
+   506→                                    valid = False
+   507→                                    break
+   508→                                m[c] = int(out_colors[0])
+   509→                        if valid and m:
+   510→                            found = ("col", sep_idx, "left", m, sep_color)
+   511→                            break
+   512→                    # Try right half
+   513→                    right = inp[:, sep_idx + 1:]
+   514→                    if right.shape == out.shape:
+   515→                        m = {}
+   516→                        valid = True
+   517→                        for c in range(10):
+   518→                            in_cells = (right == c)
+   519→                            if in_cells.any():
+   520→                                out_colors = np.unique(out[in_cells])
+   521→                                if len(out_colors) != 1:
+   522→                                    valid = False
+   523→                                    break
+   524→                                m[c] = int(out_colors[0])
+   525→                        if valid and m:
+   526→                            found = ("col", sep_idx, "right", m, sep_color)
+   527→                            break
+   528→            if found is None:
+   529→                # Try row separator
+   530→                for sep_idx in range(H_in):
+   531→                    row = inp[sep_idx, :]
+   532→                    if (row == row[0]).all() and row[0] != 0:
+   533→                        sep_color = int(row[0])
+   534→                        top = inp[:sep_idx, :]
+   535→                        if top.shape == out.shape:
+   536→                            m = {}
+   537→                            valid = True
+   538→                            for c in range(10):
+   539→                                in_cells = (top == c)
+   540→                                if in_cells.any():
+   541→                                    out_colors = np.unique(out[in_cells])
+   542→                                    if len(out_colors) != 1:
+   543→                                        valid = False
+   544→                                        break
+   545→                                    m[c] = int(out_colors[0])
+   546→                            if valid and m:
+   547→                                found = ("row", sep_idx, "top", m, sep_color)
+   548→                                break
+   549→                        bot = inp[sep_idx + 1:, :]
+   550→                        if bot.shape == out.shape:
+   551→                            m = {}
+   552→                            valid = True
+   553→                            for c in range(10):
+   554→                                in_cells = (bot == c)
+   555→                                if in_cells.any():
+   556→                                    out_colors = np.unique(out[in_cells])
+   557→                                    if len(out_colors) != 1:
+   558→                                        valid = False
+   559→                                        break
+   560→                                    m[c] = int(out_colors[0])
+   561→                            if valid and m:
+   562→                                found = ("row", sep_idx, "bottom", m, sep_color)
+   563→                                break
+   564→            if found is None:
+   565→                return None
+   566→            if sep_info is None:
+   567→                sep_info = found
+   568→            elif sep_info != found:
+   569→                return None
+   570→        if sep_info is None:
+   571→            return None
+   572→        axis, idx, side, mapping, sep_color = sep_info
+   573→        return _slice_colormap_model(axis, idx, side, mapping)
+   574→
+   575→
+   576→def _slice_colormap_model(axis: str, idx: int, side: str, mapping: dict[int, int]) -> onnx.ModelProto:
+   577→    """Build a network that slices the input on one side of a separator line
+   578→    and applies a color map to the result.
+   579→
+   580→    axis = "col" or "row"; idx = separator index; side = "left"/"right"/"top"/"bottom"
+   581→    """
+   582→    # Step 1: slice
+   583→    if axis == "col":
+   584→        if side == "left":
+   585→            starts = [0, 0, 0, 0]
+   586→            ends = [1, NUM_COLORS, MAX_GRID, idx]
+   587→        else:  # right
+   588→            starts = [0, 0, 0, idx + 1]
+   589→            ends = [1, NUM_COLORS, MAX_GRID, MAX_GRID]
+   590→    else:  # row
+   591→        if side == "top":
+   592→            starts = [0, 0, 0, 0]
+   593→            ends = [1, NUM_COLORS, idx, MAX_GRID]
+   594→        else:  # bottom
+   595→            starts = [0, 0, idx + 1, 0]
+   596→            ends = [1, NUM_COLORS, MAX_GRID, MAX_GRID]
+   597→    # Build color map conv weight (1x1)
+   598→    W = np.zeros((NUM_COLORS, NUM_COLORS, 1, 1), dtype=np.float32)
+   599→    full_map = {c: mapping.get(c, c) for c in range(NUM_COLORS)}
+   600→    for frm, to in full_map.items():
+   601→        W[to, frm, 0, 0] = 1.0
+   602→
+   603→    nodes = [
+   604→        h.make_node("Constant", [], ["starts"],
+   605→                     value=h.make_tensor("starts_v", TensorProto.INT64, [4], starts)),
+   606→        h.make_node("Constant", [], ["ends"],
+   607→                     value=h.make_tensor("ends_v", TensorProto.INT64, [4], ends)),
+   608→        h.make_node("Constant", [], ["axes"],
+   609→                     value=h.make_tensor("axes_v", TensorProto.INT64, [4], [0, 1, 2, 3])),
+   610→        h.make_node("Slice", [INPUT_NAME, "starts", "ends", "axes"], ["sliced"]),
+   611→        # Color map: 1x1 conv
+   612→        h.make_node("Conv", ["sliced", "cmW"], ["cm_out"],
+   613→                     kernel_shape=[1, 1], pads=[0, 0, 0, 0], strides=[1, 1]),
+   614→        h.make_node("Identity", ["cm_out"], [OUTPUT_NAME]),
+   615→    ]
+   616→    inits = [h.make_tensor("cmW", TensorProto.FLOAT, [NUM_COLORS, NUM_COLORS, 1, 1], W.flatten().tolist())]
+   617→    return _make_simple_model(nodes, initializers=inits, name="slice_colormap")
+   618→

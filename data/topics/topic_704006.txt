@@ -1,0 +1,297 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+TONY LI · 1ST IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+9
+more_vert
+My current bottom 15 NeuroGolf Tasks — Any Ideas?
+
+Current bottom 15, ID / score:
+
+158 14.520 | 233 14.794 | 173 15.002 054 15.077 | 025 15.089 | 285 15.131 366 15.137 | 133 15.142 | 286 15.154 255 15.290 | 349 15.368 | 018 15.449 187 15.491 | 145 15.514 | 243 15.558
+
+Any ideas to improve these further? Thanks
+
+Please sign in to reply to this topic.
+
+comment
+9 Comments
+Hotness
+Tony Li
+TOPIC AUTHOR
+
+Posted 4 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+A lot has changed, Not sure which tasks are truly the hard ones now. Some tasks have disappeared from the bottom, while others are still hanging around.
+
+But this definitely looks like a lucky post—a lot of top teams showed up here. 😀
+
+emoji_people
+Chan Kha Vu
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+May I ask what is "target" and "score"? Do you somehow estimate the "ideal" score that you want to reach, calculated using some heuristics?
+
+Just tried to submit your exact 15 tasks, ours reaches 232.16 pts (as opposed to yours 227.716).
+
+This is actually remarkable. Our team focused more on mid-tier and lower-tier tasks until last week, and you seem to excel in easy-tier tasks (we have quite a bit less 20+ points than you)
+
+Tony Li
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 1st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Your 232.16 on the same 15 tasks is very strong — thanks for checking. That confirms there is still real headroom in my bottom tasks. I’m trying to close that gap step by step , this is very useful to know.
+
+Thanks again, and good luck!
+
+about target score , The “target” is just a heuristic, not an exact ideal score.
+
+I set my total goal around 7750, then estimate each task’s target based on my current score distribution, how easy/hard the task looks, and how much room it may still have. High-score tasks likely have less room, low-score tasks may have more.
+
+So it’s mostly score distribution + easy/hard guessing + what I need to reach the total target.
+
+emoji_people
+Chan Kha Vu
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Again, looking at top-1 right now, it's quite clear we're missing a lot on many tasks (assuming 20+ points tasks are almost perfect score). I wouldn't be surprised if top-1 is +10 points compared to my team on these tasks lol.
+
+Was golfing manually/with LLM last night and found a few +2 points in our mid-tier tasks.
+
+Good luck to you and @yiheng on your road to solo gold :)
+
+7 more replies
+arrow_drop_down
++2
+Rustam Bazarbayev
+
+Posted a month ago
+
+· 982nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Current with my position I am not sure but for some tasks need human thinking rather than AI agents. Because AI agents are lazy some tasks 😁 they said this is an optimal but trying more and more you can get higher score.
+
+yash bhaskar
+
+Posted a month ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Token is all you need.
+
+Rustam Bazarbayev
+
+Posted a month ago
+
+· 982nd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Yes of course
+
+Navneet
+
+Posted a month ago
+
+arrow_drop_up
+1
+more_vert
+
+Thank you for the insightful info on your NeuroGolf Tasks @tonylica
+
+emoji_people
+jacekwl
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I also have 2 x sub15 tasks but different ones.
+
+Egor Trushin
+
+Posted a month ago
+
+· 6th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+It's difficult to help without seeing your solutions. Show them to us first.🧐
+
+Tony Li
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 1st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thanks, Egor! Nice to see you again.
+
+I’d be happy to share, but for this competition, only teammates can see my solution 🙂 Sadly, Yiheng and I are both trying for solo gold, so I have to go solo for this one.
+
+I was really honored to team up with you in Santa. That was my first gold, and I’d definitely love to team up with you again whenever we get the chance again.
+
+Good luck, and all the best to you in this competition!
+
+emoji_people
+Jan Vorel
+
+Posted a month ago
+
+· 12th in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+Sharing your points is almost same as showing solution. I will not say more … but thanks
+
+3 more replies
+arrow_drop_down
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 10 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 11 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 12 ---
+arrow_drop_up
+5
+more_vert

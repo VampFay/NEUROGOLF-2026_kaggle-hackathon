@@ -1,0 +1,271 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+YMG_AQ · 18TH IN THIS COMPETITION · POSTED 2 MONTHS AGO
+arrow_drop_up
+20
+more_vert
+Proposal: Use ONNX file size as a simple deterministic score to reduce scorer exploit risk
+
+First of all, I would like to thank the competition organizers and the operations team for creating and running this interesting competition. Solving ARC-style tasks under the ONNX submission constraint is a very engaging setting, and it has been fun to think about how to express and compress solvers in this format.
+
+That said, I have some concerns about the current scoring method.
+
+The current scorer estimates memory and params from the ONNX graph, and then computes the score from those values. However, this makes it possible to optimize not only for simple and efficient task solvers, but also for gaps in the scorer's static analysis logic.
+
+In fact, I have already confirmed that it is possible to obtain 25 points on an arbitrary task under the current scorer. I am intentionally not describing the exploit details here, but the important point is that this is not just a theoretical concern.
+
+This means that a theoretical 25 * 400 = 10000 score can be reachable through scorer-specific behavior. This is different from the original goal of solving ARC tasks well and efficiently in ONNX.
+
+Another concern is that, with the current static scoring approach, a participant who finds an exploit could keep it private and use it only for the final submission. It would also be possible to update the score gradually in order to maintain the leaderboard lead. This affects not only fairness between participants, but also the reliability of the leaderboard.
+
+As I understand it, recalculation for the first-place duration prize starts from May 6. If scorer exploits can move the leaderboard significantly, the operations team may need to spend more and more effort on remeasurement, investigation, and scorer fixes. From the participant side as well, attention may shift from improving ARC task solutions to searching for the next scorer exploit, making it harder to focus on the original purpose of the competition.
+
+Of course, individual scorer issues can be fixed. However, ONNX has many complex aspects: shape inference, constant folding, runtime behavior, operator semantics, and tooling differences. It seems very difficult to estimate memory and compute perfectly, statically, and fairly. Even if one exploit is fixed, another one may be found quickly. If the leaderboard changes significantly each time, the competition becomes unstable.
+
+For this reason, I would like to propose a simpler and more deterministic scoring method: use the submitted ONNX file size.
+
+For example, each task could be scored as follows:
+
+score = max(1.0, 25.0 - log(max(1.0, onnx_file_size_bytes)))
+
+
+Here, log is the natural logarithm.
+
+This has several clear advantages:
+
+It is fully deterministic.
+It is very simple to implement.
+It depends much less on scorer internals.
+It is less affected by ONNX tooling, runtime, or profiler differences.
+It evaluates the submitted artifact itself, so the exploit surface is smaller.
+It matches the NeuroGolf goal of building short, simple, and efficient ONNX solvers.
+
+As in last year's CodeGolf competition, optimizing byte size is not just superficial compression. It often leads participants to discover simpler and more efficient task-solving ideas and representations. I think the same applies here: minimizing ONNX file size would guide participants toward concise and essential ONNX solutions.
+
+Of course, file size is not a perfect proxy for runtime memory or compute. A small graph can still create large intermediate tensors. However, the more complex the scorer's memory and compute estimation logic becomes, the more that estimation logic itself becomes the optimization target. For a competition metric, a simple and stable proxy may be preferable to a more sophisticated but exploitable estimator.
+
+As a reference, I analyzed the 400 ONNX files from my current solution set, which corresponds to my leaderboard score of 6454.15. The ONNX file-size distribution was:
+
+min      209 bytes
+p25      1,811 bytes
+median   3,650 bytes
+p75      7,450 bytes
+p95      90,838 bytes
+max      1,144,997 bytes
+
+
+Applying the file-size-based formula above to this solution set gives a total score of about 6657.0. This keeps the score in a similar overall scale to the current memory/params-based scoring.
+
+I also checked the correlation between ONNX file size and the current scorer's metrics.
+
+file size vs MACs:
+  Pearson(ln)  0.639
+  Spearman     0.602
+
+file size vs params:
+  Pearson(ln)  0.583
+  Spearman     0.560
+
+file size vs memory:
+  Pearson(ln)  0.748
+  Spearman     0.724
+
+file size vs memory + params:
+  Pearson(ln)  0.763
+  Spearman     0.731
+
+
+So file size is reasonably correlated with the current scoring intent, especially with memory and memory + params.
+
+1
+1
+1
+
+Please sign in to reply to this topic.
+
+comment
+8 Comments
+1 appreciation comment
+Hotness
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+4
+more_vert
+
+It is a tempting proposal! We received a similar suggestion over email from @tonylica, and it definitely has its merits.
+
+However, there's a risk (and I think it's significant) that teams would begin to find & exploit loopholes in the underlying protobuf file format. I have studied that format in depth myself, and believe me when I say that it's not something most contestants would enjoy hacking around.
+
+ymg_aq
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 18th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I imagine metrics like this were already considered carefully from the organizer side as well, and your point about introducing a different class of risks makes perfect sense.
+
+Really appreciate all the effort and consideration that’s clearly going into designing and maintaining the competition.
+
+Pavel
+
+Posted 2 months ago
+
+· 7th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Interesting suggestion!
+
+A few points which immediately come to mind though:
+
+correlation between file size and memory + params when models are optimized for memory + params does not imply their correlation if we start optimizing for file size (e.g. materializing huge tensors dynamically will become free)
+file size can also potentially be optimized (maybe hacked) in non-algorithmic ways: short tensor names, field ordering, omitting defaults, opset/IR choices, initializer encoding, metadata stripping, storing tensor data outside of .onnx, etc. The initial metric also looked good before everybody started optimizing against it.
+ymg_aq
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 18th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the thoughtful points. Yes, I agree that file size is not a perfect metric and can be subject to certain optimizations.
+
+The intent of this proposal is less about finding an ideal proxy, and more about improving robustness against exploits and overall scoring stability. The current metric also seems to have its own vulnerabilities in that regard.
+
+In any case, all metrics involve trade-offs, so I think it’s best that these perspectives are discussed, and ultimately the decision is made by the organizers.
+
+Pavel
+
+Posted 2 months ago
+
+· 7th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Yeah, I guess my main point is that, at the very least, someone should run a strong agent against any new candidate metric and see what it finds before officially switching to it.
+
+This comment has been deleted.
+
+This comment has been deleted.
+
+ymg_aq
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 18th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I agree there is no clearly correct metric, and the final decision should be left to the hosts. File size is not perfect, but my main point is that it may reduce the exploit surface and help keep the competition focused on ARC-solving rather than scorer-specific tricks.
+
+This comment has been deleted.
+
+Appreciation (1)
+Navneet
+
+Posted 2 months ago
+
+arrow_drop_up
+-1
+more_vert
+
+Thanks for the ONNX file @ymgpalaqs
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+-1
+more_vert

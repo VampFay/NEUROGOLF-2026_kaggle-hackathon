@@ -1,0 +1,114 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+SYX777 · 1326TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+2
+more_vert
+Question about how submissions are scored
+
+I'm a newcomer to this competition and have a question about how submissions are scored. Apologies in advance if this is already covered in the rules and I missed it.
+
+I noticed something that surprised me: I submitted an ONNX that does not pass all examples in the official extracted/taskNNN.json files locally — specifically, it fails on a small number of arc-gen examples for one task — yet the leaderboard still awarded full points for that task as if it were 100% correct.
+
+My questions:
+
+Is this the intended behavior and sufficient for full marks on a task?
+Will there be a separate, stricter re-evaluation later (e.g., a private leaderboard at competition close) that also checks arc-gen or some unseen test set, which could change rankings?
+If a submission scores well now but doesn't generalize to the full arc-gen distribution, would that be considered a valid finish or could it be invalidated?
+
+I want to make sure I'm building toward something that will actually count, rather than optimizing against a partial check.
+
+Thanks!
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+emoji_people
+jacekwl
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Probably those examples have inputs larger than 30x30 and kaggle scorer ignores them because limit is 30x30. And there are a couple of tasks like this.
+
+There will be no re-evaluation. If it passes kaggle scorer, then it's good enough.
+
+syx777
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 1326th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thank you for the explanation! That clears up my confusion.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

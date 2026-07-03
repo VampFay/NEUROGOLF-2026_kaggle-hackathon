@@ -1,0 +1,68 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+ASHLEY OLDACRE · POSTED A MONTH AGO
+·
+KAGGLE STAFF
+arrow_drop_up
+14
+more_vert
+Submissions amount re-enabled
+
+Hello, we apologize for the disruption. The competition has been reset to allow 100 submissions a day. Thank you for bringing this to our attention.
+
+6
+
+Please sign in to reply to this topic.
+
+comment
+0 Comments
+Hotness

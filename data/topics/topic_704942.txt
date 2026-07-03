@@ -1,0 +1,716 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+TONY LI · 1ST IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+30
+more_vert
+ChatGPT Plus — $20/month — is all you need for this competition.
+
+To my fellow Kagglers:
+
+ChatGPT Plus — $20/month — is all you need for this competition.
+
+My bio says I love ChatGPT and that I’m a devoted OpenAI fan. That is not joke. It is literally how I work.
+
+In almost every chat, I either get help or learn something new from ChatGPT.
+
+When people ask me on LinkedIn how to improve their Kaggle performance, my answer is always simple:
+
+Keep asking ChatGPT.
+
+For NeuroGolf, I used only ChatGPT Plus until I reached 7600. Only this week I finally upgrade to ChatGPT Pro, hoping to chase an even better result.
+
+As Yiheng said, you can simply use ChatGPT in the web interface: copy-paste optimizations, run multiple tabs in parallel, and iterate constantly. That alone may be enough to get gold in this competition.
+
+It is not fancy. But it works.
+
+You only need trust ChatGPT. OpenAI is so nice and generous, as long as you use ChatGPT through the web app rather than the API, you can use it extensively without worrying about per-call costs.
+
+5
+
+Please sign in to reply to this topic.
+
+comment
+32 Comments
+Hotness
+souldrive
+
+Posted 15 days ago
+
+· 183rd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+This thread matches my experience — the LLM is a fantastic candidate generator, but the thing that ended up mattering most for me was the gap between "matches the visible grids" and "survives the held-out." I went the compile-the-rule direction (turning each task's transformation into a small ONNX graph rather than letting a net fit the examples), and what surprised me is how often a graph that's exact on every shown example still collapses on the hidden set — it captured the demonstration, not the rule. So I've started treating the visible examples as necessary-but-not-sufficient and running an equivariance check before trusting a candidate. For those of you reaching 7000+ with the LLM loop, how do you guard against a net that nails the visible examples but overfits the held-out — do you lean on the LB as the oracle, or screen for generalization before spending a submission?
+
+Ken Krige
+
+Posted 13 days ago
+
+· 25th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I use the public generators to make my own fresh-gen set.
+
+souldrive
+
+Posted 13 days ago
+
+· 183rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Nice — that's a clean way to do it. Using the generators to mint fresh instances sidesteps the whole "did I just fit the shown grids" problem, since the new examples are outside the visible set by construction. I've mostly leaned on the algebraic version (checking the candidate commutes with the task's symmetries), which is cheap but only as good as the symmetry group I bother to model — a fresh-gen set would catch content-dependent failures mine sails right past. Do you find a handful of fresh instances is usually enough to separate the true rule from a near-miss, or do you need a decent sample before you trust it?
+
+KKY
+
+Posted 15 days ago
+
+· 16th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Amazing… I couldn't manage to get 6500 at the time while you published this with Pro x 20.
+
+My approach is different, zero human, 100% agent self-improvement loop. I believe agent is able to eventually approach the limit without(or w/ a little) human beings' supervision.
+
+Ken Krige
+
+Posted 17 days ago
+
+· 25th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I tried this, but as soon as I have 2 tabs in parallel, I only get onnx runtime in one of them. Then, in the others, GPT agents have to model solutions in numpy and guess at what will work in ORT. Then I end up doing way too much debugging. So I am limited to one tab.
+
+Mahog
+
+Posted 17 days ago
+
+· 197th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Huh, that's weird. I can have 20 tabs (haven't tried more) open in parallel and all tabs have access to onnx/onnxruntime (I'm using ChatGPT Plus).
+
+Mahog
+
+Posted 17 days ago
+
+· 197th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I just remembered, this did happen to me once, but I resolved it by explicitly mentioning how to install onnx/onnxruntime in the prompt
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 17 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Hi Ken, nice to see you here again.
+
+As Mahog said, you can ask ChatGPT directly in the prompt how to install ONNX and ONNX Runtime. You could also create a ChatGPT project, prepare an offline installation package, upload the package or source files to the project, and then instruct ChatGPT to install everything from there.
+
+You only just need to give ChatGPT the idea or goal, or copy this chat to it . and ChatGPT will guide you through steps by step and generate whatever you need to get ONNX/ONNX Runtime working.
+
+Ken Krige
+
+Posted 17 days ago
+
+· 25th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks Tony for the help, and thanks for the welcome to this competition. Congratulations on your fantastic performance. I just started a few days ago, so way behind you. All the best for a solo gold.
+
+Starry
+
+Posted 18 days ago
+
+· 1187th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Hi Tony, I'm curious how you're actually using GPT in this competition. Do you mainly give it the overall task and objective and let it drive most of the development process, or do you analyze the task and data, come up with the ideas and strategy yourself and then have GPT implement them :) ?
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 18 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Hi @shtljw , nice to see you here.
+
+For me it is usually both. I try to understand the task first, then use ChatGPT as a thinking partner to explore ideas, write prompts and implementations, and keep iterating.
+
+I don’t think it works best as “just give GPT the task and wait for the answer.” It can easily get lazy or wander around and waste tokens or time. The human side still matters a lot: choosing directions, judging whether a method makes sense, and deciding what to try next.
+
+So my general workflow is: understand → ask GPT for ideas → learn from the result → refine again. The real power is in the iteration.
+
+WOOSUNG YOON
+
+Posted 20 days ago
+
+arrow_drop_up
+1
+more_vert
+
+I feel that the future will be an era led by those who effectively utilize AI, much like yourself.
+
+Thank you.
+
+At the same time, beyond solving problems, I also highly value the ability to persevere and resolve difficult challenges through collaboration and shared effort alongside people who are struggling.
+
+You seem to excel at both of those. 😄
+
+fle3n
+
+Posted 24 days ago
+
+· 322nd in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+I can't even reach the silver ladder with Claude Maxx x20 and the gpt pro x5 chat 😁)
+
+Fritz Cremer
+
+Posted a month ago
+
+· 1st in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Only now I realized you can use the web interface after usage is depleted 😅 For claude I think it does count towards usage.
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I stopped using Claude a year ago and never looked back.
+
+After that, my Kaggle performance improved noticeably.
+
+I wrote a post on LinkedIn about why Claude is not a strong thinking partner for me.
+
+From my personal experience, even OpenAI’s Codex feels weaker than ChatGPT Web in thinking mode. So Claude is not even close to what I need for this kind of work.
+
+Fritz Cremer
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+This competition also made me realize that…
+
+yash bhaskar
+
+Posted a month ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Can't wait to see how the LB will look in the coming weeks 😆
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Haha, it needs customized ideas and endless hard work as Yiheng said. Your intuition matters too. If the LB changes, it means the LB was already supposed to change, not because of one simple idea alone😃.
+
+Mahog
+
+Posted 25 days ago
+
+· 197th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the tips! One (slightly unrelated) question, did you experience any issues when paying for the Plus plan? I repeatedly get the "your card has been declined" error :V. If you have gotten this error once and have resolved it, could you share your experiences?
+
+emoji_people
+Aditya Raghuvanshi
+
+Posted 25 days ago
+
+· 37th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Try checking if international payments is on or not for your card
+
+Mahog
+
+Posted 24 days ago
+
+· 197th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I managed to find a way: instead of paying through the browser, I downloaded the chatgpt app (on my phone) and used google play to pay. Thanks anyways!
+
+Durga Kumari
+
+Posted 24 days ago
+
+arrow_drop_up
+2
+more_vert
+
+Great reminder that iteration often beats complexity.
+
+VMe50ForCrazyThurs
+
+Posted 24 days ago
+
+· 143rd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Thank you for sharing. I used Hermes (external minmax) to assist me in solving this problem, but the effect was not good. I used it for two days but still couldn't solve a problem. Let me try GPT Plus
+
+Paritosh Kumar Tripathi
+
+Posted a month ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+All this time, I was struggling with a claude $20 subscription 😭, didn't know OpenAI was so generous. I really hope they remain generous until the end of this competition 😂 and not introduced usage limits like claude on web as well
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+ChatGPT Thinking rate limits set to 3000 per week.
+
+3000 per week is around 0.4 message per minute assuming you sleep 6 hours per day and use ChatGPT 18 hours per day.
+
+Paritosh Kumar Tripathi
+
+Posted 25 days ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+@tonylica Wow! That is pretty good. Thanks a lot Tony!
+
+emoji_people
+Chan Kha Vu
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+This is impressive! I'm a bit ashamed of my token usage after reading this 😅 May I ask how much time per day you invest into golfing?
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+All my free time goes into Kaggle.
+
+I have a somewhat “silly” way of managing my time, but it works for me.
+
+I’ll share it if I ever win a solo gold, because then it might actually be proven useful.
+
+Fritz Cremer
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Can't be that long until solo gold 😄
+
+Rustam Bazarbayev
+
+Posted 25 days ago
+
+· 982nd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+For me to solve a task use Deepseekv4 Pro API. It costs me around $0.3 per task. But how to make automation all processes I don't know.
+
+Na Ve Ba
+
+Posted 18 days ago
+
+· 245th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Use opencode
+
+Yiheng Wang
+
+Posted a month ago
+
+· 5th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Thanks for sharing! I use pro account because of it's pro thinking. I thought a better reasoning model is necessary to get better scores, but considering your 7600 is possible (definitely it also requires many customized ideas and hard working), I think start from plus (can upgrade later if needed) is a better idea.
+
+Tony Li
+TOPIC AUTHOR
+
+Posted 25 days ago
+
+· 1st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+You’re right. Pro Thinking can sometimes solve very difficult problems, and it can be genuinely helpful. However, I’m not sure how extensively I can use it, because when I use it the way I normally do, I seem to hit some kind of weekly quota very quickly😅. I’m also not sure what the exact rate limits are.
+
+emoji_people
+Geremie Yeo
+
+Posted 23 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+@yiheng curious, do you not get rate limited on the GPT 5.5 Pro model on ChatGPT UI?
+
+Yiheng Wang
+
+Posted 23 days ago
+
+· 5th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+Sometimes if open many tabs, I will see sth like "…too many requests, wait a few minutes…."
+
+Navneet
+
+Posted 25 days ago
+
+arrow_drop_up
+-4
+more_vert
+
+Thank you for the insightful information @tonylica
+
+Ugur Tasdan
+
+Posted 13 days ago
+
+· 794th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+What do you mean by ask ChatGPT? Keep asking for ways to solve them manually or keep asking to make it iterate on its own?
+
+This comment has been deleted.
+
+This comment has been deleted.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 10 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 11 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 12 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 13 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 14 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 15 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 16 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 17 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 18 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 19 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 20 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 21 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 22 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 23 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 24 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 25 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 26 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 27 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 28 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 29 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 30 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 31 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 32 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 33 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 34 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 35 ---
+arrow_drop_up
+4
+more_vert
+--- Comment 36 ---
+arrow_drop_up
+-4
+more_vert
+--- Comment 37 ---
+arrow_drop_up
+0
+more_vert

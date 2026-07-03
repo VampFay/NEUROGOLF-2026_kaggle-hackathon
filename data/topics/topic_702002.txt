@@ -1,0 +1,121 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+RUSTAM BAZARBAYEV · 995TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+3
+more_vert
+Which tasks are hard to solve?
+
+What tasks are hard to solve to get higher score for you?
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+emoji_people
+Andrey Yunoshev
+
+Posted a month ago
+
+· 58th in this Competition
+
+arrow_drop_up
+5
+more_vert
+
+Here is my top-10 total deficit: 127.79 LB, most of then hidden zero.
+
+task076 — HZ 14.91 LB (cost 24K, host=0)
+task219 — HZ 14.23 LB (cost 48K, host=0)
+task157 — HZ 14.04 LB (cost 57K, host=0)
+task209 — HZ 13.91 LB (cost 65K, host=0)
+task255 — HZ 13.14 LB (cost 142K, host=0)
+task285 — cost 12.17 LB (cost 3.87M, host=9.83)
+task366 — HZ 12.00 LB (cost 442K, host=0)
+task018 — cost 11.79 LB (cost 2.65M, host=10.21)
+task066 — cost 11.07 LB (cost 1.29M, host=10.93)
+task319 — cost 10.53 LB (cost 751K, host=11.47)
+yash bhaskar
+
+Posted a month ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+Our Top-10 worst task (on 31/06/26):
+
+Rank	Task	Score	Cost
+1	133	14.490640	36657
+2	158	14.750691	28263
+3	366	14.754911	28144
+4	002	14.799078	26928
+5	018	14.853998	25489
+6	187	14.912110	24050
+7	054	14.938441	23425
+8	286	14.997074	22091
+9	118	15.010060	21806
+10	157	15.109395	19744
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+5
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+6
+more_vert

@@ -1,0 +1,101 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+YASH BHASKAR · 3RD IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+2
+more_vert
+What's the expected ceiling score?
+
+Would love to hear everyone's opinion on this. Where do you all think the realistic ceiling is? @crodoc is already near 7700, which is about 19.25 average per task across the 400 tasks. So I'm wondering how much room is actually left.
+
+Curious how others are estimating it.
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+ADARSH REDDY B
+
+Posted a month ago
+
+· 271st in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+It might be ~8093. Take this estimate with a pinch of salt.
+
+emoji_people
+Jan Vorel
+
+Posted a month ago
+
+· 13th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I predict max 7.9k-8.0k
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

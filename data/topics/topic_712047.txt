@@ -1,0 +1,145 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+GEORGY MAMARIN · 528TH IN THIS COMPETITION · POSTED 11 DAYS AGO
+arrow_drop_up
+5
+more_vert
+Don't lose a daily submission to one bad file out of 400
+
+I lost a full submission to a single ERROR. A node I'd built with TopK ran fine on my local onnxruntime, but the scoring server rejected it and the whole submission.zip came back zero. Chasing it down taught me the operator wasn't the problem. It was how I'd wired it. None of this showed up in a normal local run: the grader uses an older pinned runtime (ORT 1.24.4, optimizations disabled), and any one bad file zeroes everything.
+
+So I rebuilt the scoring pipeline locally and put it in a public notebook, in case it saves you the same day: NeuroGolf Survival Kit. It's plumbing every entry needs rather than any kind of strategy. What's inside:
+
+A local scorer that reproduces the official cost. params, memory, cost, and points all line up with the grader on real submission files, so you can see what a task will score before you spend a submit on it.
+A pre-submit validator that opens a real ORT 1.24.4 session on each .onnx and flags load errors, banned ops, graphs the grader can't score, and file-size overflow. Point it at your folder of 400 and it runs the whole set. Attach the competition data and it probes each file on that task's own example grids, so you skip the false alarms you'd get from random or all-zero inputs.
+One myth-bust: TopK is not banned on the server runtime. I checked it directly. You can reproduce the runtime locally and test an operator yourself instead of trusting a forum thread.
+
+There's a "run it on your own submission" cell at the end, plus a few reference visualizations of the cost breakdown (dtype to bytes, an operator-safety table). Nothing here is a scoring recipe. It's just the tooling, so you stop losing submits to files that looked fine locally. Thanks to everyone sharing on the forum. If you hit a case where the local numbers diverge from the server, drop it in the comments and I'll fix it.
+
+Optimization
+Neural Networks
+1
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+Georgy Mamarin
+TOPIC AUTHOR
+
+Posted 8 days ago
+
+· 528th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Another update. I added a section for the one failure the pre-submit validator can't catch: the silent zero. A file can pass every public example and still score 0 on the hidden test, because the hidden set is the same ARC-GEN generators with different seeds. If a file learned the public examples instead of the transformation, it works on what you can see and quietly fails on what you can't.
+
+The new section reproduces this on a self-contained toy task: a correct model versus one that overfit, with the cells the overfit model gets wrong highlighted, so you can watch the silent zero happen. The check is simple. Before you spend a submit, run each file on fresh samples it has never seen; if it breaks on those, it would break on the hidden set too. I keep the full 400-task version for my own pre-submit, but the idea and a working demo are in the kit now.
+
+Same offer as before: if your local numbers disagree with mine, say so and I'll dig in. 
+
+Georgy Mamarin
+TOPIC AUTHOR
+
+Posted 9 days ago
+
+· 528th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Week-later update. A couple of dead ends I checked against the pinned scorer (the params/memory math in neurogolf_utils, runtime reproduced on ORT 1.24.4), in case they save someone time.
+
+params are counted in elements, not bytes. That kills two "free lunch" ideas at once. Sub-byte / INT4 packing doesn't change the element count, so params don't drop. And sparse_initializer (or a Constant with sparse_value) only counts nnz, which looks almost free. In my runs it still didn't come out ahead: once the tensor gets consumed, the dense form shows up in memory. On a real task (a table that's ~80% zeros) cost went 27671 to 28496, a bit worse. The params discount is real, the memory side just eats it.
+
+On the iterative MaxPool flood-fill from today's tips thread: under this metric it really does beat a "closed-form" transitive-closure / one big MatMul. Memory here is the sum of intermediate tensors, and a reachability matrix for a 30x30 grid is 900x900, around 3.2 MB of intermediate. That dominates and scores far worse than the iterative version, even with fewer ops. MACs are free, tensors aren't, so the usual "just do it in one matrix op" instinct is backwards.
+
+No recipe here, just two things that didn't work and one that did. Shout if your local numbers disagree with mine.
+
+Georgy Mamarin
+TOPIC AUTHOR
+
+Posted 4 days ago
+
+· 528th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+A couple more updates to the kit since the last note.
+
+First, going from pass/fail to a diagnosis: the validator tells you a file fails, not why. So diagnose() now runs each file through the grader's gauntlet (load & size, banned-op scan, a runtime probe, then the scorability checks) and reports the exact gate it dies at, the cause, and the fix. Two things worth flagging if you build the same: the grader runs the file before it scores it, so a runtime error is caught before the scorability checks; and If isn't on the op deny-list, it's rejected later as a control-flow body.
+
+Second, a short "what the metric charges for" note: MACs and node count are free (the host eliminated MACs in the May 4 update), so the only things you pay for are params and the intermediate tensors you keep. And since score is 25 - ln(cost), a points target converts straight to a byte budget (to score 20, a task's whole cost has to fit in ~150 bytes).
+
+Same as always: if your local numbers disagree with the server, say so and I'll dig in.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert

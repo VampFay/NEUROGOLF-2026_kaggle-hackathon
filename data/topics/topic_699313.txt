@@ -1,0 +1,253 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+CHRIS DEOTTE · 11TH IN THIS COMPETITION · POSTED 2 MONTHS AGO
+arrow_drop_up
+55
+more_vert
+Web GUI to Build ONNX by Hand
+
+I am so excited and impressed by Codex GPT5.5 that I have to share what Codex did for me yesterday!
+
+Yesterday, I rented a cloud virtual machine with public ip address. I then gave the root password to Codex and asked Codex to SSH into the machine and install a web server and build a web gui so I can view ARC-AGI puzzles and create ONNX by hand with a GUI. In a few minutes, Codex made a working web page with GUI for me to make ONNX by hand.
+
+This is absolutely amazing. Whatever we can imagine, LLM's can make for us in minutes. I can now visit my webpage, make ONNX and download the onnx files and include in my Kaggle submissions. Wow wow wow!
+
+(And the GUI is incredibly good. I click to add nodes. I can move them around and connect them to other nodes. And i can click on them and configure their parameters. I can then run them and see the output grids and make changes so they solve the puzzles!)
+
+2
+12
+
+Please sign in to reply to this topic.
+
+comment
+12 Comments
+1 appreciation comment
+Hotness
+emoji_people
+Boladi
+
+Posted a month ago
+
+· 37th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+That's awesome!! I've been thinking about how to gamify it too, you're looks great!
+
+Chet
+
+Posted 2 months ago
+
+· 77th in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+Living a Primitive Life Through the Latest Technology
+
+Duong Nguyen
+
+Posted 2 months ago
+
+· 1093rd in this Competition
+
+arrow_drop_up
+6
+more_vert
+
+Nice work! I’m currently building my own ONNX Studio, but it’s not finished yet.
+
+Taha
+
+Posted 2 months ago
+
+· 1059th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+How do you solve it out by hand?
+
+Chris Deotte
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 11th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+I use Codex as my tutor. I try a few things myself. Then i ask Codex to give me suggestions. The more I work with Codex as a tutor, the more I can do by myself without Codex. You start to learn the techniques to do stuff.
+
+Mohit
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Codex is so peak😭😭
+
+emoji_people
+Lixin73
+
+Posted 2 months ago
+
+· 36th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Amazing，good job！
+
+Paritosh Kumar Tripathi
+
+Posted 2 months ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Would you be making this GUI public/open source?
+
+Chris Deotte
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 11th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Another Kaggler made it open source here
+
+Durga Kumari
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+This is insane in the best way. Building a full ONNX GUI for ARC-AGI in minutes feels like the future already.
+
+This comment has been deleted.
+
+Appreciation (1)
+Hanxi Shen
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for sharing
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+6
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+6
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 10 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 11 ---
+arrow_drop_up
+1
+more_vert

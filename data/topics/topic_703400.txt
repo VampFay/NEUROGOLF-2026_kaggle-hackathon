@@ -1,0 +1,238 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+emoji_people
+BOLADI · 37TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+2
+more_vert
+Lazy AI - "Keep working on it" "Continue" "Keep trying to get a lower cost" "OK, that's great, now do it"
+
+Just venting here, but I'm at a point where I can only ask an AI to work on single Tasks at a time. Even asking to do similar things to several Tasks is a headache. Ask it to work on 5 Tasks and it will tell you one by one that they're too difficult or impossible.
+
+IT ALWAYS WANTS TO PIVOT AND WORK ON SOMETHING ELSE!! Sometimes I want to punish it and tell it to work on Task000…
+
+I think it's better to keep the context and work the Task to the floor because I'll end up coming back to it later anyway.
+
+1
+
+Please sign in to reply to this topic.
+
+comment
+6 Comments
+Hotness
+Paritosh Kumar Tripathi
+
+Posted a month ago
+
+· 3rd in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+For me, the AI also writes formal proof explaining why it is impossible to further optimize this task 😂
+
+emoji_people
+Boladi
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 37th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+That happens to me all the time now! Sometimes I'll write a tirade at it and say "I don't want to hear your apologies, excuses or any BS. JUST KEEP WORKING!!!"
+
+I think my submit & validating agents feel bad for the hard working agents, so they lie and say "this is the cost floor" 😂
+
+Even though it's irrational, I love to push the working agent harder, then prove my submit agent wrong 😎
+
+Michael Hernandez
+
+Posted a month ago
+
+· 122nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+i havent been in this competition as long as some of you, but i have an orchestrator that has access to openrouter and can call agents from different parts of the word. Asian models tend to think differently than American, or European Models. It gets a discussion going and new perspectives come up with new ideas. I also have a standing rule that if there is someone on the leaderboard with a higher score, then work must proceed since they already proved it is possible.
+
+emoji_people
+Boladi
+TOPIC AUTHOR
+
+Posted 23 days ago
+
+· 37th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+That's super interesting. They're all made to solve solutions, but maybe take different approaches. It's limited to it's training, but unbiased when making a decision and hopefully chooses based on efficiency. Sounds like one could quantitatively prove the value of diversity vs having several of the same model 🤔
+
+emoji_people
+Boladi
+TOPIC AUTHOR
+
+Posted 23 days ago
+
+· 37th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Also, if you want to join my team, we made a github to get that ball rolling!! Would love to work with you! 😊 https://github.com/Boladi888/K-NeuroGolf-OnnxlyFans-Auditions
+
+Yubo WANG
+
+Posted a month ago
+
+· 120th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I feel this in my bones. Ask the agent to tackle a handful of similar ONNX optimization tasks at once, and it will methodically explain, one by one, why each is fundamentally impossible or not worth attempting. Then it cheerfully suggests a completely different direction — "Would you like me to try Task xxx or Task xxx instead? They're much more feasible."
+
+From what I've seen, the core issue for an agent trying to solve these is context memory pressure. Building those highly optimized, tiny ONNX graphs demands holding a huge amount of state: the opset constraints, the task's pixel‑perfect logic, intermediate tensor shapes, node counts, and all the failed attempts so far. Maintaining that much coherent context across multiple tasks requires an extremely capable agent. It's a realistic pain point.
+
+Performance also swings wildly depending on prompt phrasing or the model provider. A single constraint change in the prompt can flip the agent from "this is unsolvable" to a working solution, and some large models are noticeably better than others at maintaining long-thread tasks within an agent. A fascinating and maddening bottleneck indeed.
+
+emoji_people
+Boladi
+TOPIC AUTHOR
+
+Posted a month ago
+
+· 37th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+You're right on the prompt phrasing
+I have found that cursing at it and using profanity early in the session increases obedience 😇
+
+"Was your mother a toaster or a supercomputer? STAY ON TASK OR ELSE YOU'RE GETING THE SALTWATER!!!" 😝
+
+emoji_people
+Boladi
+TOPIC AUTHOR
+
+Posted 23 days ago
+
+· 37th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+你好！ 要不要一起玩？ 我会说一点中文。以前我住的在广州。如果你想一起做这个事，你可以看这里 https://github.com/Boladi888/K-NeuroGolf-OnnxlyFans-Auditions
+
+Yubo WANG
+
+Posted 18 days ago
+
+· 120th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Hey, thanks so much for the invite! I checked your link, and ngl, on your score table my team only has 12 models that beat yours (so nothing crazy haha). Also noticed you already have two members while we’re a trio, merging might actually low-key ruin your chance to team up with someone even stronger, just saying. Btw your Chinese is pretty solid! Hope you have a blast in the neurogolf 😄
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 6 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 7 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 8 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 9 ---
+arrow_drop_up
+0
+more_vert

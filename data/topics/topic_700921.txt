@@ -1,0 +1,139 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+GENGSR · 314TH IN THIS COMPETITION · POSTED 2 MONTHS AGO
+arrow_drop_up
+0
+more_vert
+Stuck around 5800: Is 6500+ mainly about manual rule writing?
+
+Hi everyone, I’m currently stuck at around 5800 on NeuroGolf 2026, and I’d like to ask for some advice on the next direction.
+
+My current baseline submission is about 5800.64. To avoid blindly mixing old high-scoring submissions, I built a per-task validation workflow: I compare different candidate ONNX files with the baseline using local probe results, including base_cost, candidate_cost, base_score, candidate_score, and md5. Then I generate single-task override submissions and test only one task replacement at a time on the leaderboard.
+
+Here are the issues I’ve run into:
+
+Some candidates from public high-score sources look extremely good locally. For example, some tasks have very low candidate cost and very high local delta. But after submitting, the public score drops instead, almost as if the task failed on hidden cases and lost the original baseline score.
+
+I tried hand-writing simple rule-based tasks, such as task006, which is a left/right binary region operation. The local validation passes, but the improvement is less than 1 point, so the return on effort feels quite low.
+
+I filtered high-ROI tasks where the base_score is low and base_cost is high. Some of them theoretically have 3–5 points of improvement potential, but many seem to require connected components, object selection, sorting, largest/smallest object logic, or other object reasoning. These are quite hard to implement efficiently in pure ONNX, and I’m also worried about hidden-case robustness.
+
+I’m a bit confused about the right path forward. If I want to go from around 5800 to 6500+, is it basically necessary to manually inspect many ARC tasks and hand-write rules? Or is there a more systematic approach, such as template-based rule solvers, automatic rule extraction from generators, or a stable ONNX graph rewriting/compression pipeline?
+
+What I have tried so far:
+
+Built a candidate matrix for all 400 tasks;
+Filtered out poison tasks that failed online;
+Ran fast triage on high-ROI tasks;
+For tasks that looked writable, tried to write Python oracles first;
+Only planned to convert to ONNX after the Python oracle passed all train/test/arc-gen examples;
+Avoided directly mixing old high-score packages at scale.
+
+The current problem is that many tasks look like fixed templates, color replacement, crop/recolor, or bbox/mask refinement during fast triage, but once I try to write a Python oracle, the rule is often uncertain or does not pass the examples.
+
+So I’d like to ask:
+
+Is the main route to 6500+ mostly manual task analysis and rule writing?
+For low-base-score tasks that require object reasoning, are there any relatively general ONNX patterns people use?
+Do you have a recommended way to classify tasks quickly, so I can decide which ones are worth hand-writing and which ones should be skipped?
+For candidates that are locally valid but drop online, how do you usually detect hidden overfitting?
+Besides hand-written rules, are there any stable, general methods for improving the score?
+
+I’m not asking for direct solutions to specific tasks. I mainly want to confirm the right direction and avoid wasting time on low-ROI tasks. Thanks a lot!
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+emoji_people
+jacekwl
+
+Posted 2 months ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Public notebooks contain a lot of tasks that fail because e.g. they use lookup tables that work only on train+test+arc-gen. One way to spot them is that they have N similar nodes, where N=number of tests. Or they does not meet requirements. If they are valid but still fail hidden test cases, usually generating extra tests helps to find edge cases. Or just making sure that your understanding of the task is the same as what generator produces.
+
+Gengsr
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 314th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thanks, that makes a lot of sense.
+
+I think I ran into exactly this with some public candidates. They looked great locally, but failed badly online, so they were probably lookup-table-like solutions. I’ll use the repeated-node check mostly to filter suspicious public candidates.
+
+For my own rule-based attempts, I guess the better path is to validate against extra generated cases before converting to ONNX.
+
+Do you usually use the official generator directly for those extra tests, or do you also create manual edge cases? Also, at higher scores, is the main bottleneck usually finding the correct rule, or making the ONNX implementation small enough?
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

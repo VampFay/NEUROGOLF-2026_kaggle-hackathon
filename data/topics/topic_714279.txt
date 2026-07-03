@@ -1,0 +1,102 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+JIM879793123 · 575TH IN THIS COMPETITION · POSTED 8 DAYS AGO
+arrow_drop_up
+3
+more_vert
+How do people turn rule-based ARC solvers into compact ONNX graphs?
+Hi everyone,
+
+I’m trying to better understand the workflow behind strong NeuroGolf submissions, especially the transition from a Python rule-based solver to a small valid ONNX graph.
+
+For several tasks, I can write a Python solver that passes all train/test/arc-gen examples locally. The hard part is not discovering the rule, but compiling that rule into an efficient static ONNX graph without blowing up memory cost.
+
+Some examples of difficulties I’m running into:
+
+connected components / largest object detection
+
+cropping dynamic regions
+
+enumerating candidate patches or rectangles
+
+rotations/flips of small templates
+
+tie-breaking between multiple valid placements
+
+avoiding large 30x30 intermediate tensors
+
+replacing float/float16 logic with uint8, bool, or bitset-style operations
+
+keeping shape inference and the official scorer happy
+
+Right now my workflow is mostly manual graph surgery: dtype lowering, cropping work areas, replacing output tails with label maps, pruning branches, and validating with the official local scorer. This works for small gains, but it does not yet feel like a real solver compiler.
+
+For people who have built stronger pipelines, I’d love to hear high-level advice:
+
+1.Do you usually start from a Python solver and then hand-translate it to ONNX, or do you design directly in ONNX primitives?
+
+2.Are there common ONNX “building blocks” you reuse for ARC-style operations like object masks, bounding boxes, flood fill, patch matching, or template placement?
+
+3.How do you decide when a Python rule is worth compiling versus when the ONNX implementation will be too expensive?
+
+4.Do you use automated graph search / template generation, or is most of the work still task-specific manual engineering?
+
+5.Any general tips for reducing memory cost beyond the usual dtype lowering, cropping, dead-code elimination, and label-map output tricks?
+
+Thanks！
+
+Please sign in to reply to this topic.
+
+comment
+0 Comments
+Hotness

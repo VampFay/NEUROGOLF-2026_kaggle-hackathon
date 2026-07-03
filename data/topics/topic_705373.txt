@@ -1,0 +1,178 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+SEBASTIANGIL00 · 802ND IN THIS COMPETITION · POSTED 24 DAYS AGO
+arrow_drop_up
+2
+more_vert
+Is ~6360 the real maximum achievable score for static-shape networks?
+
+I've been studying the scorer and I keep hitting what looks like a hard ceiling, so I wanted to share the reasoning and ask whether I'm missing something.
+
+The score is points = max(1, 25 − ln(macs + memory + params)) per task. Using the official score_network, I measured the cost of a trivial single-node network whose only job is to emit the required [1, 10, 30, 30] output:
+
+bool output → memory = 9000 → 25 − ln(9000) ≈ 15.89 points fp16 output → 18000 → ≈ 15.20 points fp32 output → 36000 → ≈ 14.51 points Since score_network counts every node's output tensor (a 2-node chain measures 72000), the output tensor alone sets a floor: any network that genuinely produces a static [1,10,30,30] result seems bounded near 15.9 points/task, i.e. ~6360 total if every task used a bool output — and lower in practice since many tasks need fp16/fp32 outputs.
+
+Yet the top of the leaderboard sits well above 7000. The only way I can see to beat the output-memory floor is to make the counted output volume smaller than 9000 (e.g. a shape-inference dimension collapsing toward 0).
+
+So my genuine question: is ~6360 the real ceiling for "honest" static-output networks, and is everything above it relying on the output-memory trick — or is there a legitimate technique to get a full [1,10,30,30] result scored below the 9000-byte floor that I've simply missed? Would love to learn if I'm wrong.
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+souldrive
+
+Posted 20 days ago
+
+· 270th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+for floor-bound tasks, is the general approach to crop the input to a bounded top-left region… how do you size that crop so it safely covers the hidden size range per task?
+
+Yes — and the trick that sidesteps the "how big a crop?" guess is to never bake a per-task crop size into the shape. Two ways:
+
+(a) Compact crop (smallest memory): size B = max(over your visible examples) of the extent + a small margin (I use +2). Hidden inputs come from the same generator, so visible-max + margin covers them in practice — but it's a gamble on the tail.
+
+(b) Static canvas + keepmask (safe for any hidden size): keep the graph at a fixed 30×30, pack content top-left, and multiply by a runtime keepmask (row_idx < H) * (col_idx < W) that zeros everything beyond the runtime (H, W) extent. The output shape stays a static 30×30 (so infer_shapes sizes it and it scores), while the values are correct for whatever the hidden size is. No per-task crop-size to get wrong.
+
+Two things that gate both, learned the hard way:
+
+Use a static-shape Gather, never a dynamic Slice. The index values can be data-dependent, but the index shape must be static — a runtime-shaped Slice makes shape-inference return nothing and the net becomes unscoreable.
+Clamp every data-derived index into [0, N-1]. The scorer profiles on an all-zeros input, so masks are empty, the "first index" is garbage, and Gather reads out of bounds. (opset-10 Min/Max are float-only — clamp in float, cast back.)
+
+For floor-bound tasks I'd reach for (b): the keepmask floor is the same [1,10,30,30] you measured, and you stop worrying about the hidden size entirely.
+
+emoji_people
+jacekwl
+
+Posted 24 days ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Macs is excluded from current metric after update, it's just max(1, 25 − ln(memory + params))
+
+Input and output are excluded from calculations.
+
+There are a couple of official update posts in Discussion tab.
+
+SebastianGil00
+TOPIC AUTHOR
+
+Posted 24 days ago
+
+· 802nd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thanks a lot, jacekw. That completely resolves it, and it's a big correction on my end. I was scoring locally with the bundled score_network, which still sums macs + memory + params and also counts the output tensor, so it was massively overestimating cost and inventing a ceiling that doesn't exist. With max(1, 25 - ln(memory + params)) and input/output excluded, the picture is totally different. I'll go read the official update posts.
+
+One thing I'm still trying to understand on the validation side: when a low-cost solver passes every public ARC-GEN sample but still scores 0, what is the hidden set actually probing? I've hit cases where a model that's correct on all public examples fails the hidden check, and I genuinely can't tell whether it's testing out-of-distribution variants of the task (shifted, resized, or recolored grids) or just more samples from the same generator distribution.
+
+I ask because it changes the whole optimization philosophy: if the final private set includes OOD variants, a model has to stay genuinely invariant (a real solver), whereas if it's the same distribution, a tighter fit is fine. Any insight there would save a lot of blind submissions on my end. 🙏
+
+robga
+
+Posted 23 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+It may be worth nothing that the organiser has said, "for all but two or three tasks, we accepted a hidden test only if its output matched that of each program from the top ten teams in last year’s Code Golf Championship", so almost without exception you can go back to those solutions to find a satisfactory variant or discover why yours may not be.
+
+SebastianGil00
+TOPIC AUTHOR
+
+Posted 23 days ago
+
+· 802nd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thanks @robga , very helpful. One question if you are willing: for the floor-bound tasks, is the general approach to crop the input to a bounded top-left region and compute there? And if so, how do you size that crop so it safely covers the hidden size range per task?
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+0
+more_vert

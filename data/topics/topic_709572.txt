@@ -1,0 +1,107 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+NGUYỄN CÔNG TUẤN · 495TH IN THIS COMPETITION · POSTED 14 DAYS AGO
+arrow_drop_up
+1
+more_vert
+Discrepancy between local evaluation score and Kaggle Leaderboard
+
+Hi everyone,
+
+How exactly does NeuroGolf calculate the final cost score? Also, does the evaluation pipeline check the correctness of the ONNX tasks using only the train and test splits, or does it include arc-gen and hidden data?
+
+I am consistently noticing a score gap between my local evaluation machine and my Kaggle submissions. For instance, in one run, my local script scores 6431.63, but drops to 6413.53 upon submission. In another case, a local score of 6413.54 actually climbs to 6425.60 on the leaderboard.
+
+Has anyone else encountered this scenario, and what causes these variations?
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+robga
+
+Posted 14 days ago
+
+· 9th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+It's train, test, arg-gen, plus a small hidden test set. There are two main ways this arises.
+
+There is an environment tooling bug around Conv that has been discussed and the fix is known. This can cause score instability. See this thread https://www.kaggle.com/competitions/neurogolf-2026/discussion/699840
+Hidden test set failure resulting in a task scoring 0 through overfitting. You can find the bad tasks through bisecting you submission until you find the culprit(s). Then going forward make sure you submit newly solved tasks/batches so you identify them early.
+Nguyễn Công Tuấn
+TOPIC AUTHOR
+
+Posted 14 days ago
+
+· 495th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thank you <3
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

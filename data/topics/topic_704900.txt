@@ -1,0 +1,112 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+PAOLO ANTONUCCIO · 1213TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+0
+more_vert
+Dinamic slices and pads
+
+In some tasks, it is necessary to use dynamic slices and pads, such as in task014, but when I run it, I get an output like this:
+
+Results on ARC-AGI examples: 1 pass, 3 fail Results on ARC-GEN examples: 2 pass, 260 fail
+
+Error: Your network performance could not be measured
+
+TypeError Traceback (most recent call last) /tmp/ipykernel_57/1126276753.py in () 40 onnx.checker.check_model(model) 41 onnx.save(model, onnx_filename) ---> 42 verify_network(model, task_num, examples)
+
+/kaggle/input/competitions/neurogolf-2026/neurogolf_utils/neurogolf_utils.py in verify_network(network, task_num, examples) 505 if memory is None or params is None: 506 print(“Error: Your network performance could not be measured”) --> 507 if memory < 0 or params < 0: 508 print(“Error: Your network performance could not be measured”) 509 elif arc_agi_wrong + arc_gen_wrong == 0:
+
+TypeError: ‘<’ not supported between instances of ‘NoneType’ and ‘int’
+
+What should I do?
+
+Please sign in to reply to this topic.
+
+comment
+2 Comments
+Hotness
+emoji_people
+Bishnu Ganguly
+
+Posted a month ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+For the dynamic slicing issue (if the shape of slice is constant such as it is in task 111 where we are doing 3*3 crop) , this issue can be sorted by Patching dynamic Slice output shape into value_info of the model . detailed discussion
+
+Paolo Antonuccio
+TOPIC AUTHOR
+
+Posted 25 days ago
+
+· 1213th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I tried spox, but the result is the same
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+0
+more_vert

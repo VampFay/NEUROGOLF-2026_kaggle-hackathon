@@ -1,0 +1,121 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+NASUBIMAN · 71ST IN THIS COMPETITION · POSTED 3 DAYS AGO
+arrow_drop_up
+3
+more_vert
+score improvement speed per task
+
+How fast are you all improving your task scores? When I optimize 100 different tasks, I can generally improve my overall score by about 5 points. Is that a relatively small improvement, especially from the perspective of others in the same silver medal zone?
+
+Please sign in to reply to this topic.
+
+comment
+3 Comments
+Hotness
+Alexander Gremyakov
+
+Posted 3 days ago
+
+· 172nd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+But how fast do you optimize those 100 tasks…
+
+nasubiman
+TOPIC AUTHOR
+
+Posted 3 days ago
+
+· 71st in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+We count each exchange with ChatGPT as one optimize. Each optimize takes about 10 minutes.
+
+emoji_people
+func-nano
+
+Posted 2 days ago
+
+· 164th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+you are so great! 5 points per hour!!! %%%
+
+3 more replies
+arrow_drop_down
+
+This comment has been deleted.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+0
+more_vert

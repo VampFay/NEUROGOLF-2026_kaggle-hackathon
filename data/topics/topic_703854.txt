@@ -1,0 +1,175 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+YOUKNOWHO · 696TH IN THIS COMPETITION · POSTED A MONTH AGO
+arrow_drop_up
+3
+more_vert
+How are you using AI agents for Neurogolf?
+
+Hi everyone,
+
+I wanted to ask a general workflow question about using AI agents for this competition.
+
+My current score is 6439.82. I am using both ChatGPT Pro and Claude Code Max, but my progress feels quite slow.
+
+A typical long session gives me around +5 score, and one 5-hour session can consume almost 10% of my weekly quota. So I am wondering if I am using agents inefficiently.
+
+For people making faster progress, I would really appreciate any general advice on the workflow:
+
+Do you use agents to solve full tasks end-to-end?
+Or do you mainly use them to build reusable scripts/tools?
+Are you creating custom “skills” for the agents?
+Are you mixing stronger and cheaper models?
+For example, one main high-capability model plus smaller/faster subagents?
+Do you let agents explore freely, or give them very specific hypotheses?
+How do you decide when to stop a bad run?
+Do you work task-by-task, or first build a stronger general framework?
+
+I am not asking for private tricks or task-specific solutions.
+
+I am mainly trying to understand the meta-workflow, because right now I feel like I am spending a lot of quota for very small gains.
+
+Any advice would be appreciated.
+
+Good luck everyone!
+
+Please sign in to reply to this topic.
+
+comment
+5 Comments
+Hotness
+Rustam Bazarbayev
+
+Posted a month ago
+
+· 995th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I think you have to solve one by one
+
+emoji_people
+Chan Kha Vu
+
+Posted a month ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Going into this competition, I never thought I might spend more on LLM tokens than on GPUs for other compute-heavy competitions…
+
+Yeah, I have no idea how to use tokens more efficiently. I guess only a few players at the top has more or less figured this out.
+
+emoji_people
+Jan Vorel
+
+Posted a month ago
+
+· 13th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+You are asking for winning recipe actually. :-)
+
+Andres H. Zapke
+
+Posted a month ago
+
+· 1393rd in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I use chatGPT to build scripts and do the rest by hand or following the footsteps of the top notebooks. Never used claude or any of those AI agents. Do you recommend them? Whats the advantage of using them as opposed to my approach?
+
+Chet
+
+Posted a month ago
+
+· 77th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Based on my benchmarking, top models are all you need. GLM vs Opus: ONNX cost-opt
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+1
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+2
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+0
+more_vert
+--- Comment 5 ---
+arrow_drop_up
+0
+more_vert

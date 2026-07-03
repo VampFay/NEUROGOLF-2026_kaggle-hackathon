@@ -1,0 +1,215 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+LEN8487 · 80TH IN THIS COMPETITION · POSTED 5 DAYS AGO
+arrow_drop_up
+4
+more_vert
+About the task 001
+
+What's the limit score of 001? Is there anyone who reached less than 100 in cost in this task?
+
+Please sign in to reply to this topic.
+
+comment
+7 Comments
+Hotness
+emoji_people
+Jan Vorel
+
+Posted 5 days ago
+
+· 13th in this Competition
+
+arrow_drop_up
+7
+more_vert
+
+task001 cost: 94
+
+sam_the_rice_cake
+
+Posted 5 days ago
+
+· 159th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Nice, I'm stuck at 1121 on task001 with the baseline graph — the 10-channel [1,10,9,9] tensor alone is 810 bytes. Mind sharing how you avoid materializing it? Did you produce the [1,10,30,30] output directly?
+
+emoji_people
+Jan Vorel
+
+Posted 5 days ago
+
+· 13th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Yes — I produce [1,10,30,30] directly, avoiding that intermediate.
+
+sam_the_rice_cake
+
+Posted 5 days ago
+
+· 159th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+thank u so much
+
+len8487
+TOPIC AUTHOR
+
+Posted a day ago
+
+· 80th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Thank you it was helpful. Finally, I reached it!
+
+OverfitOracle
+
+Posted 4 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+how many and what tasks were you able to push to 25
+
+emoji_people
+Jan Vorel
+
+Posted 4 days ago
+
+· 13th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+I have 9 25s
+
+10 more replies
+arrow_drop_down
++2
+OverfitOracle
+
+Posted 5 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+yes i have got approx 100 cost
+
+Xuyang Peng
+
+Posted 5 days ago
+
+· 39th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+100 seems incredible. I tried many times using chatgpt and the highest I could get was 198. Did you achieve this score using only chatgpt?
+
+OverfitOracle
+
+Posted 4 days ago
+
+· 10th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+yep i used gpy pro and claude max
+
+Ken Krige
+
+Posted 3 days ago
+
+· 25th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+Cost of task001: 134
+
+len8487
+TOPIC AUTHOR
+
+Posted 3 days ago
+
+· 80th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+I am also stuck at 122 😭

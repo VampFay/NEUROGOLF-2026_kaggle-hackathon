@@ -1,0 +1,476 @@
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+MICHAEL D. MOFFITT · POSTED 2 MONTHS AGO
+·
+COMPETITION HOST
+arrow_drop_up
+22
+more_vert
+NeuroGolf Update for May 4th
+
+Greetings teams! Another week, another update:
+
+Through our alias neurogolf.2026@gmail.com, we received details of exploits & fixes from roughly a half-dozen teams.
+As a result, we’ve rolled out changes to (a) assert positive tensor dimensions, and (b) improve calculate_memory() to use shapes verified by the official ONNX Runtime. The impact on the vast majority of teams should be negligible.
+Several contestants have found serious, unresolvable issues in the third-party profiler that can be leveraged to drop the contribution of MACs to nearly zero. Instead of chasing complicated fixes or encouraging similar hacks, we’ve resigned to eliminating MACs from the objective criterion altogether. Going forward, only cumulative memory footprint and parameter count will determine the cost of your networks.
+Given the rather bumpy start to this competition, we’ll set May 6th 00:00 UTC as the effective start time for our Longest Leader prize (in accordance with our stated policy). Note that there might still be occasional bug fixes and/or rescores if other issues (hopefully minor) come up.
+
+We’ll do our best to respond to comments below with further clarifications. In the meantime, batch rescoring should be starting in the next few minutes. Thank you!
+
+10
+4
+
+Please sign in to reply to this topic.
+
+comment
+22 Comments
+Hotness
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+8
+more_vert
+
+Hey folks,
+
+You're not going to believe this, but there may still be some issues with the metric. 😅 Most teams should be able to make steady progress after yesterday's update (esp. pivoting to the MAC-free objective), but I'll continue to edit this comment in-place for anyone else interested in the latest findings.
+
+Reports received from: @asalhi, @binhdth, @cdeotte, @jacekwl, @pavelsavchenkov, @takuyainoue, @tonylica, @yeoyunsianggeremie, and others
+
+Open issues:
+
+"Large" submissions failing with seemingly random tasks Fix applied
+Memory calculation issues (e.g., certain nodes skipped due to a "kernel-related" problem) Fix applied
+Scalar tensors not properly contributing to parameter count Fix applied
+Parameter accounting problems when node names are duplicated Fix applied
+Graphs with more than one input or output should be rejected Fix applied
+Official scoring metric producing timeouts Fix applied (only hidden tests are now executed)
+Various issues with nonpositive dim values Fix applied (note: networks may score 0 points instead of failing outright)
+
+Fixes to above issues discovered? Yes!
+
+Fixes to above issues verified? Yes!
+
+New metric deployed? Yes!
+
+New neurogolf_utils released? Yes! (note: it's missing the "excluded ops" check, but our scorer still enforces that)
+
+Batch rescoring kicked off? Yes!
+
+Batch rescoring finished? Yes!
+
+emoji_people
+jacekwl
+
+Posted 2 months ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+So there is definitely some issue with the grader. I got error that some tasks failed, including task166. I submitted only task166, it passed and returned score.
+
+SajayR
+
+Posted 2 months ago
+
+· 1092nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Yeah same here, had me sitting confused if I was doing something odd.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+2
+more_vert
+
+We've discovered that the traces written by ONNX's Runtime profiler are not guaranteed to have unique filenames (i.e., the path is based on the current timestamp in seconds). When multiple tasks are run back-to-back in rapid succession, these files can clobber each other (whereas a single task will execute just fine).
+
+We'll be fixing this by specifying the options.profile_file_prefix setting appropriately.
+
+Rustam Bazarbayev
+
+Posted 2 months ago
+
+· 980th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+Why does my scored notebook give this error? Error processing onnx networks for tasks: [15, 28, 56, 78, 95, 98, 120, 127, 144, 147,
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+3
+more_vert
+
+As of the evening of May 6th, this should now be fixed!
+
++cc: @arksey, @asalhi, @cdeotte, @jacekwl, @rustambazarbayev, @takuyainoue, @tivfrvqhs5
+
+yuanzhe zhou
+
+Posted 2 months ago
+
+· 634th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+Can we also fix public notebook's score?
+
+yuanzhe zhou
+
+Posted 2 months ago
+
+· 634th in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+@mmoffitt could you also fix/rerun public notebook's score? The current scores are not useful anymore.
+
+hengck23
+
+Posted 2 months ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+4
+more_vert
+
+I’m happy with the new evaluation code, but I’d like to point out a key change in the optimization target and strategy.
+
+[1] max (sum memory of all nodes in one example) ≠ sum (max over examples per node)
+
+The May 4 update shifts memory from static graph analysis to dynamic ONNX Runtime profiling, effectively optimizing the worst-case runtime example. In particular, the code uses:
+
+max(memory, current_memory) # max over samples
+
+
+[2] If the target is still worst-case static graph (as before), one possible fix is to enforce equal memory across all examples.
+
+[3] Change of optimization strategy under dynamic evaluation (May 4 code)
+
+I’m sharing this to help others pivot their evaluation strategy accordingly.What this means now:
+
+optimize the worst-case example
+previously, we may optimize nodes A and B together in the static graph, but their worst cases may not occur simultaneously
+no need for housekeeping for varying sizes (e.g. detecting 2×2, 4×4, 6×6 objects depending on input)
+when analyzing results, focus on the example that triggers peak memory
+
+[REFERENCES] (A) neurogolf_utils.py
+
+def calculate_memory(model, trace_path):
+    #UPPER ONNX STATIC PROFILE
+    onnx.checker.check_model(model, full_check=True)  ---
+
+        for dim in tensor_type.shape.dim:
+            if dim.HasField("dim_param"): return None #most important check 
+            if not dim.HasField("dim_value"): return None
+
+    #LOWER ORT RUNTIME TRACER (max over memory per sample) ----
+     with open(trace_path, 'r') as f:
+        trace_data = json.load(f)
+     memory, current_memory, first_node_name = 0, 0, None  #reset here!
+    for event in trace_data:
+
+        elif node_name == first_node_name:
+            memory, current_memory = max(memory, current_memory), 0  #reset per sample
+
+        for i, shape_dict in enumerate(event["args"]["output_type_shape"]):
+            for dims in shape_dict.values():
+                current_memory += itemsize * math.prod(dims)
+    return max(memory, current_memory) #max over sample
+
+
+(B) my experiments, verified:
+
+for UPPER ONNX STATIC PROFILE we can fill in tensor_type's dim_param, dim_value for dynamic shape (see my post on dynamic slicing) --- aka "Fixing Symbolic Dimensions"
+LOWER ORT RUNTIME TRACER supports dynamic shapes in runtime. So each examples can consume different memory (which may be more natural for arc-gen problems since input size is different?)
+hengck23
+
+Posted 2 months ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+0
+more_vert
+
+ 
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for this observation, @hengck23! Our decision to use the superior ONNX Runtime profiling (instead of scrubbing value_info) was based, in part, on your feedback about preserving dynamic slicing, which we want to allow.
+
+However, the sum(max()) vs. max(sum()) behavior you describe here is (perhaps) too drastic a change, and @prokaj has suggested an alternative that's more consistent with the scoring we've been using for the past several weeks. I'll clarify today — I also realize how much of a headache this all is, so I appreciate your patience.
+
+hengck23
+
+Posted 2 months ago
+
+· 2356th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+Thanks for the clarification. Perhaps the best solution is:
+
+ONNX static memory = ORT runtime memory for each sample
+
+
+This means we shouldn’t “cheat” in the ONNX static graph shape info, since it will be verified by ORT at runtime for every sample.
+
+This is possible because both approaches ultimately sum the memory of output tensors. In my experiments, I verified that they can be made identical (and should be).
+
+Thanks for your work :) it must be difficult being a one-person blue team versus an army of red team!
+
+Mohit
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Thats great !!
+
+Ali
+
+Posted 2 months ago
+
+· 171st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the updates @mmoffitt
+
+My best submission should score on LB around 5300, but it is now hitting errors : Error processing onnx networks for tasks: [45, 171, 210, 220, 239, 256, 309]
+
+So far locally on the new metric they pass, but not on LB, I will digg more.
+
+emoji_people
+jacekwl
+
+Posted 2 months ago
+
+· 2nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+I also got errors on random tasks and when I removed them I got errors on different tasks. I guess I will wait till rescoring is done.
+
+Ali
+
+Posted 2 months ago
+
+· 171st in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Yes, I removed the tasks that had errors, then new ones came out in the error stack, hmm , I will remove the new ones and see when this will stop.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Many thanks for this report -- I should be able to run some special diagnostic tools on my end to look into this behavior.
+
+Takuya Inoue
+
+Posted 2 months ago
+
+· 92nd in this Competition
+
+arrow_drop_up
+1
+more_vert
+
+Thanks for the recent scoring improvements. FYI, based on my recent submissions, I suspect this is due to high memory usage from the previous task, or possibly from a paired/concurrent task.
+
+9 more replies
+arrow_drop_down
++3
+keymoon
+
+Posted 2 months ago
+
+· 58th in this Competition
+
+arrow_drop_up
+2
+more_vert
+
+IMHO, neurogolf_utils should stop using onnx_tool.loadmodel() and onnx_tool.model_profile() inside the scorer. We cannot use some ops and techniques due to onnx_tool quirks. onnx_tool.model_profile() is not required to compute the scores. Currently, it only serves to prevent us from using some techniques (ref: https://www.kaggle.com/competitions/neurogolf-2026/discussion/695454 ).
+
+For example, we can use ArgMax but not ArgMin, because onnx_tool does not implement it.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+3
+more_vert
+
++1, we're eliminating the use of onnx_tool entirely.
+
+This comment has been deleted.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+1
+more_vert
+
+Will this introduce any new _IR_VERSION and _OPSET_IMPORTS version restrictions?
+
+Since our official scorer now just depends on numpy, onnx, and onnxruntime (but not onnx_tool), it's possible that you'll find support for a broader range of _IR_VERSION and _OPSET_IMPORTS values. We don't explicitly enforce any restrictions, though.
+
+Michael Hernandez
+
+Posted 2 months ago
+
+· 149th in this Competition
+
+arrow_drop_up
+0
+more_vert
+Bisection results: narrowing down the grader errors
+
+Like a few other teams mentioned, all of our submissions since the May 4 update show errors. I spent some time bisecting to figure out what's going on and wanted to share what I found in case it helps others or the host.
+
+What works:
+
+4 models (simple 1x1 Conv templates): scores fine
+25 models (all hand-built ONNX via the helper API, opset 11): scores fine (332.82)
+26 models (25 hand-built + 1 external): scores fine
+
+What doesn't:
+
+115+ models: errors every time
+Splitting the full bank into halves, quarters, or eighths all error (except one eighth with 71 models that passed once, but I suspect that was intermittent)
+Filtering out models that use "unusual" ops (Resize, TopK, ConvTranspose, Split, etc.) still errors with 359 models
+Taking only the 90 smallest models by filesize still errors at 115 total
+
+All 399 models in our bank pass local validation: onnx.checker, ORT session load, ORT inference, and ORT profiling all succeed with no exceptions or zero-dimension tensors. Every model produces correct output on all local train/test/arc-gen examples.
+
+My best guess is that this is related to the memory leak / carryover issue the host mentioned. It seems like the grader accumulates state across models in the batch, and somewhere around 100+ models it runs out of resources. Our hand-built models are tiny (under 5KB each) and score fine at 25 count, but adding enough external models (even small ones) pushes past whatever the limit is.
+
+Has anyone else found a consistent way to submit 400 models under the new grader? Curious whether the teams currently scoring 10000 submitted before or after the May 4 update.
+
+Best local score: 5321.19
+
+Update after more iterations: The error messages name specific failing task indices (e.g. Error processing onnx networks for tasks: [45, 67, 97, 159, ...]). At first I thought these were specific bad models, but after removing them and resubmitting multiple times, the same indices keep failing with whatever task happens to land at that position. Indices 194, 257, and 372 reappear every iteration no matter what model is at that slot.
+
+This confirms it's a resource/position issue in the grader batch, not a problem with specific ONNX files. All our models pass local validation under ORT 1.22 with profiling enabled.
+
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+0
+more_vert
+
+Thank you Michael! After extensive debugging, we traced the problem down to this trace file clobbering issue, and will be releasing a fix ASAP!
+
+This comment has been deleted.
+
+This comment has been deleted.
+
+This comment has been deleted.

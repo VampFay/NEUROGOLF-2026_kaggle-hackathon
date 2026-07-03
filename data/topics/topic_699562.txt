@@ -1,0 +1,148 @@
+=== BODY TEXT ===
+menu
+Skip to
+content
+Create
+explore
+
+Home
+
+emoji_events
+
+Competitions
+
+leaderboard
+
+Benchmarks
+
+smart_toy
+
+Game Arena
+
+code
+
+Data Hub
+
+expand_more
+format_list_bulleted
+
+More
+
+expand_more
+search
+​
+Sign In
+Register
+Kaggle uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+Learn more
+OK, Got it.
+THE NEUROSYNTHETIC RESEARCH INSTITUTE · RESEARCH PREDICTION COMPETITION · 12 DAYS TO GO
+Join Competition
+more_horiz
+The 2026 NeuroGolf Championship
+
+Design the smallest neural networks to solve ARC-AGI image transformations
+
+Overview
+Data
+Code
+Models
+Discussion
+Leaderboard
+Rules
+SAYAKA MIKI · 134TH IN THIS COMPETITION · POSTED 2 MONTHS AGO
+arrow_drop_up
+16
+more_vert
+There are still new exploits to be discovered
+
+I've found a scoring bug that can significantly reduce memory cost. For task069, this bug can reduce mem cost calculated by scorer from 44206 to 625, and raise points from 14.30 to 18.47. I've already gotten about +50 points from a fairly minimal automated version of this. Rewriting all 400 tasks that fit the exploit well probably can get +400 to +1000 points.
+
+I've already submit details to host @mmoffitt. But I think the scorer is still not perfect after fix this bug. One thing I'd like the organizers to clarify: what's the rule if a scorer bug is never publicly disclosed but is quietly exploited until the end of the contest? Are submissions that depend on it disqualified retroactively, or do they stand?
+
+2
+
+Please sign in to reply to this topic.
+
+comment
+5 Comments
+Hotness
+Michael D. Moffitt
+COMPETITION HOST
+
+Posted 2 months ago
+
+arrow_drop_up
+11
+more_vert
+
+[2026-05-14 Update]: This exploit (along with another reported by @pavelsavchenkov) have been fixed. Details of both issues are documented in neurogolf_utils.py. Thanks all — until next time!
+
+Wonderful, many thanks for the detailed bug report! Fixes should be coming today — it's a very surgical change, so most teams need not worry.
+
+What's the rule if a scorer bug is never publicly disclosed but is quietly exploited until the end of the contest?
+
+If a team were to discover & hold onto such a vulnerability until the very end, we reserve the right to disqualify such participants, as per sections 3.8.d and 3.8.e of our rules. However, we encourage teams to continue to hunt for such issues and report them, as the hardening of the metric ought to help everyone in the long run.
+
+Pavel
+
+Posted 2 months ago
+
+· 7th in this Competition
+
+arrow_drop_up
+11
+more_vert
+
+Thanks for reporting!
+
+I'm currently low on limits, so not running the main optimization loop, but managed to find the exploit quite quickly.
+
+It scores 25.0 on all tasks except two.
+
+On the positive side, the exploit should be fairly easy to close.
+
+Sayaka Miki
+TOPIC AUTHOR
+
+Posted 2 months ago
+
+· 134th in this Competition
+
+arrow_drop_up
+3
+more_vert
+
+It's cool. My exploit is a little bit hard to apply…maybe I get something wrong, or we find two different exploits?
+
+hwe owe
+
+Posted 2 months ago
+
+· 10th in this Competition
+
+arrow_drop_up
+-1
+more_vert
+
+i think that it will be better if the competition origination use inference time
+
+This comment has been deleted.
+
+=== COMMENTS (extracted via DOM) ===
+--- Comment 1 ---
+arrow_drop_up
+11
+more_vert
+--- Comment 2 ---
+arrow_drop_up
+11
+more_vert
+--- Comment 3 ---
+arrow_drop_up
+3
+more_vert
+--- Comment 4 ---
+arrow_drop_up
+-1
+more_vert
