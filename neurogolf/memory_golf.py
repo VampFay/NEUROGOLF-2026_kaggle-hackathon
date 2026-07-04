@@ -1958,9 +1958,8 @@ class GolfFloodFillSolver(Solver):
         pairs = get_pairs(task)
         for inp, out in pairs:
             if inp.shape != out.shape: return None
-        in_h, in_w = pairs[0][0].shape
-        for inp, _ in pairs:
-            if inp.shape != (in_h, in_w): return None
+        in_h = max(inp.shape[0] for inp, _ in pairs)
+        in_w = max(inp.shape[1] for inp, _ in pairs)
         # Detect wall and fill colors
         fill_color = None
         wall_color = None
@@ -2022,7 +2021,7 @@ class GolfFloodFillSolver(Solver):
         # interior = empty AND NOT outside
         # output = Where(interior, one_hot(fill_c), input)
         # For simplicity, use a fixed number of iterations = max(in_h, in_w)
-        n_iters = max(in_h, in_w) + 2
+        n_iters = in_h + in_w + 2
         pad_h, pad_w = MAX_GRID - in_h, MAX_GRID - in_w
 
         # Weight to extract non-zero mask (sum of channels 1-9)
@@ -2041,7 +2040,6 @@ class GolfFloodFillSolver(Solver):
             W_prop[0, 0, dh+1, dw+1] = 1.0
 
         inits = [
-            h.make_tensor("wnz", TensorProto.FLOAT, list(W_nz.shape), W_nz.flatten().tolist()),
             h.make_tensor("w0", TensorProto.FLOAT, list(W_0.shape), W_0.flatten().tolist()),
             h.make_tensor("oh", TensorProto.FLOAT, list(oh.shape), oh.flatten().tolist()),
             h.make_tensor("wp", TensorProto.FLOAT, list(W_prop.shape), W_prop.flatten().tolist()),
@@ -2051,21 +2049,36 @@ class GolfFloodFillSolver(Solver):
             h.make_node("Constant", [], ["se"], value=h.make_tensor("sev", TensorProto.INT64, [4], [1,NUM_COLORS,in_h,in_w])),
             h.make_node("Constant", [], ["sa"], value=h.make_tensor("sav", TensorProto.INT64, [4], [0,1,2,3])),
             h.make_node("Slice", [INPUT_NAME, "ss", "se", "sa"], ["s"]),
-            # empty = 1 - (sum of channels 1-9 > 0) = 1 - nonzero
-            h.make_node("Conv", ["s", "wnz"], ["nz"]),
-            h.make_node("Constant", [], ["o"], value=h.make_tensor("ov", TensorProto.FLOAT, [1,1,1,1], [1.0])),
-            h.make_node("Sub", ["o", "nz"], ["empty"]),
-            # outside starts as empty * border_mask
-            # border_mask: 1 on first/last row, 1 on first/last col
+            # empty = channel 0 only (1 for color-0 cells, 0 for padding AND non-zero)
+            h.make_node("Conv", ["s", "w0"], ["empty"]),
+            # padding_mask = 1 - (sum of ALL channels) — 1 for padding, 0 for actual cells
+            # Use a conv with all-ones weights to sum all channels
         ]
-        # Build border mask as a constant
+        # Weight to sum all channels (detect padding: sum=0 means padding)
+        W_sum = np.ones((1, NUM_COLORS, 1, 1), dtype=np.float32)
+        inits.append(h.make_tensor("ws", TensorProto.FLOAT, list(W_sum.shape), W_sum.flatten().tolist()))
+        # Build border mask as a constant (frame border)
         border = np.zeros((1, 1, in_h, in_w), dtype=np.float32)
         border[0, 0, 0, :] = 1.0
         border[0, 0, -1, :] = 1.0
         border[0, 0, :, 0] = 1.0
         border[0, 0, :, -1] = 1.0
         inits.append(h.make_tensor("bm", TensorProto.FLOAT, list(border.shape), border.flatten().tolist()))
-        nodes.append(h.make_node("Mul", ["empty", "bm"], ["outside0"]))
+        # Compute content border: empty cells adjacent to padding
+        nodes.extend([
+            h.make_node("Conv", ["s", "ws"], ["sum_all"]),  # sum of all channels
+            h.make_node("Constant", [], ["oc"], value=h.make_tensor("ocv", TensorProto.FLOAT, [1,1,1,1], [1.0])),
+            h.make_node("Sub", ["oc", "sum_all"], ["padding"]),  # 1 for padding, 0 for actual
+            # content_border = empty AND (any 4-neighbor is padding)
+            h.make_node("Conv", ["padding", "wp"], ["pad_nbr"], pads=[1,1,1,1]),
+            h.make_node("Constant", [], ["hf2"], value=h.make_tensor("hf2v", TensorProto.FLOAT, [1,1,1,1], [0.5])),
+            h.make_node("Greater", ["pad_nbr", "hf2"], ["pad_nbr_b"]),
+            # outside0 = empty AND (frame_border OR content_border)
+            h.make_node("Mul", ["empty", "bm"], ["fb_outside"]),
+            h.make_node("Cast", ["pad_nbr_b"], ["pad_nbr_f"], to=TensorProto.FLOAT),
+            h.make_node("Mul", ["empty", "pad_nbr_f"], ["cb_outside"]),
+            h.make_node("Max", ["fb_outside", "cb_outside"], ["outside0"]),
+        ])
         # Iterate: outside = max(outside, empty * conv(outside, prop))
         prev = "outside0"
         for i in range(n_iters):
@@ -2074,13 +2087,21 @@ class GolfFloodFillSolver(Solver):
             nodes.append(h.make_node("Max", [prev, "new" + str(i)], ["outside" + str(i + 1)]))
             prev = "outside" + str(i + 1)
         # interior = empty AND NOT outside = empty * (1 - outside)
-        nodes.append(h.make_node("Sub", ["o", prev], ["not_out"]))
+        # Clamp outside to [0,1] first (propagation can produce values > 1)
+        nodes.append(h.make_node("Constant", [], ["o"], value=h.make_tensor("ov", TensorProto.FLOAT, [1,1,1,1], [1.0])))
+        nodes.append(h.make_node("Constant", [], ["one_c"], value=h.make_tensor("one_cv", TensorProto.FLOAT, [1,1,1,1], [1.0])))
+        nodes.append(h.make_node("Min", [prev, "one_c"], ["outside_clamped"]))
+        nodes.append(h.make_node("Sub", ["o", "outside_clamped"], ["not_out"]))
         nodes.append(h.make_node("Mul", ["empty", "not_out"], ["interior"]))
-        # output = Where(interior, one_hot(fill_c), input)
-        nodes.append(h.make_node("Constant", [], ["hf"], value=h.make_tensor("hfv", TensorProto.FLOAT, [1], [0.5])))
-        nodes.append(h.make_node("Greater", ["interior", "hf"], ["ib"]))
-        nodes.append(h.make_node("Mul", ["oh", "interior"], ["fill_oh"]))
-        nodes.append(h.make_node("Mul", ["s", "not_out"], ["keep"]))
+        # output = input * (1 - interior) + one_hot_fill * interior
+        nodes.append(h.make_node("Constant", [], ["hf"], value=h.make_tensor("hfv", TensorProto.FLOAT, [1,1,1,1], [0.5])))
+        nodes.append(h.make_node("Sub", ["o", "outside_clamped"], ["not_out2"]))  # reuse for 1-interior
+        # keep = input * (1 - interior) — zero out interior cells, keep everything else
+        nodes.append(h.make_node("Constant", [], ["one_c2"], value=h.make_tensor("one_c2v", TensorProto.FLOAT, [1,1,1,1], [1.0])))
+        nodes.append(h.make_node("Min", ["interior", "one_c2"], ["interior_clamped"]))
+        nodes.append(h.make_node("Sub", ["one_c2", "interior_clamped"], ["not_interior"]))
+        nodes.append(h.make_node("Mul", ["s", "not_interior"], ["keep"]))
+        nodes.append(h.make_node("Mul", ["oh", "interior_clamped"], ["fill_oh"]))
         nodes.append(h.make_node("Add", ["keep", "fill_oh"], ["out"]))
         nodes.append(h.make_node("Constant", [], ["ps"], value=h.make_tensor("psv", TensorProto.INT64, [8], [0,0,0,0,0,0,pad_h,pad_w])))
         nodes.append(h.make_node("Constant", [], ["pv"], value=h.make_tensor("pvv", TensorProto.FLOAT, [], [0.0])))

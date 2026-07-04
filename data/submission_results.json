@@ -1,11 +1,12 @@
 {
   "summary": {
-    "solved": 28,
+    "solved": 30,
     "total": 400,
-    "total_score": 566.1155764272387,
-    "elapsed_sec": 70.8158609867096,
+    "total_score": 592.4313713876302,
+    "elapsed_sec": 70.57481503486633,
     "breakdown": {
       "kronecker": 1,
+      "golf_flood_fill": 2,
       "exploit_color_swap": 2,
       "task39_extract_topleft": 1,
       "golf_draw_line": 2,
@@ -22,7 +23,7 @@
       "exploit_crop": 1
     },
     "output_path": "/home/z/my-project/download/submission.zip",
-    "file_size_bytes": 13677
+    "file_size_bytes": 16755
   },
   "results": [
     {
@@ -36,10 +37,10 @@
     {
       "task_id": 2,
       "filename": "00d62c1b",
-      "solver": "replace_color",
-      "cost": 36501,
-      "score": 14.494905063544442,
-      "eligible": false
+      "solver": "golf_flood_fill",
+      "cost": 272996,
+      "score": 12.482787577954896,
+      "eligible": true
     },
     {
       "task_id": 3,
@@ -2028,10 +2029,10 @@
     {
       "task_id": 251,
       "filename": "a5313dff",
-      "solver": "replace_color",
-      "cost": 36501,
-      "score": 14.494905063544442,
-      "eligible": false
+      "solver": "golf_flood_fill",
+      "cost": 70756,
+      "score": 13.833007382436602,
+      "eligible": true
     },
     {
       "task_id": 252,

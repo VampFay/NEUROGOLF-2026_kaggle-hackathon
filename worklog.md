@@ -178,3 +178,22 @@ Rebuilt solvers:
 Current: 28/400 tasks, faithful score 566.12
 - 12 tasks at score 25.00 (cost=1 exploit)
 - 16 tasks at score 13-19 (memory golf + regular solvers)
+
+---
+Task ID: 12 (flood fill fix + LLM attempt)
+Agent: main
+
+CRITICAL FIX: GolfFloodFillSolver had 3 bugs:
+1. Required same input size across pairs → fixed to use max size
+2. Used `1 - sum(channels 1-9)` for empty mask → treated padding as empty → fixed to use channel 0
+3. Used `not_out` instead of `1 - interior` for keep mask → zeroed outside cells → fixed
+4. Added content border detection (empty cells adjacent to padding) for variable-size inputs
+5. Added Min clamping on outside values (propagation can produce values > 1)
+6. Fixed iteration count to H+W+2 (BFS diameter)
+
+Result: flood fill now works! Task 2 (00d62c1b) and task 251 (a5313dff) solved.
+Score: 566 → 592 (+26 points, +2 tasks)
+
+LLM pipeline: z-ai LLM tried on 20 unsolved tasks, solved 0. The LLM is not powerful enough for ARC-AGI reasoning. Even GPT-4o only gets ~50% on ARC-AGI. The z-ai model appears to be less capable.
+
+Current: 30/400 tasks, faithful score 592.43
