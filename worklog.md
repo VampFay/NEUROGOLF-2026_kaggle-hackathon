@@ -227,3 +227,28 @@ Next steps:
 
 This approach CAN solve all 400 tasks — it just requires analyzing each one.
 At ~10 tasks per message, we need ~40 more rounds to cover all 400.
+
+---
+Task ID: 14 (direct solver batch 4)
+Agent: main
+
+Verified Python solvers (7 new in this batch):
+- Task 3: Color 1→2 + periodic extension ✓
+- Task 10: Color 5 → rank colors by column height ✓
+- Task 15: Frame markers (2→diagonal 4, 1→orthogonal 7) ✓
+- Task 40: Markers → nearest boundary color ✓
+- Task 45: Same-color edge markers → fill row ✓
+- Task 47: Cross pattern, intersections=2 ✓
+- Task 49: Output smallest object's bounding box ✓ (KEY FIX: smallest, not largest)
+
+Near-miss (still debugging):
+- Task 4: Shape shift (top rows shift right, bottom stays) — 4 diffs
+- Task 13: Two-seed alternation — fails on pair 2 (different seed pattern)
+- Task 48: Output majority color — close but off-by-one on pair 0
+
+TOTAL verified Python solvers: 13 tasks (3, 10, 15, 40, 45, 47, 49 from this session)
+These need ONNX transpilation to be included in submission.zip.
+
+The approach WORKS: I analyze each task, write solve(grid), verify on all pairs.
+Each batch of 15 tasks yields ~7 verified solvers.
+To cover all 400: ~30 more batches needed.
