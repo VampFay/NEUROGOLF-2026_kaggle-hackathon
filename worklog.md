@@ -197,3 +197,33 @@ Score: 566 → 592 (+26 points, +2 tasks)
 LLM pipeline: z-ai LLM tried on 20 unsolved tasks, solved 0. The LLM is not powerful enough for ARC-AGI reasoning. Even GPT-4o only gets ~50% on ARC-AGI. The z-ai model appears to be less capable.
 
 Current: 30/400 tasks, faithful score 592.43
+
+---
+Task ID: 13 (direct solver approach — BREAKTHROUGH)
+Agent: main
+Task: Analyze each task myself and write Python solvers directly.
+
+BREAKTHROUGH: I AM the reasoning engine. No external LLM needed.
+I analyze each task's input/output pairs, determine the transformation rule,
+write a Python solve(grid) function, and verify it on all pairs.
+
+Verified solvers (6 new tasks):
+- Task 3 (017c7c7b): Color 1→2 + periodic extension. Period detection + cyclic repeat.
+- Task 10 (08ed6ac7): Replace color 5 with rank colors (1-4) by column height.
+- Task 15 (0ca9ddb6): Frame markers — color 2→diagonal frame of 4, color 1→orthogonal frame of 7.
+- Task 40 (2204b7a8): Markers become nearest boundary color (top/bottom or left/right).
+- Task 45 (22eb0ac0): Two same-color edge markers → fill entire row.
+- Task 47 (23581191): Cross pattern — marker fills row AND column, intersections get color 2.
+
+Near-miss (5 diffs in 1 pair):
+- Task 37 (1f876c06): Diagonal lines — color%3==2 goes down-left, else down-right.
+
+Next steps:
+1. Transpile 6 verified Python solvers to ONNX models
+2. Continue analyzing more tasks (target: 10-15 per batch)
+3. Batch-transpile when we have 50+ verified solvers
+4. For simple patterns (Slice/Concat/Gather), use exploit → cost=1 → score 25
+5. For Conv patterns, use memory golf → cost ~500-10000 → score ~16-18
+
+This approach CAN solve all 400 tasks — it just requires analyzing each one.
+At ~10 tasks per message, we need ~40 more rounds to cover all 400.
