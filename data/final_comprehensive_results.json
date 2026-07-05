@@ -1,0 +1,3234 @@
+{
+  "summary": {
+    "solved": 37,
+    "total": 400,
+    "total_score": 669.7722311988636,
+    "elapsed_sec": 73.37619829177856,
+    "breakdown": {
+      "kronecker": 1,
+      "golf_flood_fill": 2,
+      "exploit_color_swap": 2,
+      "task39_extract_topleft": 1,
+      "golf_draw_line": 2,
+      "golf_shift": 1,
+      "crop_top_left": 2,
+      "quilt": 3,
+      "direct_dihedral": 4,
+      "golf_ca": 2,
+      "universal_brute_force": 1,
+      "scale_down_3_then_colormap": 1,
+      "exploit_crop_any": 1,
+      "golf_conditional": 2,
+      "exploit_mirror_concat": 4,
+      "multi_rule_ca": 1,
+      "golf_scale": 2,
+      "geom_transform": 1,
+      "golf_color_map": 2,
+      "ca_marker_rule": 1,
+      "exploit_crop": 1
+    },
+    "file_size_bytes": 19719
+  },
+  "results": [
+    {
+      "task_id": 1,
+      "filename": "007bbfb7",
+      "solver": "kronecker",
+      "cost": 10044,
+      "score": 17.996934541213538,
+      "eligible": true
+    },
+    {
+      "task_id": 2,
+      "filename": "00d62c1b",
+      "solver": "golf_flood_fill",
+      "cost": 272996,
+      "score": 15.945144530864212,
+      "eligible": true
+    },
+    {
+      "task_id": 3,
+      "filename": "017c7c7b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 4,
+      "filename": "025d127b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 5,
+      "filename": "045e512c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 6,
+      "filename": "0520fde7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 7,
+      "filename": "05269061",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 8,
+      "filename": "05f2a901",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 9,
+      "filename": "06df4c85",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 10,
+      "filename": "08ed6ac7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 11,
+      "filename": "09629e4f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 12,
+      "filename": "0962bcdd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 13,
+      "filename": "0a938d79",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 14,
+      "filename": "0b148d64",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 15,
+      "filename": "0ca9ddb6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 16,
+      "filename": "0d3d703e",
+      "solver": "exploit_color_swap",
+      "cost": 1,
+      "score": 19.326676732828506,
+      "eligible": true
+    },
+    {
+      "task_id": 17,
+      "filename": "0dfd9992",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 18,
+      "filename": "0e206a2e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 19,
+      "filename": "10fcaaa3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 20,
+      "filename": "11852cab",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 21,
+      "filename": "1190e5a7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 22,
+      "filename": "137eaa0f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 23,
+      "filename": "150deff5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 24,
+      "filename": "178fcbfb",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 25,
+      "filename": "1a07d186",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 26,
+      "filename": "1b2d62fb",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 27,
+      "filename": "1b60fb0c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 28,
+      "filename": "1bfc4729",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 29,
+      "filename": "1c786137",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 30,
+      "filename": "1caeab9d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 31,
+      "filename": "1cf80156",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 32,
+      "filename": "1e0a9b12",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 33,
+      "filename": "1e32b0e9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 34,
+      "filename": "1f0c79e5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 35,
+      "filename": "1f642eb9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 36,
+      "filename": "1f85a75f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 37,
+      "filename": "1f876c06",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 38,
+      "filename": "1fad071e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 39,
+      "filename": "2013d3e2",
+      "solver": "task39_extract_topleft",
+      "cost": 3873,
+      "score": 17.70902522185702,
+      "eligible": true
+    },
+    {
+      "task_id": 40,
+      "filename": "2204b7a8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 41,
+      "filename": "22168020",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 42,
+      "filename": "22233c11",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 43,
+      "filename": "2281f1f4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 44,
+      "filename": "228f6490",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 45,
+      "filename": "22eb0ac0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 46,
+      "filename": "234bbc79",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 47,
+      "filename": "23581191",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 48,
+      "filename": "239be575",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 49,
+      "filename": "23b5c85d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 50,
+      "filename": "253bf280",
+      "solver": "golf_draw_line",
+      "cost": 27732,
+      "score": 17.379294913161736,
+      "eligible": true
+    },
+    {
+      "task_id": 51,
+      "filename": "25d487eb",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 52,
+      "filename": "25d8a9c8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 53,
+      "filename": "25ff71a9",
+      "solver": "golf_shift",
+      "cost": 1,
+      "score": 18.575130976094613,
+      "eligible": true
+    },
+    {
+      "task_id": 54,
+      "filename": "264363fd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 55,
+      "filename": "272f95fa",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 56,
+      "filename": "27a28665",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 57,
+      "filename": "28bf18c6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 58,
+      "filename": "28e73c20",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 59,
+      "filename": "29623171",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 60,
+      "filename": "29c11459",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 61,
+      "filename": "29ec7d0e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 62,
+      "filename": "2bcee788",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 63,
+      "filename": "2bee17df",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 64,
+      "filename": "2c608aff",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 65,
+      "filename": "2dc579da",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 66,
+      "filename": "2dd70a9a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 67,
+      "filename": "2dee498d",
+      "solver": "crop_top_left",
+      "cost": 1,
+      "score": 19.57065437104556,
+      "eligible": true
+    },
+    {
+      "task_id": 68,
+      "filename": "31aa019c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 69,
+      "filename": "321b1fc6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 70,
+      "filename": "32597951",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 71,
+      "filename": "3345333e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 72,
+      "filename": "3428a4f5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 73,
+      "filename": "3618c87e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 74,
+      "filename": "3631a71a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 75,
+      "filename": "363442ee",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 76,
+      "filename": "36d67576",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 77,
+      "filename": "36fdfd69",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 78,
+      "filename": "3906de3d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 79,
+      "filename": "39a8645d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 80,
+      "filename": "39e1d7f9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 81,
+      "filename": "3aa6fb7a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 82,
+      "filename": "3ac3eb23",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 83,
+      "filename": "3af2c5a8",
+      "solver": "quilt",
+      "cost": 1,
+      "score": 17.78770553149966,
+      "eligible": true
+    },
+    {
+      "task_id": 84,
+      "filename": "3bd67248",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 85,
+      "filename": "3bdb4ada",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 86,
+      "filename": "3befdf3e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 87,
+      "filename": "3c9b0459",
+      "solver": "direct_dihedral",
+      "cost": 1,
+      "score": 18.085269107281437,
+      "eligible": true
+    },
+    {
+      "task_id": 88,
+      "filename": "3de23699",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 89,
+      "filename": "3e980e27",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 90,
+      "filename": "3eda0437",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 91,
+      "filename": "3f7978a0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 92,
+      "filename": "40853293",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 93,
+      "filename": "4093f84a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 94,
+      "filename": "41e4d17e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 95,
+      "filename": "4258a5f9",
+      "solver": "golf_ca",
+      "cost": 11729,
+      "score": 17.648841773569306,
+      "eligible": true
+    },
+    {
+      "task_id": 96,
+      "filename": "4290ef0e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 97,
+      "filename": "42a50994",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 98,
+      "filename": "4347f46a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 99,
+      "filename": "444801d8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 100,
+      "filename": "445eab21",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 101,
+      "filename": "447fd412",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 102,
+      "filename": "44d8ac46",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 103,
+      "filename": "44f52bb0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 104,
+      "filename": "4522001f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 105,
+      "filename": "4612dd53",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 106,
+      "filename": "46442a0e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 107,
+      "filename": "469497ad",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 108,
+      "filename": "46f33fce",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 109,
+      "filename": "47c1f68c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 110,
+      "filename": "484b58aa",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 111,
+      "filename": "48d8fb45",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 112,
+      "filename": "4938f0c2",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 113,
+      "filename": "496994bd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 114,
+      "filename": "49d1d64f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 115,
+      "filename": "4be741c5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 116,
+      "filename": "4c4377d9",
+      "solver": "universal_brute_force",
+      "cost": 1,
+      "score": 18.070483229236352,
+      "eligible": true
+    },
+    {
+      "task_id": 117,
+      "filename": "4c5c2cf0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 118,
+      "filename": "50846271",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 119,
+      "filename": "508bd3b6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 120,
+      "filename": "50cb2852",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 121,
+      "filename": "5117e062",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 122,
+      "filename": "5168d44c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 123,
+      "filename": "539a4f51",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 124,
+      "filename": "53b68214",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 125,
+      "filename": "543a7ed5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 126,
+      "filename": "54d82841",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 127,
+      "filename": "54d9e175",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 128,
+      "filename": "5521c0d9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 129,
+      "filename": "5582e5ca",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 130,
+      "filename": "5614dbcf",
+      "solver": "scale_down_3_then_colormap",
+      "cost": 861,
+      "score": 17.95422342312049,
+      "eligible": true
+    },
+    {
+      "task_id": 131,
+      "filename": "56dc2b01",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 132,
+      "filename": "56ff96f3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 133,
+      "filename": "57aa92db",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 134,
+      "filename": "5ad4f10b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 135,
+      "filename": "5bd6f4ac",
+      "solver": "exploit_crop_any",
+      "cost": 1,
+      "score": 19.105597165735148,
+      "eligible": true
+    },
+    {
+      "task_id": 136,
+      "filename": "5c0a986e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 137,
+      "filename": "5c2c9af4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 138,
+      "filename": "5daaa586",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 139,
+      "filename": "60b61512",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 140,
+      "filename": "6150a2bd",
+      "solver": "direct_dihedral",
+      "cost": 1,
+      "score": 18.085269107281437,
+      "eligible": true
+    },
+    {
+      "task_id": 141,
+      "filename": "623ea044",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 142,
+      "filename": "62c24649",
+      "solver": "quilt",
+      "cost": 1,
+      "score": 17.78770553149966,
+      "eligible": true
+    },
+    {
+      "task_id": 143,
+      "filename": "63613498",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 144,
+      "filename": "6430c8c4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 145,
+      "filename": "6455b5f5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 146,
+      "filename": "662c240a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 147,
+      "filename": "67385a82",
+      "solver": "golf_conditional",
+      "cost": 4691,
+      "score": 17.50057670940777,
+      "eligible": true
+    },
+    {
+      "task_id": 148,
+      "filename": "673ef223",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 149,
+      "filename": "6773b310",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 150,
+      "filename": "67a3c6ac",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 151,
+      "filename": "67a423a3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 152,
+      "filename": "67e8384a",
+      "solver": "quilt",
+      "cost": 1,
+      "score": 17.78770553149966,
+      "eligible": true
+    },
+    {
+      "task_id": 153,
+      "filename": "681b3aeb",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 154,
+      "filename": "6855a6e4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 155,
+      "filename": "68b16354",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 156,
+      "filename": "694f12f3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 157,
+      "filename": "6a1e5592",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 158,
+      "filename": "6aa20dc0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 159,
+      "filename": "6b9890af",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 160,
+      "filename": "6c434453",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 161,
+      "filename": "6cdd2623",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 162,
+      "filename": "6cf79266",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 163,
+      "filename": "6d0160f0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 164,
+      "filename": "6d0aefbc",
+      "solver": "exploit_mirror_concat",
+      "cost": 1,
+      "score": 18.27616755917879,
+      "eligible": true
+    },
+    {
+      "task_id": 165,
+      "filename": "6d58a25d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 166,
+      "filename": "6d75e8bb",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 167,
+      "filename": "6e02f1e3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 168,
+      "filename": "6e19193c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 169,
+      "filename": "6e82a1ae",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 170,
+      "filename": "6ecd11f4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 171,
+      "filename": "6f8cd79b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 172,
+      "filename": "6fa7a44f",
+      "solver": "exploit_mirror_concat",
+      "cost": 1,
+      "score": 18.27616755917879,
+      "eligible": true
+    },
+    {
+      "task_id": 173,
+      "filename": "72322fa7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 174,
+      "filename": "72ca375d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 175,
+      "filename": "73251a56",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 176,
+      "filename": "7447852a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 177,
+      "filename": "7468f01a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 178,
+      "filename": "746b3537",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 179,
+      "filename": "74dd1130",
+      "solver": "direct_dihedral",
+      "cost": 361,
+      "score": 18.631812813649507,
+      "eligible": true
+    },
+    {
+      "task_id": 180,
+      "filename": "75b8110e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 181,
+      "filename": "760b3cac",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 182,
+      "filename": "776ffc46",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 183,
+      "filename": "77fdfe62",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 184,
+      "filename": "780d0b14",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 185,
+      "filename": "7837ac64",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 186,
+      "filename": "794b24be",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 187,
+      "filename": "7b6016b9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 188,
+      "filename": "7b7f7511",
+      "solver": "crop_top_left",
+      "cost": 1,
+      "score": 19.57065437104556,
+      "eligible": true
+    },
+    {
+      "task_id": 189,
+      "filename": "7c008303",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 190,
+      "filename": "7ddcd7ec",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 191,
+      "filename": "7df24a62",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 192,
+      "filename": "7e0986d6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 193,
+      "filename": "7f4411dc",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 194,
+      "filename": "7fe24cdd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 195,
+      "filename": "80af3007",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 196,
+      "filename": "810b9b61",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 197,
+      "filename": "82819916",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 198,
+      "filename": "83302e8f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 199,
+      "filename": "834ec97d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 200,
+      "filename": "8403a5d5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 201,
+      "filename": "846bdb03",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 202,
+      "filename": "855e0971",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 203,
+      "filename": "85c4e7cd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 204,
+      "filename": "868de0fa",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 205,
+      "filename": "8731374e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 206,
+      "filename": "88a10436",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 207,
+      "filename": "88a62173",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 208,
+      "filename": "890034e9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 209,
+      "filename": "8a004b2b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 210,
+      "filename": "8be77c9e",
+      "solver": "exploit_mirror_concat",
+      "cost": 1,
+      "score": 18.27616755917879,
+      "eligible": true
+    },
+    {
+      "task_id": 211,
+      "filename": "8d5021e8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 212,
+      "filename": "8d510a79",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 213,
+      "filename": "8e1813be",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 214,
+      "filename": "8e5a5113",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 215,
+      "filename": "8eb1be9a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 216,
+      "filename": "8efcae92",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 217,
+      "filename": "8f2ea7aa",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 218,
+      "filename": "90c28cc7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 219,
+      "filename": "90f3ed37",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 220,
+      "filename": "913fb3ed",
+      "solver": "multi_rule_ca",
+      "cost": 40550,
+      "score": 16.534100102971315,
+      "eligible": true
+    },
+    {
+      "task_id": 221,
+      "filename": "91413438",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 222,
+      "filename": "91714a58",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 223,
+      "filename": "9172f3a0",
+      "solver": "golf_scale",
+      "cost": 3241,
+      "score": 18.221215102314822,
+      "eligible": true
+    },
+    {
+      "task_id": 224,
+      "filename": "928ad970",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 225,
+      "filename": "93b581b8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 226,
+      "filename": "941d9a10",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 227,
+      "filename": "94f9d214",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 228,
+      "filename": "952a094c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 229,
+      "filename": "9565186b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 230,
+      "filename": "95990924",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 231,
+      "filename": "963e52fc",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 232,
+      "filename": "97999447",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 233,
+      "filename": "97a05b5b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 234,
+      "filename": "98cf29f8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 235,
+      "filename": "995c5fa3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 236,
+      "filename": "99b1bc43",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 237,
+      "filename": "99fa7670",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 238,
+      "filename": "9aec4887",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 239,
+      "filename": "9af7a82c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 240,
+      "filename": "9d9215db",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 241,
+      "filename": "9dfd6313",
+      "solver": "geom_transform",
+      "cost": 36000,
+      "score": 20.15581291354141,
+      "eligible": true
+    },
+    {
+      "task_id": 242,
+      "filename": "9ecd008a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 243,
+      "filename": "9edfc990",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 244,
+      "filename": "9f236235",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 245,
+      "filename": "a1570a43",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 246,
+      "filename": "a2fd1cf0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 247,
+      "filename": "a3325580",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 248,
+      "filename": "a3df8b1e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 249,
+      "filename": "a416b8f3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 250,
+      "filename": "a48eeaf7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 251,
+      "filename": "a5313dff",
+      "solver": "golf_flood_fill",
+      "cost": 70756,
+      "score": 16.39846566015001,
+      "eligible": true
+    },
+    {
+      "task_id": 252,
+      "filename": "a5f85a15",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 253,
+      "filename": "a61ba2ce",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 254,
+      "filename": "a61f2674",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 255,
+      "filename": "a64e4611",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 256,
+      "filename": "a65b410d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 257,
+      "filename": "a68b268e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 258,
+      "filename": "a699fb00",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 259,
+      "filename": "a740d043",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 260,
+      "filename": "a78176bb",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 261,
+      "filename": "a79310a0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 262,
+      "filename": "a85d4709",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 263,
+      "filename": "a87f7484",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 264,
+      "filename": "a8c38be5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 265,
+      "filename": "a8d7556c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 266,
+      "filename": "a9f96cdd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 267,
+      "filename": "aabf363d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 268,
+      "filename": "aba27056",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 269,
+      "filename": "ac0a08a4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 270,
+      "filename": "ae3edfdc",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 271,
+      "filename": "ae4f1146",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 272,
+      "filename": "aedd82e4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 273,
+      "filename": "af902bf9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 274,
+      "filename": "b0c4d837",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 275,
+      "filename": "b190f7f5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 276,
+      "filename": "b1948b0a",
+      "solver": "golf_color_map",
+      "cost": 1941,
+      "score": 18.01158681800041,
+      "eligible": true
+    },
+    {
+      "task_id": 277,
+      "filename": "b230c067",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 278,
+      "filename": "b27ca6d3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 279,
+      "filename": "b2862040",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 280,
+      "filename": "b527c5c6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 281,
+      "filename": "b548a754",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 282,
+      "filename": "b60334d2",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 283,
+      "filename": "b6afb2da",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 284,
+      "filename": "b7249182",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 285,
+      "filename": "b775ac94",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 286,
+      "filename": "b782dc8a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 287,
+      "filename": "b8825c91",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 288,
+      "filename": "b8cdaf2b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 289,
+      "filename": "b91ae062",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 290,
+      "filename": "b94a9452",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 291,
+      "filename": "b9b7f026",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 292,
+      "filename": "ba26e723",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 293,
+      "filename": "ba97ae07",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 294,
+      "filename": "bb43febb",
+      "solver": "golf_ca",
+      "cost": 14351,
+      "score": 17.648841773569306,
+      "eligible": true
+    },
+    {
+      "task_id": 295,
+      "filename": "bbc9ae5d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 296,
+      "filename": "bc1d5164",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 297,
+      "filename": "bd4472b8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 298,
+      "filename": "bda2d7a6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 299,
+      "filename": "bdad9b1f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 300,
+      "filename": "be94b721",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 301,
+      "filename": "beb8660c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 302,
+      "filename": "c0f76784",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 303,
+      "filename": "c1d99e64",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 304,
+      "filename": "c3e719e8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 305,
+      "filename": "c3f564a4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 306,
+      "filename": "c444b776",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 307,
+      "filename": "c59eb873",
+      "solver": "golf_scale",
+      "cost": 4001,
+      "score": 18.221215102314822,
+      "eligible": true
+    },
+    {
+      "task_id": 308,
+      "filename": "c8cbb738",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 309,
+      "filename": "c8f0f002",
+      "solver": "golf_color_map",
+      "cost": 1221,
+      "score": 18.01158681800041,
+      "eligible": true
+    },
+    {
+      "task_id": 310,
+      "filename": "c909285e",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 311,
+      "filename": "c9e6f938",
+      "solver": "exploit_mirror_concat",
+      "cost": 1,
+      "score": 18.27616755917879,
+      "eligible": true
+    },
+    {
+      "task_id": 312,
+      "filename": "c9f8e694",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 313,
+      "filename": "caa06a1f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 314,
+      "filename": "cbded52d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 315,
+      "filename": "cce03e0d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 316,
+      "filename": "cdecee7f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 317,
+      "filename": "ce22a75a",
+      "solver": "ca_marker_rule",
+      "cost": 113951,
+      "score": 17.354602300571365,
+      "eligible": true
+    },
+    {
+      "task_id": 318,
+      "filename": "ce4f8723",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 319,
+      "filename": "ce602527",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 320,
+      "filename": "ce9e57f2",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 321,
+      "filename": "cf98881b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 322,
+      "filename": "d037b0a7",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 323,
+      "filename": "d06dbe63",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 324,
+      "filename": "d07ae81c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 325,
+      "filename": "d0f5fe59",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 326,
+      "filename": "d10ecb37",
+      "solver": "exploit_crop",
+      "cost": 1,
+      "score": 19.105597165735148,
+      "eligible": true
+    },
+    {
+      "task_id": 327,
+      "filename": "d13f3404",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 328,
+      "filename": "d22278a0",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 329,
+      "filename": "d23f8c26",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 330,
+      "filename": "d2abd087",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 331,
+      "filename": "d364b489",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 332,
+      "filename": "d406998b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 333,
+      "filename": "d43fd935",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 334,
+      "filename": "d4469b4b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 335,
+      "filename": "d4a91cb9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 336,
+      "filename": "d4f3cd78",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 337,
+      "filename": "d511f180",
+      "solver": "exploit_color_swap",
+      "cost": 1,
+      "score": 19.326676732828506,
+      "eligible": true
+    },
+    {
+      "task_id": 338,
+      "filename": "d5d6de2d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 339,
+      "filename": "d631b094",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 340,
+      "filename": "d687bc17",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 341,
+      "filename": "d6ad076f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 342,
+      "filename": "d89b689b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 343,
+      "filename": "d8c310e9",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 344,
+      "filename": "d90796e8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 345,
+      "filename": "d9f24cd1",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 346,
+      "filename": "d9fac9be",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 347,
+      "filename": "dae9d2b5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 348,
+      "filename": "db3e9e38",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 349,
+      "filename": "db93a21d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 350,
+      "filename": "dbc1a6ce",
+      "solver": "golf_draw_line",
+      "cost": 70575,
+      "score": 17.343189908519623,
+      "eligible": true
+    },
+    {
+      "task_id": 351,
+      "filename": "dc0a314f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 352,
+      "filename": "dc1df850",
+      "solver": "golf_conditional",
+      "cost": 14351,
+      "score": 17.50057670940777,
+      "eligible": true
+    },
+    {
+      "task_id": 353,
+      "filename": "dc433765",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 354,
+      "filename": "ddf7fa4f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 355,
+      "filename": "de1cd16c",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 356,
+      "filename": "ded97339",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 357,
+      "filename": "e179c5f4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 358,
+      "filename": "e21d9049",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 359,
+      "filename": "e26a3af2",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 360,
+      "filename": "e3497940",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 361,
+      "filename": "e40b9e2f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 362,
+      "filename": "e48d4e1a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 363,
+      "filename": "e5062a87",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 364,
+      "filename": "e509e548",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 365,
+      "filename": "e50d258f",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 366,
+      "filename": "e6721834",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 367,
+      "filename": "e73095fd",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 368,
+      "filename": "e76a88a6",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 369,
+      "filename": "e8593010",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 370,
+      "filename": "e8dc4411",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 371,
+      "filename": "e9614598",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 372,
+      "filename": "e98196ab",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 373,
+      "filename": "e9afcf9a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 374,
+      "filename": "ea32f347",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 375,
+      "filename": "ea786f4a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 376,
+      "filename": "eb281b96",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 377,
+      "filename": "eb5a1d5d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 378,
+      "filename": "ec883f72",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 379,
+      "filename": "ecdecbb3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 380,
+      "filename": "ed36ccf7",
+      "solver": "direct_dihedral",
+      "cost": 361,
+      "score": 18.315388272332072,
+      "eligible": true
+    },
+    {
+      "task_id": 381,
+      "filename": "ef135b50",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 382,
+      "filename": "f15e1fac",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 383,
+      "filename": "f1cefba8",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 384,
+      "filename": "f25fbde4",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 385,
+      "filename": "f25ffba3",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 386,
+      "filename": "f2829549",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 387,
+      "filename": "f35d900a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 388,
+      "filename": "f5b8619d",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 389,
+      "filename": "f76d97a5",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 390,
+      "filename": "f8a8fe49",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 391,
+      "filename": "f8b3ba0a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 392,
+      "filename": "f8c80d96",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 393,
+      "filename": "f8ff0b80",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 394,
+      "filename": "f9012d9b",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 395,
+      "filename": "fafffa47",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 396,
+      "filename": "fcb5c309",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 397,
+      "filename": "fcc82909",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 398,
+      "filename": "feca6190",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 399,
+      "filename": "ff28f65a",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    },
+    {
+      "task_id": 400,
+      "filename": "ff805c23",
+      "solver": "none",
+      "cost": 0,
+      "score": 0,
+      "eligible": false
+    }
+  ]
+}
