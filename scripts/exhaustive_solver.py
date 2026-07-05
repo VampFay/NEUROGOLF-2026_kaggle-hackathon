@@ -455,12 +455,202 @@ def try_exhaustive(task):
                 if verify_python(pairs, ops_py):
                     return build_onnx([("color_map", mapping), ("repeat_rows", (n,))], in_h, in_w), f"colormap_then_repeat_rows_{n}"
     
+    # === Level 3: Three-op combinations ===
+    
+    DIHEDRALS = [
+        ("identity", lambda g: g),
+        ("flip_lr", lambda g: py_flip_lr(g)),
+        ("flip_ud", lambda g: py_flip_ud(g)),
+        ("rot180", lambda g: py_rot180(g)),
+        ("rot90", lambda g: py_rot90(g)),
+        ("rot270", lambda g: py_rot270(g)),
+        ("transpose", lambda g: py_transpose(g)),
+    ]
+    
+    # 3a. color_map + dihedral + crop (same-size → crop at end)
+    if same_size and all_same_in:
+        mapping = derive_color_map(pairs)
+        if mapping and any(k != v for k, v in mapping.items()):
+            for dname, dfn in DIHEDRALS:
+                if all_same_out and out_h <= in_h and out_w <= in_w:
+                    ops_py = [lambda g, m=mapping: py_color_map(g, m), dfn, lambda g, h=out_h, w=out_w: py_crop(g, 0, 0, h, w)]
+                    if verify_python(pairs, ops_py):
+                        ops_dsl = [("color_map", mapping)]
+                        if dname != "identity":
+                            ops_dsl.append((dname, None))
+                        ops_dsl.append(("crop_top_left", (out_h, out_w)))
+                        return build_onnx(ops_dsl, in_h, in_w), f"colormap_{dname}_crop"
+    
+    # 3b. crop + color_map + dihedral (crop first, then recolor, then flip)
+    if all_same_out and out_h <= in_h and out_w <= in_w:
+        for dname, dfn in DIHEDRALS:
+            # Derive color map after crop + dihedral
+            mapping = {}
+            ok = True
+            for inp, out in pairs:
+                cropped = py_crop(inp, 0, 0, out_h, out_w)
+                transformed = dfn(cropped)
+                if transformed.shape != out.shape:
+                    ok = False; break
+                for c in range(NUM_COLORS):
+                    in_cells = (transformed == c)
+                    if not in_cells.any(): continue
+                    out_at = out[in_cells]
+                    out_colors = np.unique(out_at)
+                    if len(out_colors) != 1:
+                        ok = False; break
+                    t = int(out_colors[0])
+                    if c in mapping and mapping[c] != t:
+                        ok = False; break
+                    mapping[c] = t
+                if not ok: break
+            if ok and any(k != v for k, v in mapping.items()):
+                ops_py = [lambda g, h=out_h, w=out_w: py_crop(g, 0, 0, h, w), lambda g, m=mapping: py_color_map(g, m), dfn]
+                if verify_python(pairs, ops_py):
+                    ops_dsl = [("crop_top_left", (out_h, out_w)), ("color_map", mapping)]
+                    if dname != "identity":
+                        ops_dsl.append((dname, None))
+                    return build_onnx(ops_dsl, in_h, in_w), f"crop_colormap_{dname}"
+    
+    # 3c. color_map + scale_up + dihedral
+    if all_same_in and all_same_out and out_h > in_h:
+        for k in range(2, 6):
+            if out_h != in_h * k or out_w != in_w * k: continue
+            for dname, dfn in DIHEDRALS:
+                mapping = {}
+                ok = True
+                for inp, out in pairs:
+                    mapped = inp.copy()
+                    for c2, v in mapping.items():
+                        mapped[inp == c2] = v
+                    if not mapping:
+                        # Derive mapping from scaled+transformed
+                        pass
+                    scaled = py_scale_up(mapped, k)
+                    transformed = dfn(scaled)
+                    if transformed.shape != out.shape:
+                        ok = False; break
+                if not ok: continue
+                # Derive mapping: reverse the dihedral, then reverse scale, then compare
+                mapping = {}
+                ok = True
+                for inp, out in pairs:
+                    # Reverse dihedral
+                    rev_dfn = {"flip_lr": py_flip_lr, "flip_ud": py_flip_ud, "rot180": py_rot180,
+                               "rot90": py_rot270, "rot270": py_rot90, "transpose": py_transpose,
+                               "identity": lambda g: g}.get(dname, lambda g: g)
+                    rev_out = rev_dfn(out)
+                    # Reverse scale
+                    scaled_down = py_scale_down(rev_out, k)
+                    if scaled_down.shape != inp.shape:
+                        ok = False; break
+                    for c in range(NUM_COLORS):
+                        in_cells = (inp == c)
+                        if not in_cells.any(): continue
+                        out_at = scaled_down[in_cells]
+                        out_colors = np.unique(out_at)
+                        if len(out_colors) != 1:
+                            ok = False; break
+                        t = int(out_colors[0])
+                        if c in mapping and mapping[c] != t:
+                            ok = False; break
+                        mapping[c] = t
+                    if not ok: break
+                if not ok or not any(k2 != v for k2, v in mapping.items()): continue
+                ops_py = [lambda g, m=mapping: py_color_map(g, m), lambda g, k=k: py_scale_up(g, k), dfn]
+                if verify_python(pairs, ops_py):
+                    return build_onnx([("color_map", mapping), ("scale_up", (k,)), (dname, None) if dname != "identity" else ("identity", None)], in_h, in_w), f"colormap_scale{k}_{dname}"
+    
+    # 3d. dihedral + color_map + scale_up
+    if all_same_in and all_same_out and out_h > in_h:
+        for k in range(2, 6):
+            if out_h != in_h * k or out_w != in_w * k: continue
+            for dname, dfn in DIHEDRALS:
+                mapping = {}
+                ok = True
+                for inp, out in pairs:
+                    transformed = dfn(inp)
+                    if transformed.shape != inp.shape:
+                        ok = False; break
+                    scaled = py_scale_up(transformed, k)
+                    if scaled.shape != out.shape:
+                        ok = False; break
+                    for c in range(NUM_COLORS):
+                        in_cells = (scaled == c)
+                        if not in_cells.any(): continue
+                        out_at = out[in_cells]
+                        out_colors = np.unique(out_at)
+                        if len(out_colors) != 1:
+                            ok = False; break
+                        t = int(out_colors[0])
+                        if c in mapping and mapping[c] != t:
+                            ok = False; break
+                        mapping[c] = t
+                    if not ok: break
+                if not ok or not any(k2 != v for k2, v in mapping.items()): continue
+                ops_py = [dfn, lambda g, m=mapping: py_color_map(g, m), lambda g, k=k: py_scale_up(g, k)]
+                if verify_python(pairs, ops_py):
+                    ops_dsl = []
+                    if dname != "identity":
+                        ops_dsl.append((dname, None))
+                    ops_dsl.append(("color_map", mapping))
+                    ops_dsl.append(("scale_up", (k,)))
+                    return build_onnx(ops_dsl, in_h, in_w), f"{dname}_colormap_scale{k}"
+    
+    # 3e. color_map + scale_down + dihedral
+    if all_same_in and all_same_out and out_h < in_h:
+        for k in range(2, 6):
+            if in_h != out_h * k or in_w != out_w * k: continue
+            for dname, dfn in DIHEDRALS:
+                mapping = {}
+                ok = True
+                for inp, out in pairs:
+                    # Reverse: dihedral^{-1}(out) → scale_down → compare to inp for color map
+                    rev_dfn = {"flip_lr": py_flip_lr, "flip_ud": py_flip_ud, "rot180": py_rot180,
+                               "rot90": py_rot270, "rot270": py_rot90, "transpose": py_transpose,
+                               "identity": lambda g: g}.get(dname, lambda g: g)
+                    rev_out = rev_dfn(out)
+                    scaled_down = py_scale_down(rev_out, k) if rev_out.shape[0] == in_h else rev_out[::k, ::k]
+                    if scaled_down.shape != inp.shape:
+                        ok = False; break
+                    for c in range(NUM_COLORS):
+                        in_cells = (inp == c)
+                        if not in_cells.any(): continue
+                        out_at = scaled_down[in_cells]
+                        out_colors = np.unique(out_at)
+                        if len(out_colors) != 1:
+                            ok = False; break
+                        t = int(out_colors[0])
+                        if c in mapping and mapping[c] != t:
+                            ok = False; break
+                        mapping[c] = t
+                    if not ok: break
+                if not ok or not any(k2 != v for k2, v in mapping.items()): continue
+                ops_py = [lambda g, m=mapping: py_color_map(g, m), lambda g, k=k: py_scale_down(g, k), dfn]
+                if verify_python(pairs, ops_py):
+                    return build_onnx([("color_map", mapping), ("scale_down", (k,)), (dname, None) if dname != "identity" else ("identity", None)], in_h, in_w), f"colormap_scaledown{k}_{dname}"
+    
+    # 3f. color_map + dihedral + color_map (two color maps with flip between)
+    if same_size and all_same_in:
+        # Derive first color map from input → intermediate (unknown)
+        # Try each dihedral, derive two color maps
+        for dname, dfn in DIHEDRALS:
+            # For each pair: out = cm2(dfn(cm1(inp)))
+            # We don't know cm1 or cm2. Try: cm1 = identity, cm2 = derive from dfn(inp) vs out
+            # That's just dihedral + color_map (2-op, already handled)
+            # Try: cm1 = derive from inp vs dfn^{-1}(out), cm2 = identity
+            # That's color_map + dihedral (2-op, already handled)
+            # For true 3-op: cm1 != identity AND cm2 != identity
+            # This is hard to derive without knowing the intermediate
+            # Skip for now
+            pass
+    
     return None, None
 
 
 def main():
     """Run exhaustive solver on all unsolved tasks."""
-    with open("/home/z/my-project/data/final_unified_results.json") as f:
+    with open("/home/z/my-project/data/final_comprehensive_results.json") as f:
         d = json.load(f)
     unsolved = [r["task_id"] for r in d["results"] if not r.get("eligible")]
     print(f"Unsolved: {len(unsolved)}")

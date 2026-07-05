@@ -3,7 +3,7 @@
     "solved": 37,
     "total": 400,
     "total_score": 669.7722311988636,
-    "elapsed_sec": 116.45047211647034,
+    "elapsed_sec": 116.06774139404297,
     "breakdown": {
       "kronecker": 1,
       "golf_flood_fill": 2,
