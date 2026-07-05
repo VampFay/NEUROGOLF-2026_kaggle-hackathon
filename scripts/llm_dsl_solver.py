@@ -82,9 +82,12 @@ def call_zai_chat(prompt, max_retries=2):
             with open(tmp_file, "w") as f:
                 f.write(prompt)
             output_file = "/tmp/dsl_response.json"
+            # Remove stale output file
+            if os.path.exists(output_file):
+                os.remove(output_file)
             result = subprocess.run(
                 ["z-ai", "chat", "--prompt", open(tmp_file).read(), "--output", output_file],
-                capture_output=True, text=True, timeout=120
+                capture_output=True, text=True, timeout=30
             )
             if os.path.exists(output_file):
                 with open(output_file) as f:
@@ -124,26 +127,37 @@ def parse_dsl_response(response):
     response = re.sub(r'```json\s*', '', response)
     response = re.sub(r'```\s*', '', response)
     response = response.strip()
+    # Fix Python-style dict keys: {1: 2} → {"1": 2}
+    # Match patterns like {<number>: <number>} inside mapping
+    response = re.sub(r'\{(\d+):\s*', r'{"\1": ', response)
+    response = re.sub(r',\s*(\d+):\s*', r', "\1": ', response)
     # Try parsing the whole response as JSON
     try:
         return json.loads(response)
     except Exception:
         pass
-    # Try to find {"operations": ...} (greedy to match nested braces)
-    m = re.search(r'\{"operations".*?\}', response, re.DOTALL)
-    if m:
-        try:
-            return json.loads(m.group(0))
-        except Exception:
-            pass
-    # Try finding any JSON object with "operations"
+    # Try to find {"operations": ...} 
     start = response.find('{"operations"')
     if start >= 0:
         # Find matching closing brace
         depth = 0
+        in_string = False
+        escape = False
         for i in range(start, len(response)):
-            if response[i] == '{': depth += 1
-            elif response[i] == '}':
+            ch = response[i]
+            if escape:
+                escape = False
+                continue
+            if ch == '\\':
+                escape = True
+                continue
+            if ch == '"' and not escape:
+                in_string = not in_string
+                continue
+            if in_string:
+                continue
+            if ch == '{': depth += 1
+            elif ch == '}':
                 depth -= 1
                 if depth == 0:
                     try:
@@ -281,16 +295,20 @@ def solve_task_dsl(task_id, max_attempts=2):
 
 
 def main():
-    """Run DSL solver on unsolved tasks."""
-    with open("/home/z/my-project/data/final_unified_results.json") as f:
+    """Run DSL solver on unsolved tasks with 2s delay, max_attempts=2, 5-min timeout."""
+    # Load the LATEST results (final_comprehensive, not final_unified)
+    results_file = "/home/z/my-project/data/final_comprehensive_results.json"
+    with open(results_file) as f:
         d = json.load(f)
     unsolved = [r["task_id"] for r in d["results"] if not r.get("eligible")]
-    print(f"Unsolved: {len(unsolved)}")
+    print(f"Total unsolved: {len(unsolved)}")
     
-    # Process sequentially with small delay to avoid rate limits
-    BATCH = 50  # Process 50 tasks per run
+    # Process first 50 tasks
+    BATCH = 50
     to_solve = unsolved[:BATCH]
-    print(f"Processing first {len(to_solve)} tasks")
+    print(f"Processing first {len(to_solve)} tasks: {to_solve}")
+    print(f"Settings: max_attempts=2, 2s delay between calls, 5-min timeout")
+    print()
     
     import zipfile
     output_path = "/home/z/my-project/download/submission.zip"
@@ -299,8 +317,21 @@ def main():
     breakdown = {}
     
     t0 = time.time()
+    TIMEOUT_SEC = 270  # 4 min 30 sec — leave buffer
+    
     for i, tid in enumerate(to_solve):
-        result = solve_task_dsl(tid, max_attempts=1)
+        # Check timeout
+        elapsed = time.time() - t0
+        if elapsed > TIMEOUT_SEC:
+            print(f"\n  *** Stopping: 5-minute timeout reached ({elapsed:.0f}s) ***", flush=True)
+            break
+        
+        # 5-second delay between API calls to avoid rate limits
+        if i > 0:
+            time.sleep(5)
+        
+        print(f"  [{i+1}/{len(to_solve)}] task {tid}...", end="", flush=True)
+        result = solve_task_dsl(tid, max_attempts=2)
         if result["success"]:
             model = result["model"]
             try:
@@ -323,21 +354,19 @@ def main():
                     ops = result["operations"]
                     first_op = ops[0]["op"] if ops else "unknown"
                     breakdown[first_op] = breakdown.get(first_op, 0) + 1
-                    print(f"  [{i+1}/{len(to_solve)}] task {tid}: OK (first_op={first_op}, score={e['score']:.2f})")
+                    print(f" ✓ SOLVED (first_op={first_op}, score={e['score']:.2f}, ops={len(ops)})", flush=True)
                 else:
-                    print(f"  [{i+1}/{len(to_solve)}] task {tid}: ineligible")
+                    print(f" ineligible after stripping", flush=True)
             except Exception as e:
-                print(f"  [{i+1}/{len(to_solve)}] task {tid}: error: {e}")
+                print(f" error: {e}", flush=True)
         else:
-            if (i+1) % 10 == 0:
-                print(f"  [{i+1}/{len(to_solve)}] task {tid}: failed")
-        if (i+1) % 10 == 0:
-            elapsed = time.time() - t0
-            print(f"    --- {i+1}/{len(to_solve)} done, solved={newly_solved}, elapsed={elapsed:.0f}s ---")
+            err = result.get("error", "unknown")[:50]
+            print(f" ✗ failed ({err})", flush=True)
     
     elapsed = time.time() - t0
     print(f"\n=== DSL Solver Summary ===")
-    print(f"Time: {elapsed:.1f}s")
+    print(f"Time: {elapsed:.1f}s ({elapsed/60:.1f} min)")
+    print(f"Tasks attempted: {i+1}")
     print(f"Newly solved: {newly_solved}")
     print(f"New score: {new_score:.2f}")
     print(f"Breakdown: {breakdown}")
